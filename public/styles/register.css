@@ -1,0 +1,145 @@
+@font-face {
+    font-family: kolle;
+    src: url('../font/kolle.ttf')
+}
+
+@font-face {
+    font-family: kollebold;
+    src: url('../font/kollebold.ttf')
+}
+
+@font-face {
+    font-family: prodmed;
+    src: url('../font/prodmedium.ttf')
+}
+
+@font-face {
+    font-family: prodbold;
+    src: url('../font/prodbold.ttf')
+}
+
+@font-face {
+    font-family: prod;
+    src: url('../font/prod.ttf')
+}
+
+body {
+    height: 100%;
+    margin: 0px auto;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body,
+html {
+    margin: 0;
+    height: 100%;
+}
+
+.background {
+    background-image: url(asset/wallpaper.png);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.tablehopper {
+    letter-spacing: 1px;
+    font-size: 30px;
+    font-family: prodbold;
+}
+
+.nav-item a {
+    background-color: transparent;
+    font-family: prodmed;
+    letter-spacing: 1px;
+    color: white;
+    margin: 10px;
+    position: relative;
+    padding: 10px 20px;
+    overflow: hidden;
+}
+
+.nav-item a:hover {
+    color: #0069ff;
+    cursor: pointer;
+    transition: 0.7s;
+}
+
+.nav-item a::after {
+    background-color: white;
+    content: "";
+    width: 0;
+    height: 3px;
+    left: 0;
+    bottom: 0;
+    transition: width 0.35s ease 0.1s;
+    position: absolute;
+}
+
+.nav-item a:hover::after {
+    width: 100%;
+}
+
+h2.signup-text {
+    font-family: prodbold;
+    letter-spacing: 0.7px;
+    text-align: center;
+    padding-top: 2%;
+    color: #006AFF;
+    padding-bottom: 20px;
+}
+
+.form-row {
+    width: 60%;
+    padding: 2%;
+    margin-left: 20%;
+    font-family: prodmed;
+    background-color: transparent;
+}
+
+.register-form {
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 5%;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: whitesmoke;
+}
+
+.signup-btn {
+    background-color: white;
+    border-color: #0069ff;
+    border-width: 3px;
+    width: 140px;
+    border-radius: 6px;
+    font-family: prodbold;
+    color: #0069ff;
+}
+
+.reset-btn {
+    background-color: white;
+    border-color: red;
+    border-width: 3px;
+    border-radius: 6px;
+    margin-left: 50px;
+    font-family: prodbold;
+    color: red;
+}
+
+@media (max-width:991px) {
+    .register-form {
+        width: 100%;
+        margin-left: 0%;
+    }
+}
+
+@media (max-width:767px) {
+    .register-form {
+        width: 100%;
+        margin-left: 0%;
+    }
+}

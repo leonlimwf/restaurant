@@ -1,0 +1,166 @@
+@font-face {
+    font-family: kolle;
+    src: url('../font/kolle.ttf')
+}
+
+@font-face {
+    font-family: kollebold;
+    src: url('../font/kollebold.ttf')
+}
+
+@font-face {
+    font-family: prodmed;
+    src: url('../font/prodmedium.ttf')
+}
+
+@font-face {
+    font-family: prodbold;
+    src: url('../font/prodbold.ttf')
+}
+
+@font-face {
+    font-family: prod;
+    src: url('../font/prod.ttf')
+}
+
+body {
+    height: 100%;
+    margin: 0px auto;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body,
+html {
+    margin: 0;
+    height: 100%;
+}
+
+.background {
+    background-image: url(asset/wallpaper.png);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.tablehopper {
+    letter-spacing: 1px;
+    font-size: 30px;
+    font-family: prodbold;
+}
+
+.nav-item a {
+    background-color: transparent;
+    font-family: prodmed;
+    letter-spacing: 1px;
+    color: white;
+    margin: 10px;
+    position: relative;
+    padding: 10px 20px;
+    overflow: hidden;
+}
+
+.nav-item a:hover {
+    color: #0069ff;
+    cursor: pointer;
+    transition: 0.7s;
+}
+
+.nav-item a::after {
+    background-color: white;
+    content: "";
+    width: 0;
+    height: 3px;
+    left: 0;
+    bottom: 0;
+    transition: width 0.35s ease 0.1s;
+    position: absolute;
+}
+
+.nav-item a:hover::after {
+    width: 100%;
+}
+
+.login-form {
+    width: 30%;
+    height: 90%;
+    margin-left: 35%;
+    border-radius: 25px;
+    background-color: white;
+}
+
+.login-form-logo {
+    text-align: center;
+}
+
+input.username-login,
+.password-login {
+    width: 70%;
+    height: 48px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border-color: #0069ff;
+    border-style: solid;
+    border-width: 3px;
+    outline: none;
+    font-family: prodbold;
+}
+
+.username-login,
+.password-login {
+    color: grey;
+    letter-spacing: 0.6px;
+    padding-left: 10px;
+    font-size: 15px;
+    content: "sdsdfsdf";
+}
+
+.login-button {
+    width: 70%;
+    height: 48px;
+    margin-top: 5em;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border-color: #0069ff;
+    background-color: #0069ff;
+    color: white;
+    border-style: solid;
+    border-width: 3px;
+    outline: none;
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    font-family: prodmed;
+}
+
+.forgot-password {
+    color: #0069ff;
+    font-family: prodbold;
+    margin-bottom: 80px;
+}
+
+.no-account-text {
+    font-family: prodbold;
+    color: #6D6D6D;
+}
+
+.sign-up-here-text {
+    color: #0069ff;
+    cursor: pointer;
+}
+
+@media (max-width:991px) {
+    .login-form {
+        min-width: 90%;
+        margin-left: 5%;
+    }
+}
+
+@media (max-width:767px) {
+    .register-form {
+        width: 100%;
+        margin-left: 0%;
+    }
+}

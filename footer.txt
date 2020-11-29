@@ -1,0 +1,53 @@
+<footer class="site-footer ">
+        <div class="container ">
+            <div class="row ">
+                <div class="col-sm-12 col-md-6 ">
+
+                    <h6><i class="fas fa-info-circle " style="font-size: 17px;color: white; "></i> About</h6>
+                    <p class="text-justify " style="color: white; ">Table Hopper is a website founded by a Student in Temasek Polytechnic while he was on his break. He was disappointed that Yelp and other websites did not helped much when he was finding a restaurant in Singapore, as the design was
+                        either too compact or held too little info. Thus, he built a website that allows other to use and also find out more about the restaurant that they want to visit.</p>
+                </div>
+
+                <div class="col-xs-6 col-md-3 ">
+                    <h6><i class="fas fa-bookmark " style="font-size: 17px;color: white; "></i> Categories</h6>
+                    <ul class="footer-links ">
+                        <li><a href="http://scanfcode.com/category/c-language/ ">Cheap and Good Food</a></li>
+                        <li><a href="http://scanfcode.com/category/front-end-development/ ">Fancy Dining</a></li>
+                        <li><a href="http://scanfcode.com/category/back-end-development/ ">Family-Friendly</a></li>
+                        <li><a href="http://scanfcode.com/category/java-programming-language/ ">Barbeque</a></li>
+                        <li><a href="http://scanfcode.com/category/android/ ">Steamboat</a></li>
+                        <li><a href="http://scanfcode.com/category/templates/ ">Others</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3 ">
+                    <h6><i class="fas fa-link " style="font-size: 17px;color: white; "></i> Quick Links</h6>
+                    <ul class="footer-links ">
+                        <li><a href="http://scanfcode.com/about/ ">About Us</a></li>
+                        <li><a href="http://scanfcode.com/contact/ ">Contact Us</a></li>
+                        <li><a href="http://scanfcode.com/contribute-at-scanfcode/ ">Search</a></li>
+                        <li><a href="http://scanfcode.com/sitemap/ ">Sitemap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container ">
+            <div class="row ">
+                <div class="col-md-8 col-sm-6 col-xs-12 ">
+                    <p class="copyright-text ">Copyright &copy; 2020 All Rights Reserved by
+                        <a href="# ">Leo Lim</a>.
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12 ">
+                    <ul class="social-icons ">
+                        <li><a class="facebook " href="# "><i class="fa fa-facebook "></i></a></li>
+                        <li><a class="twitter " href="# "><i class="fa fa-twitter "></i></a></li>
+                        <li><a class="dribbble " href="# "><i class="fa fa-dribbble "></i></a></li>
+                        <li><a class="linkedin " href="# "><i class="fa fa-linkedin "></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
