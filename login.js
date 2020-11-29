@@ -12,7 +12,7 @@ function load() {
     } else if (userPassword != password) {
         alert("Incorrect credentials")
     } else {
-        alert("Correct credentials")
+        alert("Correct credentials, please proceed")
 
     }
 }
