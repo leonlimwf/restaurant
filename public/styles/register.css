@@ -110,6 +110,15 @@ h2.signup-text {
     background-color: whitesmoke;
 }
 
+.alert-danger {
+    width: 55%;
+    padding: 2%;
+    margin-left: 22.5%;
+    text-align: center;
+    margin-bottom: 20px;
+    visibility: ;
+}
+
 .signup-btn {
     background-color: white;
     border-color: #0069ff;

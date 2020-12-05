@@ -96,32 +96,52 @@ html {
     text-align: center;
 }
 
-input.username-login,
-.password-login {
+.username-login {
+    color: black;
+    padding-left: 10px;
+    font-size: 15px;
+    font-family: prodmed;
     width: 70%;
-    height: 48px;
+    height: 44px;
     margin-bottom: 20px;
     border-radius: 6px;
     border-color: #0069ff;
     border-style: solid;
     border-width: 3px;
     outline: none;
-    font-family: prodbold;
+    font-family: prodmed;
+    letter-spacing: 0.8px;
 }
 
-.username-login,
 .password-login {
-    color: grey;
-    letter-spacing: 0.6px;
+    color: black;
+    letter-spacing: 0.8px;
     padding-left: 10px;
     font-size: 15px;
-    content: "sdsdfsdf";
+    font-family: prodmed;
+    width: 70%;
+    height: 44px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border-color: #0069ff;
+    border-style: solid;
+    border-width: 3px;
+    outline: none;
+}
+
+.alert-danger {
+    margin-top: 20px;
+    width: 70%;
+    padding: 25px;
+    visibility: hidden;
+    font-family: prod;
+    letter-spacing: 0.7px;
 }
 
 .login-button {
     width: 70%;
     height: 48px;
-    margin-top: 5em;
+    margin-top: 2em;
     margin-bottom: 10px;
     border-radius: 6px;
     border-color: #0069ff;
@@ -142,12 +162,13 @@ input.username-login,
 }
 
 .no-account-text {
-    font-family: prodbold;
+    font-family: prodmed;
     color: #6D6D6D;
 }
 
 .sign-up-here-text {
     color: #0069ff;
+    font-family: prodbold;
     cursor: pointer;
 }
 
