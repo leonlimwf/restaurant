@@ -66,20 +66,25 @@
 
         <center>
             <div class="login-area">
-                <input type="text" class="username-login" placeholder="Username" name="username-field" id="username-field">
-                <br>
-                <input type="password" class="password-login" placeholder="Password" name="password-field" id="password-field">
+                <form id="loginForm">
+                    <input type="text" class="username-login" placeholder="Username" name="usernamefield" id="usernamefield" required>
+                    <br>
+                    <input type="password" class="password-login" placeholder="Password" name="passwordfield" id="passwordfield" required>
+
+                    <div class="alert alert-danger" id="alert-box">
+
+                    </div>
+                    <button class="login-button" id="login-button" type="submit" onclick="login()">Log In</button>
+                </form>
             </div>
-            <div class="alert alert-danger" id="alert-box">
-                <strong>Oh No!</strong> Incorrect credentials, try again?
-            </div>
-            <button class="login-button" type="submit" onclick="load()">Log In</button>
+
+
             <p class="forgot-password">Forgot Password?</p>
 
             <p class="no-account-text">No account? <span class="sign-up-here-text" onclick="location='register.html'">Sign up here</span></p>
+
         </center>
     </div>
-
 
 
 
@@ -87,6 +92,35 @@
 </body>
 
 
+<script>
+    document.getElementById("login-button").addEventListener("click", function(event) {
+        event.preventDefault()
+    });
+
+    function login() {
+        var credentials = {
+            userId: document.getElementById("usernamefield").value,
+            userPassword: document.getElementById("passwordfield").value
+        };
+        var request = new XMLHttpRequest();
+        request.open("POST", "/login", true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.onload = function() {
+            response = JSON.parse(request.responseText);
+            document.getElementById("alert-box").style.visibility = "visible";
+            document.getElementById("alert-box").innerHTML = response.message;
+            setTimeout(function() {
+
+                loginSuccess = response.success
+                if (loginSuccess == true) {
+                    window.location.href = "index.html";
+                }
+            }, 1000);
+
+        };
+        request.send(JSON.stringify(credentials));
+    }
+</script>
 
 
 </html>
