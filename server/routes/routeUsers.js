@@ -6,9 +6,12 @@ const usersDBObject = new userdb();
 
 const router = express.Router();
 router.post("/login", usersDBObject.getLoginCredentials);
-
+router.post("/register", usersDBObject.getRegistrationCredentials);
 router.get('/login', function(req, res) {
     res.sendFile(path.join(__dirname, '../../public', 'login.html'));
+});
+router.get('/register', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../public', 'register.html'));
 });
 
 

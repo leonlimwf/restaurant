@@ -121,7 +121,7 @@ html {
     font-family: prodmed;
     width: 70%;
     height: 44px;
-    margin-bottom: 20px;
+    margin-bottom: 2em;
     border-radius: 6px;
     border-color: #0069ff;
     border-style: solid;
@@ -130,18 +130,17 @@ html {
 }
 
 .alert-danger {
-    margin-top: 20px;
     width: 70%;
     padding: 25px;
     visibility: hidden;
-    font-family: prod;
+    font-family: prodmed;
     letter-spacing: 0.7px;
 }
 
 .login-button {
     width: 70%;
     height: 48px;
-    margin-top: 2em;
+    margin-top: 1em;
     margin-bottom: 10px;
     border-radius: 6px;
     border-color: #0069ff;
@@ -150,7 +149,7 @@ html {
     border-style: solid;
     border-width: 3px;
     outline: none;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 0.8px;
     font-family: prodmed;
 }
@@ -158,12 +157,14 @@ html {
 .forgot-password {
     color: #0069ff;
     font-family: prodbold;
-    margin-bottom: 80px;
+    padding-bottom: 15px;
+    font-size: 16px;
 }
 
 .no-account-text {
     font-family: prodmed;
     color: #6D6D6D;
+    font-size: 15px;
 }
 
 .sign-up-here-text {

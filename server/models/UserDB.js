@@ -17,8 +17,10 @@ class userDB {
             if (error) {
                 throw error;
             } else {
+                console.log(JSON.stringify(result, null, 2));
                 if (result.length > 0) {
-                    if (password == result[0].password) {
+                    if (password == result[0].password) { //result[0].password comes from db
+                        console.log(typeof result)
                         success = !false;
                         msg = "<strong style='color: limegreen'>It's a success! Hang tight!</strong>";
                         console.log(success);
@@ -32,6 +34,40 @@ class userDB {
                     console.log("Wrong credentials");
                 }
                 respond.json(prepareMessage(msg, success));
+            }
+        });
+    }
+
+    getRegistrationCredentials(request, respond) {
+        var userIdInput = request.body.userIdInput;
+        var passwordInput = request.body.passwordInput;
+        var firstNameInput = request.body.firstNameInput;
+        var lastNameInput = request.body.lastNameInput;
+        var msg = "";
+        var regSuccess = false;
+
+        var values = [userIdInput, lastNameInput, firstNameInput, passwordInput]
+        var sqlreg = "INSERT INTO movie_review.users (user_id,last_name, first_name, password) VALUES (?)";
+
+        db.query(sqlreg, [values], function(error, result) {
+            if (error) {
+                if (error.errno === 1062) {
+                    msg = "<strong style='color: red'>Duplicated Id</strong>";
+                }
+
+                respond.json(prepareMessage(msg, regSuccess));
+            } else {
+                console.log(JSON.stringify(result, null, 2));
+                if (result["insertId"] > 0) {
+                    regSuccess = true;
+                    msg = "<strong style='color: limegreen'>It's a success! Hang tight!</strong>";
+                    console.log(regSuccess);
+                } else {
+                    msg = '<strong>Oh No!</strong> Some error have occured!'
+                    console.log("Error Occured");
+                }
+
+                respond.json(prepareMessage(msg, regSuccess));
             }
         });
     }
@@ -63,10 +99,13 @@ class userDB {
     }
 
 
+
+
+
 }
 
-function prepareMessage(msg, success) {
-    var obj = { "message": msg, "success": success };
+function prepareMessage(msg, success, regSuccess) {
+    var obj = { "message": msg, "success": success, "regSuccess": regSuccess };
     return obj;
 }
 
