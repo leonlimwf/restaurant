@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="asset/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="asset/favicon.ico" type="image/x-icon" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/fdc798ee43.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="styles/home.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <title>Table Hopper</title>
+</head>
+
+<body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://kit.fontawesome.com/fdc798ee43.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+    </script>
+</body>
+
+<script>
+    function getCookie() {
+        value_or_null = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
+        console.log("Logged in as", value_or_null)
+        if (value_or_null == "") {
+            document.getElementsByClassName('nav')[0].style.visibility = "hidden";
+            document.getElementsByClassName('navbar-toggler')[0].style.visibility = "hidden";
+        }
+    }
+</script>
+
+<body onload="getCookie()">
+    <div class="background">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand tablehopper ml-2" href="#" style="color: #006AFF;">Table Hopper</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg" style="color: white;">
+                    <path fill-rule="evenodd"
+                        d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                </svg>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="nav">
+                    <!-- <li class="nav-item active">
+                        <a class="nav-link">About Us<span
+                                class="sr-only">(current)</span></a>
+                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html" style="background-color: #006AFF;border-radius: 5px;">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <section class="home container" style="background-color: transparent;margin-top: 12%">
+            <div class="row">
+                <center>
+                    <h2 class="col-sm-9 tablehopper-h2-about">The <span style="color: #006AFF;"><u>finest</u></span> restaurants are on Table Hopper
+                    </h2>
+
+                    <input class="col-sm-9 searchbar" type="search" maxlength="70" placeholder=" Try 'Uncle Leong Restaurant' ">
+                </center>
+
+            </div>
+
+        </section>
+    </div>
+
+</body>
+<div class="categories">
+    <center>
+        <div class="categories-text">
+            <h2 class="view-categories-text">View our list of curated categories</h2>
+            <h3 class="view-categories-subtext">Get the flexibility you need, and the food you crave for</h3>
+        </div>
+
+        <div class="categories-selection">
+            <div class="categories-selection-row">
+                <div class="categories-selection-column" style="background-color:#aaa;">
+                    <h2>Column 1</h2>
+                    <p>Some text..</p>
+                </div>
+                <div class="categories-selection-column" style="background-color:#bbb;">
+                    <h2>Column 2</h2>
+                    <p>Some text..</p>
+                </div>
+                <div class="categories-selection-column" style="background-color:#ccc;">
+                    <h2>Column 3</h2>
+                    <p>Some text..</p>
+                </div>
+                <div class="categories-selection-column" style="background-color:#ddd;">
+                    <h2>Column 4</h2>
+                    <p>Some text..</p>
+                </div>
+            </div>
+        </div>
+    </center>
+
+
+
+</div>
+
+<footer class="site-footer ">
+    <div class="container ">
+        <div class="row ">
+            <div class="col-sm-12 col-md-6 ">
+
+                <h6><i class="fas fa-info-circle " style="font-size: 17px;color: white; "></i> About</h6>
+                <p class="text-justify " style="color: white; ">Table Hopper is a website founded by a Student in Temasek Polytechnic while he was on his break. He was disappointed that Yelp and other websites did not helped much when he was finding a restaurant in Singapore, as the design was either
+                    too compact or held too little info. Thus, he built a website that allows other to use and also find out more about the restaurant that they want to visit.</p>
+            </div>
+
+            <div class="col-xs-6 col-md-3 ">
+                <h6><i class="fas fa-bookmark " style="font-size: 17px;color: white; "></i> Categories</h6>
+                <ul class="footer-links ">
+                    <li><a href="http://scanfcode.com/category/c-language/ ">Cheap and Good Food</a></li>
+                    <li><a href="http://scanfcode.com/category/front-end-development/ ">Fancy Dining</a></li>
+                    <li><a href="http://scanfcode.com/category/back-end-development/ ">Family-Friendly</a></li>
+                    <li><a href="http://scanfcode.com/category/java-programming-language/ ">Barbeque</a></li>
+                    <li><a href="http://scanfcode.com/category/android/ ">Steamboat</a></li>
+                    <li><a href="http://scanfcode.com/category/templates/ ">Others</a></li>
+                </ul>
+            </div>
+
+            <div class="col-xs-6 col-md-3 ">
+                <h6><i class="fas fa-link " style="font-size: 17px;color: white; "></i> Quick Links</h6>
+                <ul class="footer-links ">
+                    <li><a href="http://scanfcode.com/about/ ">About Us</a></li>
+                    <li><a href="http://scanfcode.com/contact/ ">Contact Us</a></li>
+                    <li><a href="http://scanfcode.com/contribute-at-scanfcode/ ">Search</a></li>
+                    <li><a href="http://scanfcode.com/sitemap/ ">Sitemap</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="container ">
+        <div class="row ">
+            <div class="col-md-8 col-sm-6 col-xs-12 ">
+                <p class="copyright-text ">Copyright &copy; 2020 All Rights Reserved by
+                    <a href="# ">Leo Lim</a>.
+                </p>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                <ul class="social-icons ">
+                    <li><a class="facebook " href="# "><i class="fa fa-facebook "></i></a></li>
+                    <li><a class="twitter " href="# "><i class="fa fa-twitter "></i></a></li>
+                    <li><a class="dribbble " href="# "><i class="fa fa-dribbble "></i></a></li>
+                    <li><a class="linkedin " href="# "><i class="fa fa-linkedin "></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+
+</html>

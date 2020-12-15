@@ -1,5 +1,6 @@
 "use strict";
 const { stat } = require('fs');
+var validator = require("email-validator");
 var db = require('../lib/db-connection');
 const User = require('./User');
 
@@ -11,26 +12,29 @@ class userDB {
         var msg = "";
         var success = false;
 
-        var sql = "SELECT password FROM users WHERE user_id = ?";
+        var sql = "SELECT user_password FROM restaurant.user where user_userId = ?"
 
         db.query(sql, [userid], function(error, result) {
             if (error) {
                 throw error;
             } else {
-                console.log(JSON.stringify(result, null, 2));
                 if (result.length > 0) {
-                    if (password == result[0].password) { //result[0].password comes from db
-                        console.log(typeof result)
-                        success = !false;
+                    if (password == result[0].user_password) { //result[0].password comes from db
+                        success = true;
                         msg = "<strong style='color: limegreen'>It's a success! Hang tight!</strong>";
+                        respond.status(200)
                         console.log(success);
 
                     } else {
                         msg = '<strong>Oh No!</strong> Incorrect password, try again?'
+                        respond.status(401)
+                        success = false;
                         console.log("Wrong password");
                     }
                 } else {
                     msg = '<strong>Oh No!</strong> We are unable to find your account!'
+                    respond.status(401)
+                    success = false;
                     console.log("Wrong credentials");
                 }
                 respond.json(prepareMessage(msg, success));
@@ -39,64 +43,92 @@ class userDB {
     }
 
     getRegistrationCredentials(request, respond) {
+        var d = new Date();
+        var date = d.getUTCDate();
+        var month = d.getUTCMonth() + 1; // Since getUTCMonth() returns month from 0-11 not 1-12
+        var year = d.getUTCFullYear();
+
         var userIdInput = request.body.userIdInput;
         var passwordInput = request.body.passwordInput;
         var firstNameInput = request.body.firstNameInput;
         var lastNameInput = request.body.lastNameInput;
+        var genderInput = request.body.genderInput;
+        var addressInput = request.body.addressInput;
+        var phoneNumInput = request.body.phoneNumInput;
+        var emailInput = request.body.emailInput;
+        var dateStr = year + "-" + month + "-" + date;
         var msg = "";
         var regSuccess = false;
 
-        var values = [userIdInput, lastNameInput, firstNameInput, passwordInput]
-        var sqlreg = "INSERT INTO movie_review.users (user_id,last_name, first_name, password) VALUES (?)";
+        var emailValid = validator.validate(emailInput)
 
-        db.query(sqlreg, [values], function(error, result) {
-            if (error) {
-                if (error.errno === 1062) {
-                    msg = "<strong style='color: red'>Duplicated Id</strong>";
-                }
-
-                respond.json(prepareMessage(msg, regSuccess));
-            } else {
-                console.log(JSON.stringify(result, null, 2));
-                if (result["insertId"] > 0) {
-                    regSuccess = true;
-                    msg = "<strong style='color: limegreen'>It's a success! Hang tight!</strong>";
-                    console.log(regSuccess);
+        if (emailValid == true) {
+            console.log(`Email valid, Input Received was ${emailInput}`)
+            var values = [userIdInput, passwordInput, firstNameInput, lastNameInput, genderInput, addressInput, phoneNumInput, emailInput, dateStr]
+            var sqlreg = "INSERT INTO restaurant.user (user_userId,user_password, user_firstName, user_lastName, user_gender, user_address, user_mobileNum, user_email, user_joinDate) VALUES (?)";
+            db.query(sqlreg, [values], function(error, result) {
+                if (error) {
+                    let errorMessage = error.sqlMessage.split(" ")
+                    let errorOccur = errorMessage[2]
+                    if (error.errno === 1062) {
+                        respond.status(403)
+                        msg = "<strong style='color: red; font-family='prodmed''>" + errorOccur + " has already been taken, please try another one.</strong>";
+                    }
+                    respond.json(prepareMessage(msg, regSuccess));
                 } else {
-                    msg = '<strong>Oh No!</strong> Some error have occured!'
-                    console.log("Error Occured");
+                    if (result["insertId"] > 0) {
+                        regSuccess = true;
+                        msg = "<strong style='color: limegreen'>It's a success! Hang tight!</strong>";
+                        console.log(regSuccess);
+                    } else {
+                        msg = '<strong>Oh No!</strong> Some error have occured!'
+                        respond.status(403)
+                        console.log("Error Occured");
+                    }
+
+                    respond.json(prepareMessage(msg, regSuccess));
                 }
+            });
+        } else {
+            msg = "<strong style='color: red; font-family: prodmed'>Invalid email detected</strong>";
+            console.log(`Email Invalid, Input Received was ${emailInput}`)
+            respond.json(prepareMessage(msg))
+        }
 
-                respond.json(prepareMessage(msg, regSuccess));
-            }
-        });
     }
 
-    getAllUsers(request, respond) {
-        var sql = "SELECT * FROM movie_review.users";
-        db.query(sql, function(error, result) {
-            if (error) {
-                throw error;
-            } else {
-                respond.json(result);
-            }
-        });
-    }
+    // getAllUsers(request, respond) {
+    //     var sql = "SELECT * FROM restaurant.user";
+    //     db.query(sql, function(error, result) {
+    //         if (error) {
+    //             throw error;
+    //         } else {
+    //             function prepareMessageJson() {
+    //                 var obj = result[1].user_password
+    //                 var x = result[1].user_userId
+    //                 var lmao = { password: obj, userid: x }
+    //                 console.log(typeof)
+    //                 respond.json(lmao)
+    //             }
+    //             prepareMessageJson()
+    //         }
+    //     });
+    // }
 
-    updateUserFirstName(request, respond) {
+    // updateUserFirstName(request, respond) {
 
-        var userObject = new User(request.params.userid, request.body.firstname);
+    //     var userObject = new User(request.params.userid, request.body.firstname);
 
-        var sql = "UPDATE movie_review.users SET first_name = ? WHERE user_id = ?";
-        var values = [userObject.getFirstName(), userObject.getUserId()];
-        db.query(sql, values, function(error, result) {
-            if (error) {
-                throw error;
-            } else {
-                respond.json(result);
-            }
-        });
-    }
+    //     var sql = "UPDATE movie_review.users SET first_name = ? WHERE user_id = ?";
+    //     var values = [userObject.getFirstName(), userObject.getUserId()];
+    //     db.query(sql, values, function(error, result) {
+    //         if (error) {
+    //             throw error;
+    //         } else {
+    //             respond.json(result);
+    //         }
+    //     });
+    // }
 
 
 

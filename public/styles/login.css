@@ -86,7 +86,7 @@ html {
 
 .login-form {
     width: 30%;
-    height: 90%;
+    height: 85%;
     margin-left: 35%;
     border-radius: 25px;
     background-color: white;
@@ -102,8 +102,8 @@ html {
     font-size: 15px;
     font-family: prodmed;
     width: 70%;
-    height: 44px;
-    margin-bottom: 20px;
+    height: 3em;
+    margin-bottom: 1.5em;
     border-radius: 6px;
     border-color: #0069ff;
     border-style: solid;
@@ -120,7 +120,7 @@ html {
     font-size: 15px;
     font-family: prodmed;
     width: 70%;
-    height: 44px;
+    height: 3em;
     margin-bottom: 2em;
     border-radius: 6px;
     border-color: #0069ff;
@@ -157,7 +157,7 @@ html {
 .forgot-password {
     color: #0069ff;
     font-family: prodbold;
-    padding-bottom: 15px;
+    padding-bottom: 5em;
     font-size: 16px;
 }
 
