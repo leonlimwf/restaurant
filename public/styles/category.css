@@ -1,0 +1,170 @@
+@font-face {
+    font-family: kolle;
+    src: url('../font/kolle.ttf')
+}
+
+@font-face {
+    font-family: kollebold;
+    src: url('../font/kollebold.ttf')
+}
+
+@font-face {
+    font-family: prodmed;
+    src: url('../font/prodmedium.ttf')
+}
+
+@font-face {
+    font-family: prodbold;
+    src: url('../font/prodbold.ttf')
+}
+
+@font-face {
+    font-family: prod;
+    src: url('../font/prod.ttf')
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body,
+html {
+    margin: 0;
+    height: 100%;
+}
+
+.background {
+    background-image: url('../asset/wallpaper.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.tablehopper {
+    letter-spacing: 1px;
+    font-size: 30px;
+    font-family: prodbold;
+}
+
+.nav-item a {
+    background-color: transparent;
+    font-family: prodbold;
+    letter-spacing: 1px;
+    color: white;
+    margin: 10px;
+    position: relative;
+    padding: 10px 20px;
+    overflow: hidden;
+}
+
+.nav-item a:hover {
+    color: #0069ff;
+    cursor: pointer;
+    transition: 0.7s;
+}
+
+.nav-item a::after {
+    background-color: white;
+    content: "";
+    width: 0;
+    height: 3px;
+    left: 0;
+    bottom: 0;
+    transition: width 0.35s ease 0.1s;
+    position: absolute;
+}
+
+.nav-item a:hover::after {
+    width: 100%;
+}
+
+.restaurant {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    min-width: 50vw;
+    height: 18vh;
+    left: 25%;
+    background-color: transparent;
+    display: flex;
+}
+
+#restaurantDisplayPhoto {
+    height: 18vh;
+    width: 18vh;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.restaurant-info {
+    float: right;
+    max-height: 20vh;
+    min-width: 80%;
+    background-color: transparent;
+}
+
+#restaurantName {
+    font-size: 16px;
+    font-family: prodbold;
+    margin: 10px 0px 0px 10px;
+}
+
+#restaurantRegion {
+    margin-left: 10px;
+    font-size: 13px;
+    font-family: prodmed;
+}
+
+#restaurantPricing {
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 13px;
+    letter-spacing: 3px;
+    font-family: prodmed;
+}
+
+#restaurantStar {
+    margin: 5px 0px 5px 5px;
+    font-size: 16px;
+}
+
+.checked {
+    color: #1a73e8;
+}
+
+#restaurantAddress {
+    font-size: 16px;
+    font-family: prodmed;
+    margin-left: 10px;
+    margin-top: 4.5em;
+}
+
+.stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+}
+
+.stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: #0069ff;
+}
+
+@media (max-width:991px) {
+    .restaurant {
+        left: 0%;
+    }
+}
+
+@media (max-width:767px) {}

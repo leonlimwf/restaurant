@@ -34,7 +34,7 @@
     function getCookie() {
         value_or_null = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
         console.log("Logged in as", value_or_null)
-        if (value_or_null == "") {
+        if (value_or_null != "") { //!= to see is user is logged in, if logged in, hide the login and signup button
             document.getElementsByClassName('nav')[0].style.visibility = "hidden";
             document.getElementsByClassName('navbar-toggler')[0].style.visibility = "hidden";
         }
@@ -73,7 +73,7 @@
         <section class="home container" style="background-color: transparent;margin-top: 12%">
             <div class="row">
                 <center>
-                    <h2 class="col-sm-9 tablehopper-h2-about">The <span style="color: #006AFF;"><u>finest</u></span> restaurants are on Table Hopper
+                    <h2 class="col-sm-9 tablehopper-h2-about">The finest restaurants are on Table Hopper
                     </h2>
 
                     <input class="col-sm-9 searchbar" type="search" maxlength="70" placeholder=" Try 'Uncle Leong Restaurant' ">
@@ -92,25 +92,59 @@
             <h3 class="view-categories-subtext">Get the flexibility you need, and the food you crave for</h3>
         </div>
 
-        <div class="categories-selection">
-            <div class="categories-selection-row">
-                <div class="categories-selection-column" style="background-color:#aaa;">
-                    <h2>Column 1</h2>
-                    <p>Some text..</p>
-                </div>
-                <div class="categories-selection-column" style="background-color:#bbb;">
-                    <h2>Column 2</h2>
-                    <p>Some text..</p>
-                </div>
-                <div class="categories-selection-column" style="background-color:#ccc;">
-                    <h2>Column 3</h2>
-                    <p>Some text..</p>
-                </div>
-                <div class="categories-selection-column" style="background-color:#ddd;">
-                    <h2>Column 4</h2>
-                    <p>Some text..</p>
-                </div>
+        <div id="container">
+            <div>
+                <a href="restaurants/category/steamboat">
+                    <img src="asset/svg/steamboat.svg" style="height: 14vh;margin-top: 10px;">
+                    <p id="categories-card-descriptor">Steamboat</p>
+                </a>
             </div>
+            <div>
+                <a href="restaurants/category/western">
+                    <img src="asset/svg/westerndining.svg" style="height: 10vh;margin-top: 45px;">
+                    <p id="categories-card-descriptor">Western Dining</p>
+                </a>
+            </div>
+            <div>
+                <a href="restaurants/category/chinese">
+                    <img src="asset/svg/chef.png" style="height: 13vh;margin-top: 15px;">
+                    <p id="categories-card-descriptor">Chinese Dining</p>
+                </a>
+            </div>
+            <div>
+                <a href="restaurants/category/barbeque">
+                    <img src="asset/svg/barbeque.svg" style="height: 14vh;margin-top: 10px;">
+                    <p id="categories-card-descriptor">Barbeque</p>
+                </a>
+            </div>
+            <span></span>
+        </div>
+        <div id="container">
+            <div>
+                <a href="restaurants/category/deserts">
+                    <img src="asset/svg/desert.svg" style="height: 14vh;margin-top: 10px;">
+                    <p id="categories-card-descriptor">Deserts</p>
+                </a>
+            </div>
+            <div>
+                <a href="restaurants/category/finedining">
+                    <img src="asset/svg/finedining.svg" style="height: 14vh;margin-top: 10px;">
+                    <p id="categories-card-descriptor">Fine Dining</p>
+                </a>
+            </div>
+            <div>
+                <a href="restaurants/category/buffet">
+                    <img src="asset/svg/buffet.svg" style="height: 10vh;margin-top: 45px;">
+                    <p id="categories-card-descriptor">Buffet</p>
+                </a>
+            </div>
+            <div>
+                <a href="restaurants/category/others">
+                    <img src="asset/svg/others.png" style="margin-top: 40%">
+                    <p id="categories-card-descriptor">Others</p>
+                </a>
+            </div>
+            <span></span>
         </div>
     </center>
 

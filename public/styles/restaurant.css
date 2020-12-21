@@ -1,0 +1,256 @@
+@font-face {
+    font-family: kolle;
+    src: url('../font/kolle.ttf')
+}
+
+@font-face {
+    font-family: kollebold;
+    src: url('../font/kollebold.ttf')
+}
+
+@font-face {
+    font-family: prodmed;
+    src: url('../font/prodmedium.ttf')
+}
+
+@font-face {
+    font-family: prodbold;
+    src: url('../font/prodbold.ttf')
+}
+
+@font-face {
+    font-family: prod;
+    src: url('../font/prod.ttf')
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body,
+html {
+    margin: 0;
+    height: 100%;
+}
+
+.tablehopper {
+    letter-spacing: 1px;
+    font-size: 30px;
+    font-family: prodbold;
+}
+
+.nav-item a {
+    background-color: transparent;
+    font-family: prodbold;
+    letter-spacing: 1px;
+    color: white;
+    margin: 10px;
+    position: relative;
+    padding: 10px 20px;
+    overflow: hidden;
+}
+
+.nav-item a:hover {
+    color: #0069ff;
+    cursor: pointer;
+    transition: 0.7s;
+}
+
+.nav-item a::after {
+    background-color: white;
+    content: "";
+    width: 0;
+    height: 3px;
+    left: 0;
+    bottom: 0;
+    transition: width 0.35s ease 0.1s;
+    position: absolute;
+}
+
+.nav-item a:hover::after {
+    width: 100%;
+}
+
+.restaurant {
+    margin-top: 5em;
+    margin-left: 20em;
+}
+
+#restaurantName {
+    font-size: 35px;
+    font-family: prodbold;
+}
+
+#restaurantCategory {
+    color: #757575;
+    font-family: prodbold;
+    font-size: 16px
+}
+
+#restaurantAddress {
+    font-size: 18px;
+    font-family: prodbold;
+    margin-top: 2em;
+}
+
+.tab {
+    margin-top: 2em;
+    background-color: white;
+    overflow: hidden;
+}
+
+.tablinks {
+    background-color: white;
+    border-color: transparent;
+    font-family: prodmed;
+    letter-spacing: 0.5px;
+    border: none;
+    outline: 0 !important;
+}
+
+.tablinks:hover {
+    color: #0069ff;
+}
+
+.tablinks:focus {
+    color: #0069ff;
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+    animation: fadeEffect 1s;
+    /* Fading effect takes 1 second */
+}
+
+#restaurant-about-text {
+    font-family: prodbold;
+    font-size: 18px;
+    margin-top: 1.5em;
+}
+
+#restaurantAbout {
+    font-size: 16px;
+    font-family: prodbold;
+    letter-spacing: 0.3px;
+    margin-top: 1em;
+    max-width: 80%;
+    background-color: transparent;
+    margin-bottom: 5vh;
+}
+
+#restaurantImage {
+    width: 80%;
+    border-radius: 5px;
+    border: 2px solid #575757
+}
+
+#restaurantRating {
+    font-size: 16px;
+    font-family: prodmed;
+}
+
+#restaurantFeatures {
+    font-size: 16px;
+    font-family: prodmed;
+    margin-bottom: 5vh;
+}
+
+.checked {
+    color: green;
+}
+
+#contact-phone,
+#contact-email,
+#contact-socialMedia {
+    margin-top: 0px;
+}
+
+#addReviewBox {
+    min-width: 30vw;
+    height: 10vh;
+    margin-top: 1.5em;
+    margin-left: -10px;
+    font-family: prodmed;
+    font-size: 16px;
+    text-align: left;
+    border: 2px solid #707070;
+    border-radius: 10px;
+}
+
+#addReviewButton {
+    border: 0;
+    outline: 0;
+    background-color: white;
+}
+
+.fa-plus-circle {
+    font-size: 25px;
+    color: #006AFF;
+}
+
+.reviewSection {
+    margin-top: 4em;
+    margin-left: -10px;
+    background-color: white;
+}
+
+#userImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 60px;
+}
+
+#userName {
+    font-family: prodmed;
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+#commentDate {
+    margin-top: 1em;
+    font-family: prodmed;
+    font-size: 14px;
+}
+
+#commentRating {
+    font-family: prodmed;
+}
+
+#commentSectionText {
+    font-family: prod;
+    max-width: 40vw;
+}
+
+
+/* Go from zero to full opacity */
+
+@keyframes fadeEffect {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width:991px) {
+    .restaurant {
+        margin-left: 0%;
+    }
+    #restaurant-about-text {
+        width: 100%;
+    }
+    #addReviewBox {
+        min-width: 80vw;
+    }
+    #commentSectionText {
+        max-width: 90vw;
+    }
+    #restaurantImage {
+        width: 100%;
+    }
+}
+
+@media (max-width:767px) {}

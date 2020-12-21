@@ -1,0 +1,134 @@
+head
+  // Required meta tags
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  link(rel='icon' href='asset/favicon.ico' type='image/x-icon')
+  link(rel='shortcut icon' href='asset/favicon.ico' type='image/x-icon')
+  // Bootstrap CSS
+  link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' integrity='sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z' crossorigin='anonymous')
+  script(src='https://kit.fontawesome.com/fdc798ee43.js' crossorigin='anonymous')
+  link(rel='stylesheet' type='text/css' href='/styles/restaurant.css')
+  link(href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap' rel='stylesheet')
+  link(href='https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap' rel='stylesheet')
+  title Table Hopper
+nav.navbar.navbar-expand-lg.navbar-light
+  a.navbar-brand.tablehopper.ml-2(href='#' style='color: #006AFF;') Table Hopper
+  button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+    svg.bi.bi-list(width='1em' height='1em' viewbox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg' style='color: white;')
+      path(fill-rule='evenodd' d='M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z')
+  #navbarSupportedContent.collapse.navbar-collapse.justify-content-end
+    ul.nav
+      //
+        <li class="nav-item active">
+        <a class="nav-link">About Us<span
+        class="sr-only">(current)</span></a>
+        </li>
+      li.nav-item
+        a.nav-link(href='login.html') Log In
+      li.nav-item
+        a.nav-link(href='register.html' style='background-color: #006AFF;border-radius: 5px;') Sign Up
+
+each restaurant in array
+  .col-sm-6.restaurant
+    h3#restaurantName= restaurant.restaurantName
+    h5#restaurantCategory= restaurant.restaurantCategory
+    h5#restaurantAddress= restaurant.restaurantAddress
+    img#restaurantImage(src= '/asset/restaurantGallery/'+restaurant.restaurantGallery)
+    .tab
+      button#defaultOpen.tablinks(onclick="openTab(event, 'restaurant-about')") Overview
+      button.tablinks(onclick="openTab(event, 'restaurant-review')") Review
+    #restaurant-about.tabcontent
+      h5#restaurant-about-text
+        i.fas.fa-info-circle(style='font-size: 18px;margin-right: 5px;')
+        |  About the restaurant
+      h5#restaurantAbout= restaurant.restaurantAbout
+      .review-features
+        h5#restaurant-about-text
+          i.fas.fa-question-circle(style='font-size: 18px;margin-right: 5px;')
+          |  Features and Reviews
+        #rating
+          span.fa.fa-star
+          span.fa.fa-star
+          span.fa.fa-star
+          span.fa.fa-star
+          span.fa.fa-star
+        h5#restaurantRating= restaurant.restaurantRating
+        h5#restaurantFeatures= restaurant.features
+      .opening-Hour
+        h5#restaurant-about-text
+          i.fas.fa-clock(style='font-size: 18px;margin-right: 5px;')
+          |  Opening Hours
+        p(style='font-family: prodmed;')= restaurant.restaurantOpeningHours
+      .contact
+        h5#restaurant-about-text
+          i.fas.fa-mobile-alt(style='font-size: 18px;margin-right: 5px;')
+          |  Contact Us
+        ul
+          li#contact-phone(style='font-family: prodmed;margin-top: 5px;')= restaurant.restaurantPhone
+          li#contact-email(style='font-family: prodmed;') lmao@mail.com
+          li#contact-socialMedia(style='font-family: prodmed;') @mafiafh
+      .website
+        h5#restaurant-about-text
+          i.fas.fa-laptop(style='font-size: 18px;margin-right: 5px;')
+          |  Find Us at
+        a#website-link(href= restaurant.restaurantLink style='font-family: prodmed;margin-top: 5px;')= restaurant.restaurantLink
+      .mapouter(style='margin-top: 20px;')
+        .gmap_canvas
+          iframe#gmap_canvas(width='600' height='400' src='https://maps.google.com/maps?q='+restaurant.restaurantAddress.slice(-6)+ 'e&t=k&z=17&ie=UTF8&iwloc=&output=embed' frameborder='0' scrolling='no' marginheight='0' marginwidth='0')
+      style.
+        .mapouter {
+        position: relative;
+        text-align: right;
+        height: 500px;
+        width: 600px;
+        }
+        .gmap_canvas {
+        overflow: hidden;
+        background: none!important;
+        height: 500px;
+        width: 600px;
+        }
+    #restaurant-review.tabcontent
+      .addReview
+        input#addReviewBox(type='text' placeholder='  Write your review here')
+        button#addReviewButton
+          i.fas.fa-plus-circle
+      .reviewSection
+        img#userImage(src='asset/wallpaper.png')
+        span#userName Username
+        #commentSection
+          p#commentDate
+            | Written at: 
+            span#writtenAtDate 23 June 2003
+          p#commentRating 3 Star
+          p#commentSectionText
+            | Lorem ipsum this is my review omg omgLorem ipsum this is my review omg omgLorem ipsum this is my review omg omg
+      .reviewSection
+        img#userImage(src='asset/wallpaper.png')
+        span#userName Username
+        #commentSection
+          p#commentDate
+            | Written at: 
+            span#writtenAtDate 23 June 2003
+          p#commentSectionText
+            | Lorem ipsum this is my review omg omgLorem ipsum this is my review omg omgLorem ipsum this is my review omg omg
+script.
+  document.getElementById("defaultOpen").click();
+  function openTab(evt, tabname) {
+  // Declare all variables
+  // Get all elements with class="tabcontent" and hide them
+  var tabcontent = document.getElementsByClassName("tabcontent");
+  console.log(tabcontent)
+  for (i = 0; i < tabcontent.length; i++) {
+  tabcontent[i].style.display = "none";
+  }
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  console.log(tablinks)
+  for (i = 0; i < tablinks.length; i++) {
+  tablinks[i].className = tablinks[i].className.replace("active", "");
+  }
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabname).style.display = "block";
+  evt.currentTarget.className += "active";
+  }

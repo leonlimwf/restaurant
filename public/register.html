@@ -180,6 +180,7 @@
 
         let canContinue = true
         for (const [key, value] of Object.entries(registrationCredentials)) {
+            console.log(value)
             if (value.length < 1) {
                 canContinue = false;
             }

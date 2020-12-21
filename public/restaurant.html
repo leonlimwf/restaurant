@@ -1,0 +1,186 @@
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="asset/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="asset/favicon.ico" type="image/x-icon" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/fdc798ee43.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="styles/restaurant.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <title>Table Hopper</title>
+</head>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand tablehopper ml-2" href="#" style="color: #006AFF;">Table Hopper</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg" style="color: white;">
+                    <path fill-rule="evenodd"
+                        d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                </svg>
+            </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="nav">
+                <!-- <li class="nav-item active">
+                        <a class="nav-link">About Us<span
+                                class="sr-only">(current)</span></a>
+                    </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="register.html" style="background-color: #006AFF;border-radius: 5px;">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="col-sm-6 restaurant">
+        <h3 id="restaurantName">Restaurant Name here</h3>
+        <h5 id="restaurantCategory">Category here</h5>
+        <h5 id="restaurantAddress">Address here</h5>
+
+        <img src="asset/wallpaper.png" id="restaurantImage">
+
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'restaurant-about')">Overview</button>
+            <button class="tablinks" onclick="openTab(event, 'restaurant-review')" id="defaultOpen">Review</button>
+        </div>
+        <div id="restaurant-about" class="tabcontent">
+            <h5 id="restaurant-about-text"><i class="fas fa-info-circle" style="font-size: 18px;margin-right: 5px;"></i> About the restaurant</h5>
+            <h5 id="restaurantAbout">Lorem ipsum here would be the aboutLorem ipsum here would be the aboutLorem ipsum here would be the aboutLorem ipsum here would be the about</h5>
+
+            <div class="review-features">
+                <h5 id="restaurant-about-text"><i class="fas fa-question-circle" style="font-size: 18px;margin-right: 5px;"></i> Features and Reviews</h5>
+                <div id="rating">
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+                <h5 id="restaurantRating">4/5 Star</h5>
+                <h5 id="restaurantFeatures">Michellin Star</h5>
+            </div>
+
+            <div class="opening-Hour">
+                <h5 id="restaurant-about-text"><i class="fas fa-clock" style="font-size: 18px;margin-right: 5px;"></i> Opening Hours</h5>
+                <p style="font-family: prodmed;">Monday : 0700 - 2300</p>
+            </div>
+
+            <div class="contact">
+                <h5 id="restaurant-about-text"><i class="fas fa-mobile-alt" style="font-size: 18px;margin-right: 5px;"></i> Contact Us</h5>
+                <ul>
+                    <li id="contact-phone" style="font-family: prodmed;margin-top: 5px;">9372 4823</li>
+                    <li id="contact-email" style="font-family: prodmed;">lmao@mail.com</li>
+                    <li id="contact-socialMedia" style="font-family: prodmed;">@mafiafh</li>
+                </ul>
+            </div>
+            <div class="website">
+                <h5 id="restaurant-about-text"><i class="fas fa-laptop" style="font-size: 18px;margin-right: 5px;"></i> Find Us at</h5>
+                <a href="https://www.google.com" id="website-link" style="font-family: prodmed;margin-top: 5px;">www.lmao.com</a>
+            </div>
+        </div>
+
+        <div id="restaurant-review" class="tabcontent">
+            <div class="addReview">
+                <input id="addReviewBox" type="text" placeholder="  Write your review here">
+                <button id="addReviewButton"><i class="fas fa-plus-circle"></i></button>
+            </div>
+
+            <div class="reviewSection">
+                <img id="userImage" src="asset/wallpaper.png">
+                <span id="userName">Username</span>
+
+                <div id='commentSection'>
+                    <p id="commentDate">Written at: <span id="writtenAtDate">23 June 2003</span></p>
+                    <p id="commentRating">3 Star</p>
+                    <p id="commentSectionText">Lorem ipsum this is my review omg omgLorem ipsum this is my review omg omgLorem ipsum this is my review omg omg</p>
+                </div>
+            </div>
+
+            <div class="reviewSection">
+                <img id="userImage" src="asset/wallpaper.png">
+                <span id="userName">Username</span>
+
+                <div id='commentSection'>
+                    <p id="commentDate">Written at: <span id="writtenAtDate">23 June 2003</span></p>
+                    <p id="commentSectionText">Lorem ipsum this is my review omg omgLorem ipsum this is my review omg omgLorem ipsum this is my review omg omg</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+
+<script>
+    document.getElementById("defaultOpen").click();
+
+    function openTab(evt, tabname) {
+        // Declare all variables
+
+        // Get all elements with class="tabcontent" and hide them
+        var tabcontent = document.getElementsByClassName("tabcontent");
+        console.log(tabcontent)
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        console.log(tablinks)
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace("active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(tabname).style.display = "block";
+        evt.currentTarget.className += "active";
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <script>
+    function getRes() {
+        var xmlHttpRequest = new XMLHttpRequest();
+
+        xmlHttpRequest.onreadystatechange = function() {
+            if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
+                var restaurantResponseText = xmlHttpRequest.responseText;
+                var restaurant = JSON.parse(restaurantResponseText)
+                console.log(typeof whatiwant)
+                document.getElementById("restaurantName").innerHTML = restaurant.restaurant_name
+                document.getElementById("restaurantCategory").innerHTML = restaurant.restaurant_category
+                document.getElementById("restaurantAddress").innerHTML = restaurant.restaurant_address
+            }
+        };
+        var resId = 300003;
+        var url = '/restaurants/id/' + resId
+        xmlHttpRequest.open('GET', url, true);
+        xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
+        xmlHttpRequest.send();
+    }
+</script> -->
+
+</html>

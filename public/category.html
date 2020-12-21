@@ -1,0 +1,124 @@
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="asset/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="asset/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="styles/category.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/fdc798ee43.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <title>Table Hopper</title>
+</head>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand tablehopper ml-2" href="index.html" style="color: #006AFF;">Table Hopper</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg" style="color: white;">
+                    <path fill-rule="evenodd"
+                        d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                </svg>
+            </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="nav">
+                <!-- <li class="nav-item active">
+                        <a class="nav-link">About Us<span
+                                class="sr-only">(current)</span></a>
+                    </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html" style="color: black;">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="register.html" style="background-color: #006AFF;border-radius: 5px;">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="col-sm-6 restaurant" style="margin-top: 5em;">
+        <div class="restaurant-displayPhoto">
+            <img src="asset/tablehopperlogo.png" id="restaurantDisplayPhoto">
+        </div>
+        <div class="restaurant-info">
+            <h5 id="restaurantName">Wutor Steakhouse</h5>
+            <div id="restaurantStar">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <h5 id="restaurantFeatures">Baby Friendly</h5>
+            <h5 id="restaurantAddress">123 Angsana Road</h5>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="col-sm-6 restaurant">
+        <div class="restaurant-displayPhoto">
+            <img src="asset/tablehopperlogo.png" id="restaurantDisplayPhoto">
+        </div>
+        <div class="restaurant-info">
+            <h5 id="restaurantName">Wutor Steakhouse</h5>
+            <div id="restaurantStar">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <h5 id="restaurantFeatures">Baby Friendly</h5>
+            <h5 id="restaurantAddress">123 Angsana Road</h5>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="col-sm-6 restaurant">
+        <div class="restaurant-displayPhoto">
+            <img src="asset/tablehopperlogo.png" id="restaurantDisplayPhoto">
+        </div>
+        <div class="restaurant-info">
+            <h5 id="restaurantName">Wutor Steakhouse</h5>
+            <div id="restaurantStar" class="hotel_a">
+                <div class="stars-outer">
+                    <div class="stars-inner"></div>
+                </div>
+            </div>
+            <h5 id="restaurantFeatures">Baby Friendly</h5>
+            <h5 id="restaurantAddress">123 Angsana Road</h5>
+        </div>
+    </div>
+</body>
+
+<script>
+    var ratings = {
+        hotel_a: 2.3,
+        hotel_b: 1
+    };
+    var starTotal = 5;
+    for (const rating in ratings) {
+        // 2
+        const starPercentage = (ratings[rating] / starTotal) * 100;
+        console.log(starPercentage)
+            // 3
+        const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+        // 4
+        console.log(starPercentageRounded)
+        document.querySelector(`.${rating} .stars-inner`).style.width = starPercentageRounded;
+    }
+</script>
+
+
+
+
+</html>

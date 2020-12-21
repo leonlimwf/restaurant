@@ -1,5 +1,4 @@
 "use strict";
-const { stat } = require('fs');
 var validator = require("email-validator");
 var db = require('../lib/db-connection');
 const User = require('./User');
@@ -62,7 +61,7 @@ class userDB {
 
         var emailValid = validator.validate(emailInput)
 
-        if (emailValid == true) {
+        if (emailValid) {
             console.log(`Email valid, Input Received was ${emailInput}`)
             var values = [userIdInput, passwordInput, firstNameInput, lastNameInput, genderInput, addressInput, phoneNumInput, emailInput, dateStr]
             var sqlreg = "INSERT INTO restaurant.user (user_userId,user_password, user_firstName, user_lastName, user_gender, user_address, user_mobileNum, user_email, user_joinDate) VALUES (?)";

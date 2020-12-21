@@ -35,7 +35,7 @@ html {
 
 .background {
     background-image: url('../asset/wallpaper.png');
-    min-height: 100%;
+    min-height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -105,7 +105,7 @@ html {
 }
 
 .categories {
-    background-color: grey;
+    background-color: whitesmoke;
     min-height: 100vh;
 }
 
@@ -129,23 +129,39 @@ html {
     margin-top: 10px;
 }
 
-.categories-selection-column {
-    float: left;
-    width: 25%;
-    padding: 10px;
-}
-
-.categories-selection {
+#container {
+    text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
     width: 80%;
 }
 
+#container>div {
+    width: 200px;
+    height: 200px;
+    margin-top: 10vh;
+    border-radius: 10px;
+    vertical-align: top;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    box-shadow: 3px 3px lightgrey;
+    background: white;
+    text-align: center;
+}
 
-/* Clear floats after the columns */
+#categories-card-descriptor {
+    margin-top: 20px;
+    font-family: prodbold;
+    color: #575757;
+    letter-spacing: 0.4px;
+}
 
-.categories-selection-row:after {
-    content: "";
-    display: table;
-    clear: both;
+span {
+    width: 100%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0
 }
 
 .site-footer {
@@ -308,7 +324,7 @@ html {
     .site-footer .social-icons {
         text-align: center
     }
-    .column {
+    .categories-selection-column {
         width: 100%;
         height: 10em;
     }

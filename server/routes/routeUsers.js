@@ -18,9 +18,13 @@ router.get('/login', function(req, res) {
     res.sendFile(path.join(__dirname + '../../../public/login.html'));
     console.log(__dirname)
 });
-router.post("/register", usersDBObject.getRegistrationCredentials);
-router.get('/register', function(req, res) {
-    res.sendFile(path.join(__dirname + '../../../public/register.html'));
-    console.log(__dirname)
-});
+
+router
+    .route("/register")
+    .post(usersDBObject.getRegistrationCredentials)
+    .get((req, res) => {
+        res.sendFile(path.join(__dirname + '../../../public/register.html'));
+    });
+
+
 module.exports = router;

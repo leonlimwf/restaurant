@@ -113,7 +113,7 @@
             style.visibility = "visible";
             document.getElementById("alert-box").innerHTML = response.message;
             setTimeout(function() {
-                if (request.status == 200 && response.success == true) {
+                if (request.status === 200 && response.success) {
                     var now = new Date();
                     var time = now.getTime();
                     time += 3600 * 1000;
