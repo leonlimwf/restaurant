@@ -76,7 +76,10 @@
                     <h2 class="col-sm-9 tablehopper-h2-about">The finest restaurants are on Table Hopper
                     </h2>
 
-                    <input class="col-sm-9 searchbar" type="search" maxlength="70" placeholder=" Try 'Uncle Leong Restaurant' ">
+
+                    <input class="col-sm-9 searchbar" id="searchBar" type="search" maxlength="70" placeholder="Try 'Uncle Leong Restaurant' ">
+                    <input type="submit" onclick="search()">
+
                 </center>
 
             </div>
@@ -208,6 +211,12 @@
 
 
 
-
+<script>
+    function search() {
+        var value = document.getElementById('searchBar').value
+        console.log(value)
+        window.location.href = "search.html?query=" + value
+    }
+</script>
 
 </html>
