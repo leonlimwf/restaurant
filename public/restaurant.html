@@ -17,7 +17,7 @@
 </head>
 
 
-<body>
+<body onload="loadRestaurantInfo()">
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand tablehopper ml-2" href="#" style="color: #006AFF;">Table Hopper</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,52 +44,84 @@
         </div>
     </nav>
     <div class="col-sm-6 restaurant">
-        <h3 id="restaurantName">Restaurant Name here</h3>
-        <h5 id="restaurantCategory">Category here</h5>
-        <h5 id="restaurantAddress">Address here</h5>
+
+    </div>
+
+
+</body>
+
+
+<script>
+    function loadRestaurantInfo() {
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log(urlParams)
+        const myParam = urlParams.get('id');
+        console.log(myParam)
+        var request = new XMLHttpRequest();
+        console.log(request)
+        request.open("GET", `restaurants/id/${myParam}`, true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.onload = function() {
+            response = JSON.parse(request.responseText);
+            let str = ""
+            for (var i = 0; i < response.length; i++) {
+                var time = response[i].restaurantOpeningHours.split(",")
+                console.log(time)
+                console.log(response[i].restaurantFeatures)
+                str += `
+        <h3 id="restaurantName">${response[i].restaurantName}</h3>
+        <h5 id="restaurantCategory">${response[i].restaurantCategory}</h5>
+        <h5 id="restaurantAddress"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>${response[i].restaurantAddress}</h5>
 
         <img src="asset/wallpaper.png" id="restaurantImage">
 
         <div class="tab">
-            <button class="tablinks" onclick="openTab(event, 'restaurant-about')">Overview</button>
-            <button class="tablinks" onclick="openTab(event, 'restaurant-review')" id="defaultOpen">Review</button>
+            <button class="tablinks" onclick="openTab(event, 'restaurant-about')" id="defaultOpen">Overview</button>
+            <button class="tablinks" onclick="openTab(event, 'restaurant-review')" >Review</button>
         </div>
         <div id="restaurant-about" class="tabcontent">
             <h5 id="restaurant-about-text"><i class="fas fa-info-circle" style="font-size: 18px;margin-right: 5px;"></i> About the restaurant</h5>
-            <h5 id="restaurantAbout">Lorem ipsum here would be the aboutLorem ipsum here would be the aboutLorem ipsum here would be the aboutLorem ipsum here would be the about</h5>
+            <div class="h_line"></div>
+            <h5 id="restaurantAbout">${response[i].restaurantAbout}</h5>
 
-            <div class="review-features">
-                <h5 id="restaurant-about-text"><i class="fas fa-question-circle" style="font-size: 18px;margin-right: 5px;"></i> Features and Reviews</h5>
-                <div id="rating">
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
+            <div class="review-features" style="margin-bottom: 5vh">
+                <h5 id="restaurant-about-text"><i class="fas fa-question-circle" style="font-size: 18px;margin-right: 5px;"></i> Features and Pricing</h5>
+                <div class="h_line"></div>
+                <div id="restaurantStar">
+                    <div class="stars-outer">
+                        <div class="stars-inner">${response[i].restaurantRating}</div>
+                    </div>
                 </div>
-                <h5 id="restaurantRating">4/5 Star</h5>
-                <h5 id="restaurantFeatures">Michellin Star</h5>
+                <h5 id="restaurantFeatures"><i class="fas fa-check-circle" style="color: limegreen"></i> ${response[i].restaurantFeatures[0]}</h5>
+                <h5 id="restaurantFeatures"><i class="fas fa-check-circle" style="color: limegreen"></i> ${response[i].restaurantFeatures[1]}</h5>
+                <h5 id="restaurantPricing"><i class="far fa-money-bill-alt" style="color: green"></i> ${response[i].restaurantPricing}</h5>
             </div>
 
-            <div class="opening-Hour">
+            <div class="opening-Hour" style="margin-bottom: 5vh">
                 <h5 id="restaurant-about-text"><i class="fas fa-clock" style="font-size: 18px;margin-right: 5px;"></i> Opening Hours</h5>
-                <p style="font-family: prodmed;">Monday : 0700 - 2300</p>
+                <div class="h_line"></div>
+                <p style="font-family: prodmed;">${response[i].restaurantOpeningHours}</p>
             </div>
 
-            <div class="contact">
+            <div class="contact" style="margin-bottom: 5vh">
                 <h5 id="restaurant-about-text"><i class="fas fa-mobile-alt" style="font-size: 18px;margin-right: 5px;"></i> Contact Us</h5>
+                <div class="h_line"></div>
                 <ul>
-                    <li id="contact-phone" style="font-family: prodmed;margin-top: 5px;">9372 4823</li>
-                    <li id="contact-email" style="font-family: prodmed;">lmao@mail.com</li>
-                    <li id="contact-socialMedia" style="font-family: prodmed;">@mafiafh</li>
+                    <li id="contact-phone" style="font-family: prodmed;margin-top: 5px;">${response[i].restaurantPhone}</li>
+                    <li id="contact-email" style="font-family: prodmed;">${response[i].restaurantEmail}</li>
+                    <li id="contact-socialMedia" style="font-family: prodmed;">${response[i].restaurantSocialMedia}</li>
                 </ul>
             </div>
-            <div class="website">
+            <div class="website" style="margin-bottom: 5vh">
                 <h5 id="restaurant-about-text"><i class="fas fa-laptop" style="font-size: 18px;margin-right: 5px;"></i> Find Us at</h5>
-                <a href="https://www.google.com" id="website-link" style="font-family: prodmed;margin-top: 5px;">www.lmao.com</a>
+                <div class="h_line"></div>
+                <a href="https://www.google.com" id="website-link" style="font-family: prodmed;margin-top: 5px;">${response[i].restaurantLink}</a>
             </div>
         </div>
 
+
+
+        
         <div id="restaurant-review" class="tabcontent">
             <div class="addReview">
                 <input id="addReviewBox" type="text" placeholder="  Write your review here">
@@ -117,14 +149,24 @@
                 </div>
             </div>
         </div>
-    </div>
+        `
+            }
+            document.getElementsByClassName('col-sm-6 restaurant')[0].innerHTML = str
+            document.getElementById("defaultOpen").click();
+            displayStar()
+        }
+        request.send()
+    }
 
-
-</body>
-
-
-<script>
-    document.getElementById("defaultOpen").click();
+    function displayStar() {
+        var starCount = document.getElementsByClassName('stars-inner')
+        const maxStar = 5
+        for (let i = 0; i < starCount.length; i++) {
+            var star = parseInt(starCount[i].innerHTML)
+            var starUnchecked = maxStar - star
+            starCount[i].innerHTML = `<span class="fa fa-star"></span>`.repeat(star) + `<span class="fa fa-star" style="opacity: 50%"></span>`.repeat(starUnchecked)
+        }
+    }
 
     function openTab(evt, tabname) {
         // Declare all variables

@@ -10,47 +10,85 @@ class RestaurantDB {
             if (error) {
                 console.log(error)
             } else {
+                var sql2 =
+                    `SELECT restaurant.restaurant_contact_id, restaurant_socialMedia, restaurant_email
+                FROM restaurant.restaurant
+                INNER JOIN restaurant_contact
+                WHERE restaurant.restaurant.restaurant_contact_id = restaurant_contact.restaurant_contact_id
+                AND restaurant.restaurant.restaurant_id = ?`
                 var resId = id.toString()
-                console.log("User typed ", resId)
-                var resIdResult = resId.slice(-2) - 1
-                console.log("Restaurant Result Index of ", resIdResult)
+                db.query(sql2, [resId], function(error2, result2) {
+                    if (error2) {
+                        throw error2
+                    } else {
+                        var array = []
+                        var sql3 = `
+                        SELECT features_name
+                        FROM restaurant.restaurant_features
+                        INNER JOIN restaurant.features
+                            ON restaurant.restaurant_features.features_id = restaurant.features.features_id
+                        INNER JOIN restaurant.restaurant
+                            ON restaurant.restaurant.restaurant_id = restaurant.restaurant_features.restaurant_id
+                            AND restaurant.restaurant.restaurant_id = ?`
+                        db.query(sql3, [resId], function(error3, result3) {
+                            if (error3) {
+                                throw error3
+                            } else {
 
-                var restaurant = result[resIdResult]
-                var array = []
-                var restaurantId = restaurant.restaurant_id
-                var restaurantName = restaurant.restaurant_name
-                var restaurantDisplayPhoto = restaurant.restaurant_displayPhoto
-                var restaurantCategory = restaurant.restaurant_category
-                var restaurantLink = restaurant.restaurant_link
-                var restaurantAddress = restaurant.restaurant_address
-                var restaurantRegion = restaurant.restaurant_region
-                var restaurantPricing = restaurant.restaurant_pricing
-                var restaurantRating = restaurant.restaurant_rating
-                var restaurantAbout = restaurant.restaurant_about
-                var restaurantPhone = restaurant.restaurant_phone
-                var restaurantOpeningHours = restaurant.restaurant_openingHours
-                var restaurantReviewsCount = restaurant.restaurant_reviewsCount
-                var restaurantStarCount = restaurant.restaurant_starCount
-                var restaurantGallery = restaurant.restaurant_gallery
-                array.push({
-                        "restaurantId": restaurantId,
-                        "restaurantName": restaurantName,
-                        "restaurantDisplayPhoto": restaurantDisplayPhoto,
-                        "restaurantCategory": restaurantCategory,
-                        "restaurantLink": restaurantLink,
-                        "restaurantAddress": restaurantAddress,
-                        "restaurantRegion": restaurantRegion,
-                        "restaurantPricing": restaurantPricing,
-                        "restaurantRating": restaurantRating,
-                        "restaurantAbout": restaurantAbout,
-                        "restaurantPhone": restaurantPhone,
-                        "restaurantOpeningHours": restaurantOpeningHours,
-                        "restaurantReviewsCount": restaurantReviewsCount,
-                        "restaurantStarCount": restaurantStarCount,
-                        "restaurantGallery": restaurantGallery
-                    })
-                    // console.log(array)
-                response.render('restaurant', { array })
+                                var resIdResult = resId.slice(-2) - 1
+                                console.log("Restaurant Result Index of ", resIdResult)
+                                var restaurant = result[resIdResult]
+                                var restaurantId = restaurant.restaurant_id
+                                var restaurantName = restaurant.restaurant_name
+                                var restaurantDisplayPhoto = restaurant.restaurant_displayPhoto
+                                var restaurantCategory = restaurant.restaurant_category
+                                var restaurantLink = restaurant.restaurant_link
+                                var restaurantAddress = restaurant.restaurant_address
+                                var restaurantRegion = restaurant.restaurant_region
+                                var restaurantPricing = restaurant.restaurant_pricing
+                                var restaurantRating = restaurant.restaurant_rating
+                                var restaurantAbout = restaurant.restaurant_about
+                                var restaurantPhone = restaurant.restaurant_phone
+                                var restaurantOpeningHours = restaurant.restaurant_openingHours
+                                var restaurantReviewsCount = restaurant.restaurant_reviewsCount
+                                var restaurantStarCount = restaurant.restaurant_starCount
+                                var restaurantGallery = restaurant.restaurant_gallery
+                                var restaurantEmail = result2[0].restaurant_email
+                                var restaurantSocialMedia = result2[0].restaurant_socialMedia
+                                var featureArrayList = []
+                                for (var item in result3) {
+                                    var feature = result3[item].features_name
+                                    featureArrayList.push(feature)
+                                }
+                                array.push({
+                                    "restaurantId": restaurantId,
+                                    "restaurantName": restaurantName,
+                                    "restaurantDisplayPhoto": restaurantDisplayPhoto,
+                                    "restaurantCategory": restaurantCategory,
+                                    "restaurantLink": restaurantLink,
+                                    "restaurantAddress": restaurantAddress,
+                                    "restaurantRegion": restaurantRegion,
+                                    "restaurantPricing": restaurantPricing,
+                                    "restaurantRating": restaurantRating,
+                                    "restaurantAbout": restaurantAbout,
+                                    "restaurantPhone": restaurantPhone,
+                                    "restaurantOpeningHours": restaurantOpeningHours,
+                                    "restaurantReviewsCount": restaurantReviewsCount,
+                                    "restaurantStarCount": restaurantStarCount,
+                                    "restaurantGallery": restaurantGallery,
+                                    "restaurantSocialMedia": restaurantSocialMedia,
+                                    "restaurantEmail": restaurantEmail,
+                                    "restaurantFeatures": featureArrayList
+                                })
+                                console.log(array)
+                                response.send(array)
+                            }
+                        })
+
+                    }
+
+                });
+
             }
 
         })
@@ -103,8 +141,7 @@ class RestaurantDB {
                     })
 
                 }
-
-                response.render('category', { array })
+                response.send(array)
             }
         });
     }

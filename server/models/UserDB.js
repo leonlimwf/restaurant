@@ -20,7 +20,7 @@ class userDB {
                 if (result.length > 0) {
                     if (password == result[0].user_password) { //result[0].password comes from db
                         success = true;
-                        msg = "<strong style='color: limegreen'>It's a success! Hang tight!</strong>";
+                        msg = "<strong style='color: white; font-family: prod'>It's a success! Hang tight!</strong>";
                         respond.status(200)
                         console.log(success);
 
@@ -93,45 +93,90 @@ class userDB {
             console.log(`Email Invalid, Input Received was ${emailInput}`)
             respond.json(prepareMessage(msg))
         }
-
     }
 
-    // getAllUsers(request, respond) {
-    //     var sql = "SELECT * FROM restaurant.user";
-    //     db.query(sql, function(error, result) {
-    //         if (error) {
-    //             throw error;
-    //         } else {
-    //             function prepareMessageJson() {
-    //                 var obj = result[1].user_password
-    //                 var x = result[1].user_userId
-    //                 var lmao = { password: obj, userid: x }
-    //                 console.log(typeof)
-    //                 respond.json(lmao)
-    //             }
-    //             prepareMessageJson()
-    //         }
-    //     });
-    // }
+    addComment(request, respond) {
+        var d = new Date();
+        var date = d.getUTCDate();
+        var month = d.getUTCMonth() + 1; // Since getUTCMonth() returns month from 0-11 not 1-12
+        var year = d.getUTCFullYear();
+        var dateStr = year + "-" + month + "-" + date;
+        var sql = "INSERT INTO restaurant.review (review_content, review_rating,review_date, user_id, restaurant_id) VALUES (?, ?, ?, ?,?);"
 
-    // updateUserFirstName(request, respond) {
+        var values = [request.body.review_content, request.body.review_rating, dateStr, request.body.user_id, request.body.restaurant_id]
 
-    //     var userObject = new User(request.params.userid, request.body.firstname);
-
-    //     var sql = "UPDATE movie_review.users SET first_name = ? WHERE user_id = ?";
-    //     var values = [userObject.getFirstName(), userObject.getUserId()];
-    //     db.query(sql, values, function(error, result) {
-    //         if (error) {
-    //             throw error;
-    //         } else {
-    //             respond.json(result);
-    //         }
-    //     });
-    // }
+        db.query(sql, values, function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                console.log("Succesfully inserted data")
+                respond.status(200).send(result)
+            }
+        })
+    }
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+    getAllUsers(request, respond) {
+        var sql = "SELECT * FROM restaurant.user";
+        db.query(sql, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                var array = []
+
+                for (var i = 0; i < result.length; i++) {
+                    console.log(i)
+                    var x = result[i].user_userId;
+                    console.log(x)
+                    array.push({ "name": x })
+                }
+
+                console.log(array)
+
+            }
+            respond.send(array)
+        });
+    }
+
+    updateUserFirstName(request, respond) {
+        var sql = "UPDATE restaurant.user SET user_firstName = ? WHERE user_id = ?";
+        var values = [request.body.first_name, request.body.id];
+        db.query(sql, values, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log("Successful")
+                return respond.status(200).json(result)
+                    // respond.json(result);
+            }
+        });
+    }
+
+    deleteAccount(request, respond) {
+        var sql = "DELETE from restaurant.user where user_id='?' "
+        var id = request.body.id
+        db.query(sql, [id], function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                console.log(`Successfully deleted account of user ID ${id}`)
+                return respond.status(200).json(result)
+            }
+        })
+    }
 
 }
 

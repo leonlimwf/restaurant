@@ -103,37 +103,36 @@
             userPassword: document.getElementById("passwordfield").value
         };
         var request = new XMLHttpRequest();
-        console.log(request)
         request.open("POST", "/login", true);
         request.setRequestHeader("Content-Type", "application/json");
         request.onload = function() {
             response = JSON.parse(request.responseText);
-            console.log(response)
-            document.getElementById("alert-box").
-            style.visibility = "visible";
+            document.getElementById("alert-box").style.visibility = "visible";
             document.getElementById("alert-box").innerHTML = response.message;
-            setTimeout(function() {
-                if (request.status === 200 && response.success) {
-                    var now = new Date();
-                    var time = now.getTime();
-                    time += 3600 * 1000;
-                    now.setTime(time);
-                    window.location.href = "home.html";
-                    // var curCookieUser = "name=" + credentials.userId
-                    // var curCookiePassword = "password=" + credentials.userPassword
-                    document.cookie =
-                        'username=' + credentials.userId +
-                        '; expires=' + now.toUTCString() +
-                        '; path=/';
-                    document.cookie =
-                        'password=' + credentials.userPassword +
-                        '; expires=' + now.toUTCString() +
-                        '; path=/';
-                    // document.cookie = curCookieUser
-                    // document.cookie = curCookiePassword;
-                    alert(document.cookie)
-                }
-            }, 2000);
+            if (response.success) {
+                document.getElementById("alert-box").style.backgroundColor = "#7cc325";
+                setTimeout(function() {
+                    if (request.status === 200) {
+                        var now = new Date();
+                        var time = now.getTime();
+                        time += 3600 * 1000;
+                        now.setTime(time);
+                        window.location.href = "home.html";
+                        document.cookie =
+                            'username=' + credentials.userId +
+                            '; expires=' + now.toUTCString() +
+                            '; path=/';
+                        document.cookie =
+                            'password=' + credentials.userPassword +
+                            '; expires=' + now.toUTCString() +
+                            '; path=/';
+                        // document.cookie = curCookieUser
+                        // document.cookie = curCookiePassword;
+                        alert(document.cookie)
+                    }
+                }, 2000);
+            }
+
 
         };
         request.send(JSON.stringify(credentials));

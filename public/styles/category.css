@@ -78,20 +78,34 @@ html {
     width: 100%;
 }
 
+#resultsFound {
+    margin-left: 26%;
+    font-family: prodmed;
+    font-size: 16px;
+    margin-top: 3em;
+}
+
 .restaurant {
-    margin-top: 1em;
     margin-bottom: 1em;
     min-width: 50vw;
-    height: 18vh;
+    min-height: 18vh;
     left: 25%;
     background-color: transparent;
     display: flex;
 }
 
+#restaurantCategory {
+    background-color: transparent;
+    min-width: 50vw;
+    margin-top: 2em;
+}
+
 #restaurantDisplayPhoto {
     height: 18vh;
     width: 18vh;
+    border: 2px solid #ededed;
     border-radius: 5px;
+    margin-right: 10px;
     background-color: transparent;
 }
 
@@ -115,55 +129,71 @@ html {
 }
 
 #restaurantPricing {
-    margin-top: 5px;
-    margin-left: 10px;
-    font-size: 13px;
+    font-size: 11px;
     letter-spacing: 3px;
     font-family: prodmed;
-}
-
-#restaurantStar {
-    margin: 5px 0px 5px 5px;
-    font-size: 16px;
-}
-
-.checked {
-    color: #1a73e8;
-}
-
-#restaurantAddress {
-    font-size: 16px;
-    font-family: prodmed;
-    margin-left: 10px;
-    margin-top: 4.5em;
+    background-color: transparent;
+    font-weight: strong;
+    flex: 1;
 }
 
 .stars-outer {
-    display: inline-block;
-    position: relative;
-    font-family: FontAwesome;
+    float: left;
+    background-color: transparent;
+    height: 100%;
 }
 
-.stars-outer::before {
-    content: "\f006 \f006 \f006 \f006 \f006";
+.fa-circle {
+    font-size: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 4.5px;
+    color: #757575;
 }
 
-.stars-inner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.stars-inner::before {
-    content: "\f005 \f005 \f005 \f005 \f005";
+.fa-map-marker-alt {
     color: #0069ff;
+    margin-right: 5px;
+}
+
+#restaurantStar {
+    margin: 5px 0px 0px 10px;
+    color: #0069ff;
+    letter-spacing: 3px;
+    font-size: 11px;
+    display: flex;
+}
+
+.h_line {
+    margin-left: 26%;
+    margin-bottom: 1em;
+    width: 50vw;
+    height: 0;
+    border: 0.5px solid #CCCCCC;
+    display: inline-block;
+}
+
+#restaurantAddress {
+    font-size: 14px;
+    font-family: prodmed;
+    color: #464646;
+    margin-left: 10px;
+    margin-top: 7.5vh;
+    display: flex;
+    justify-content: flex-start;
 }
 
 @media (max-width:991px) {
     .restaurant {
         left: 0%;
+    }
+    .h_line {
+        margin-left: 4%;
+        margin-bottom: 1em;
+        width: 95vw;
+        height: 0;
+        border: 0.5px solid #CCCCCC;
+        display: inline-block;
     }
 }
 

@@ -88,7 +88,7 @@ html {
 }
 
 #restaurantAddress {
-    font-size: 18px;
+    font-size: 16px;
     font-family: prodbold;
     margin-top: 2em;
 }
@@ -124,17 +124,26 @@ html {
     /* Fading effect takes 1 second */
 }
 
+.h_line {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    width: 35vw;
+    height: 0;
+    border: 0.5px solid #CCCCCC;
+    display: inline-block;
+}
+
 #restaurant-about-text {
     font-family: prodbold;
     font-size: 18px;
-    margin-top: 1.5em;
+    margin-top: 1em;
 }
 
 #restaurantAbout {
     font-size: 16px;
-    font-family: prodbold;
+    font-family: prodmed;
     letter-spacing: 0.3px;
-    margin-top: 1em;
+    margin-top: 0.1em;
     max-width: 80%;
     background-color: transparent;
     margin-bottom: 5vh;
@@ -146,25 +155,26 @@ html {
     border: 2px solid #575757
 }
 
-#restaurantRating {
+#restaurantStar {
+    margin-top: 0.5em;
+    color: #0069ff;
     font-size: 16px;
     font-family: prodmed;
+    padding-bottom: 10px;
+}
+
+#restaurantPricing {
+    font-family: prodmed;
+    font-size: 16px;
 }
 
 #restaurantFeatures {
     font-size: 16px;
     font-family: prodmed;
-    margin-bottom: 5vh;
 }
 
 .checked {
     color: green;
-}
-
-#contact-phone,
-#contact-email,
-#contact-socialMedia {
-    margin-top: 0px;
 }
 
 #addReviewBox {
@@ -239,8 +249,8 @@ html {
     .restaurant {
         margin-left: 0%;
     }
-    #restaurant-about-text {
-        width: 100%;
+    #restaurantAbout {
+        min-width: 100%;
     }
     #addReviewBox {
         min-width: 80vw;
@@ -253,4 +263,8 @@ html {
     }
 }
 
-@media (max-width:767px) {}
+@media (max-width:767px) {
+    #restaurantAbout {
+        width: 100%;
+    }
+}

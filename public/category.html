@@ -30,10 +30,6 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="nav">
-                <!-- <li class="nav-item active">
-                        <a class="nav-link">About Us<span
-                                class="sr-only">(current)</span></a>
-                    </li>-->
                 <li class="nav-item">
                     <a class="nav-link" href="login.html" style="color: black;">Log In</a>
                 </li>
@@ -43,81 +39,71 @@
             </ul>
         </div>
     </nav>
-    <div class="col-sm-6 restaurant" style="margin-top: 5em;">
-        <div class="restaurant-displayPhoto">
-            <img src="asset/tablehopperlogo.png" id="restaurantDisplayPhoto">
-        </div>
-        <div class="restaurant-info">
-            <h5 id="restaurantName">Wutor Steakhouse</h5>
-            <div id="restaurantStar">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-            </div>
-            <h5 id="restaurantFeatures">Baby Friendly</h5>
-            <h5 id="restaurantAddress">123 Angsana Road</h5>
-        </div>
-    </div>
+    <h5 id="resultsFound"></h5>
+    <div id="restaurantCategory">
 
-    <hr>
-
-    <div class="col-sm-6 restaurant">
-        <div class="restaurant-displayPhoto">
-            <img src="asset/tablehopperlogo.png" id="restaurantDisplayPhoto">
-        </div>
-        <div class="restaurant-info">
-            <h5 id="restaurantName">Wutor Steakhouse</h5>
-            <div id="restaurantStar">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-            </div>
-            <h5 id="restaurantFeatures">Baby Friendly</h5>
-            <h5 id="restaurantAddress">123 Angsana Road</h5>
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="col-sm-6 restaurant">
-        <div class="restaurant-displayPhoto">
-            <img src="asset/tablehopperlogo.png" id="restaurantDisplayPhoto">
-        </div>
-        <div class="restaurant-info">
-            <h5 id="restaurantName">Wutor Steakhouse</h5>
-            <div id="restaurantStar" class="hotel_a">
-                <div class="stars-outer">
-                    <div class="stars-inner"></div>
-                </div>
-            </div>
-            <h5 id="restaurantFeatures">Baby Friendly</h5>
-            <h5 id="restaurantAddress">123 Angsana Road</h5>
-        </div>
     </div>
 </body>
-
 <script>
-    var ratings = {
-        hotel_a: 2.3,
-        hotel_b: 1
-    };
-    var starTotal = 5;
-    for (const rating in ratings) {
-        // 2
-        const starPercentage = (ratings[rating] / starTotal) * 100;
-        console.log(starPercentage)
-            // 3
-        const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-        // 4
-        console.log(starPercentageRounded)
-        document.querySelector(`.${rating} .stars-inner`).style.width = starPercentageRounded;
+    function checkLogInStatus() {
+        value_or_null = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
+        console.log("Logged in as", value_or_null)
+        if (value_or_null != "") { //!= to see is user is logged in, if logged in, hide the login and signup button
+            document.getElementsByClassName('nav')[0].style.visibility = "hidden";
+            document.getElementsByClassName('navbar-toggler')[0].style.visibility = "hidden";
+        }
     }
-</script>
 
+    function displayStar() {
+        var starCount = document.getElementsByClassName('stars-inner')
+        const maxStar = 5
+        for (let i = 0; i < starCount.length; i++) {
+            var star = parseInt(starCount[i].innerHTML)
+            var starUnchecked = maxStar - star
+            starCount[i].innerHTML = `<span class="fa fa-star"></span>`.repeat(star) + `<span class="fa fa-star" style="opacity: 50%"></span>`.repeat(starUnchecked)
+        }
+    }
+
+    function loadAllRestaurants() {
+        checkLogInStatus()
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('type');
+        var request = new XMLHttpRequest();
+        request.open("GET", `restaurants/category/${myParam}`, true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.onload = function() {
+            response = JSON.parse(request.responseText);
+            document.getElementById('resultsFound').innerHTML = `${response.length} restaurants found for '${response[0].restaurantCategory}' category`
+            let str = ""
+            for (var i = 0; i < response.length; i++) {
+                str += `
+        <div class="col-sm-6 restaurant">
+            <div class="restaurant-displayPhoto">
+                <img src="asset/restaurantGallery/${response[i].restaurantDisplayPhoto}" id="restaurantDisplayPhoto">
+            </div>
+            <div class="restaurant-info">
+                <h5 id="restaurantName"><a href='restaurant.html?id=${response[i].restaurantId}' style="color: black">${response[i].restaurantName}</a></h5>
+                <div id="restaurantStar">
+                    <div class="stars-outer">
+                        <div class="stars-inner">${response[i].restaurantRating}</div>
+                    </div>
+                    <i class="fas fa-circle"></i>
+                    <h5 id="restaurantPricing">${response[i].restaurantPricing}</h5>
+                </div>
+                <h5 id="restaurantRegion">${response[i].restaurantRegion} Region</h5>
+                <h5 id="restaurantAddress"><i class="fas fa-map-marker-alt"></i>${response[i].restaurantAddress}</h5>
+            </div>
+        </div>
+        <div class="h_line"></div>
+        `
+            }
+            document.getElementById('restaurantCategory').innerHTML = str
+            displayStar()
+        }
+        request.send()
+    }
+    loadAllRestaurants()
+</script>
 
 
 

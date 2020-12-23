@@ -65,8 +65,9 @@ each restaurant in array
           |  Contact Us
         ul
           li#contact-phone(style='font-family: prodmed;margin-top: 5px;')= restaurant.restaurantPhone
-          li#contact-email(style='font-family: prodmed;') lmao@mail.com
-          li#contact-socialMedia(style='font-family: prodmed;') @mafiafh
+          li
+            a#contact-email(href="mailto:'"+restaurant.restaurantEmail+"'" style='font-family: prodmed;')= restaurant.restaurantEmail
+          li#contact-socialMedia(style='font-family: prodmed;')= restaurant.restaurantSocialMedia
       .website
         h5#restaurant-about-text
           i.fas.fa-laptop(style='font-size: 18px;margin-right: 5px;')

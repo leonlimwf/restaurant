@@ -7,11 +7,14 @@ const usersDBObject = new userdb();
 
 const router = express.Router();
 
-router.get('/profile/:id', function(req, res) {
-    res.send(`you got to see profile with id of ${req.params.id}`)
-})
-
+router.get("/users", usersDBObject.getAllUsers);
+router.put("/update", usersDBObject.updateUserFirstName);
+router.post("/delete", usersDBObject.deleteAccount);
 // router.get("/seeres", usersDBObject.getAllUsers);
+
+router.post("/comment/new", usersDBObject.addComment)
+
+
 
 router.post("/login", usersDBObject.getLoginCredentials);
 router.get('/login', function(req, res) {

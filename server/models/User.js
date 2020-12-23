@@ -1,27 +1,27 @@
 "use strict"
 
 class users {
-    constructor(id, user_id, last_name, first_name, password) {
-        this.id = id;
-        this.user_id = user_id;
-        this.last_name = last_name;
-        this.first_name = first_name;
-        this.password = password;
+    constructor(userid, user_userId, user_firstName, user_lastName, user_password) {
+        this.userid = userid;
+        this.user_userId = user_userId;
+        this.user_firstName = user_firstName;
+        this.user_lastName = user_lastName;
+        this.user_password = user_password;
     }
     getId() {
-        return this.id;
+        return this.userid;
     }
     getUserId() {
-        return this.user_id;
+        return this.user_userId;
     }
     getLastName() {
-        return this.last_name;
+        return this.user_lastName;
     }
     getFirstName() {
-        return this.first_name;
+        return this.user_firstName;
     }
     getPassword() {
-        return this.password;
+        return this.user_password;
     }
 }
 module.exports = users;
