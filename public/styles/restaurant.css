@@ -152,7 +152,7 @@ html {
 #restaurantImage {
     width: 80%;
     border-radius: 5px;
-    border: 2px solid #575757
+    border: 1px solid #575757
 }
 
 #restaurantStar {
@@ -224,12 +224,13 @@ html {
     font-size: 14px;
 }
 
-#commentRating {
+.commentRating {
     font-family: prodmed;
+    color: #0069ff;
 }
 
 #commentSectionText {
-    font-family: prod;
+    font-family: prodmed;
     max-width: 40vw;
 }
 

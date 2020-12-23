@@ -19,7 +19,7 @@
 
 <body onload="loadRestaurantInfo()">
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand tablehopper ml-2" href="#" style="color: #006AFF;">Table Hopper</a>
+        <a class="navbar-brand tablehopper ml-2" href="index.html" style="color: #006AFF;">Table Hopper</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg" style="color: white;">
@@ -35,7 +35,7 @@
                                 class="sr-only">(current)</span></a>
                     </li>-->
                 <li class="nav-item">
-                    <a class="nav-link" href="login.html">Log In</a>
+                    <a class="nav-link" href="login.html" style="color: #006AFF;">Log In</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="register.html" style="background-color: #006AFF;border-radius: 5px;">Sign Up</a>
@@ -53,27 +53,40 @@
 
 <script>
     function loadRestaurantInfo() {
+        checkLogInStatus()
         const urlParams = new URLSearchParams(window.location.search);
-        console.log(urlParams)
         const myParam = urlParams.get('id');
-        console.log(myParam)
         var request = new XMLHttpRequest();
         console.log(request)
         request.open("GET", `restaurants/id/${myParam}`, true);
         request.setRequestHeader("Content-Type", "application/json");
         request.onload = function() {
             response = JSON.parse(request.responseText);
+            reviewArrayLength = response[0].reviewArray.length
+
+            let reviewStr = ""
+            for (var i = 0; i < reviewArrayLength; i++) {
+                reviewStr += `
+                <div class="reviewSection">
+                    <img id="userImage" src="asset/wallpaper.png">
+                    <span id="userName">${response[0].reviewArray[i].reviewUserId}</span>
+
+                    <div id='commentSection'>
+                        <p id="commentDate">Written at: <span id="writtenAtDate">${response[0].reviewArray[i].reviewDate}</span></p>
+                        <p class="commentRating">${response[0].reviewArray[i].reviewRating}</p>
+                        <p id="commentSectionText">${response[0].reviewArray[i].reviewContent}</p>
+                    </div>
+                </div>`
+            }
+
             let str = ""
             for (var i = 0; i < response.length; i++) {
-                var time = response[i].restaurantOpeningHours.split(",")
-                console.log(time)
-                console.log(response[i].restaurantFeatures)
                 str += `
         <h3 id="restaurantName">${response[i].restaurantName}</h3>
         <h5 id="restaurantCategory">${response[i].restaurantCategory}</h5>
         <h5 id="restaurantAddress"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>${response[i].restaurantAddress}</h5>
 
-        <img src="asset/wallpaper.png" id="restaurantImage">
+        <img src="asset/restaurantGallery/${response[i].restaurantGallery}" id="restaurantImage">
 
         <div class="tab">
             <button class="tablinks" onclick="openTab(event, 'restaurant-about')" id="defaultOpen">Overview</button>
@@ -124,36 +137,20 @@
         
         <div id="restaurant-review" class="tabcontent">
             <div class="addReview">
-                <input id="addReviewBox" type="text" placeholder="  Write your review here">
-                <button id="addReviewButton"><i class="fas fa-plus-circle"></i></button>
+                    <input id="addReviewBox" type="text" placeholder="  Write your review here">
+                    <button id="addReviewButton"><i class="fas fa-plus-circle"></i></button>
             </div>
+            <div class="reviewBox">
 
-            <div class="reviewSection">
-                <img id="userImage" src="asset/wallpaper.png">
-                <span id="userName">Username</span>
-
-                <div id='commentSection'>
-                    <p id="commentDate">Written at: <span id="writtenAtDate">23 June 2003</span></p>
-                    <p id="commentRating">3 Star</p>
-                    <p id="commentSectionText">Lorem ipsum this is my review omg omgLorem ipsum this is my review omg omgLorem ipsum this is my review omg omg</p>
-                </div>
-            </div>
-
-            <div class="reviewSection">
-                <img id="userImage" src="asset/wallpaper.png">
-                <span id="userName">Username</span>
-
-                <div id='commentSection'>
-                    <p id="commentDate">Written at: <span id="writtenAtDate">23 June 2003</span></p>
-                    <p id="commentSectionText">Lorem ipsum this is my review omg omgLorem ipsum this is my review omg omgLorem ipsum this is my review omg omg</p>
-                </div>
             </div>
         </div>
         `
             }
             document.getElementsByClassName('col-sm-6 restaurant')[0].innerHTML = str
+            document.getElementsByClassName('reviewBox')[0].innerHTML = reviewStr
             document.getElementById("defaultOpen").click();
             displayStar()
+            displayReviewStar()
         }
         request.send()
     }
@@ -168,19 +165,35 @@
         }
     }
 
-    function openTab(evt, tabname) {
-        // Declare all variables
+    function displayReviewStar() {
+        var count = document.getElementsByClassName('commentRating')
+        const maxStar = 5
+        for (let i = 0; i < count.length; i++) {
+            var star = count[i].innerHTML
+            var starUnchecked = maxStar - star
+            count[i].innerHTML = `<span class="fa fa-star"></span>`.repeat(star) + `<span class="fa fa-star" style="opacity: 50%"></span>`.repeat(starUnchecked)
+        }
+        // console.log(starCount.length)
+    }
 
-        // Get all elements with class="tabcontent" and hide them
+    function checkLogInStatus() {
+        value_or_null = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
+        console.log("Logged in as", value_or_null)
+        if (value_or_null != "") { //!= to see is user is logged in, if logged in, hide the login and signup button
+            document.getElementsByClassName('nav')[0].style.visibility = "hidden";
+            document.getElementsByClassName('navbar-toggler')[0].style.visibility = "hidden";
+        }
+    }
+
+    function openTab(evt, tabname) {
         var tabcontent = document.getElementsByClassName("tabcontent");
-        console.log(tabcontent)
         for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+            tabcontent[i].style.display = "";
+            console.log(tabcontent[i])
         }
 
         // Get all elements with class="tablinks" and remove the class "active"
         tablinks = document.getElementsByClassName("tablinks");
-        console.log(tablinks)
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace("active", "");
         }
@@ -190,39 +203,5 @@
         evt.currentTarget.className += "active";
     }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <script>
-    function getRes() {
-        var xmlHttpRequest = new XMLHttpRequest();
-
-        xmlHttpRequest.onreadystatechange = function() {
-            if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
-                var restaurantResponseText = xmlHttpRequest.responseText;
-                var restaurant = JSON.parse(restaurantResponseText)
-                console.log(typeof whatiwant)
-                document.getElementById("restaurantName").innerHTML = restaurant.restaurant_name
-                document.getElementById("restaurantCategory").innerHTML = restaurant.restaurant_category
-                document.getElementById("restaurantAddress").innerHTML = restaurant.restaurant_address
-            }
-        };
-        var resId = 300003;
-        var url = '/restaurants/id/' + resId
-        xmlHttpRequest.open('GET', url, true);
-        xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
-        xmlHttpRequest.send();
-    }
-</script> -->
 
 </html>
