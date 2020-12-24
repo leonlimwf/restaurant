@@ -15,8 +15,7 @@ class SearchDB {
             if (error) {
                 response.status(500).send("Error occured")
             } else {
-                let x = `${result.length}`
-                if (x === 0) {
+                if (`${result.length}` === 0) {
                     console.log("No results found")
                 } else {
                     var array = []

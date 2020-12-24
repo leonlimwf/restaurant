@@ -73,11 +73,18 @@
         request.setRequestHeader("Content-Type", "application/json");
         request.onload = function() {
             response = JSON.parse(request.responseText);
-            console.log(response)
-            document.getElementById('resultsFound').innerHTML = `${response.length} restaurants found that starts with '${myParam}'`
-            let str = ""
-            for (var i = 0; i < response.length; i++) {
-                str += `
+            console.log(response.length)
+            if (response.length === 0) {
+                document.getElementById('resultsFound').innerHTML = `${response.length} restaurants found that starts with '${myParam}'`
+                document.getElementById('restaurantCategory').innerHTML = `<center>
+                                                                           <img src="asset/svg/notfound.svg" style="width: 30vw;padding-top: 10vh">
+                                                                           <h3 style="font-family: prodbold; font-size: 20px; margin-top: 30px">Try a different keyword maybe?</h3>
+                                                                           <a style="font-family: prodbold; font-size: 16px;" href="home.html">Go Back</a>
+                                                                           </center>`
+            } else {
+                let str = ""
+                for (var i = 0; i < response.length; i++) {
+                    str += `
         <div class="col-sm-6 restaurant">
             <div class="restaurant-displayPhoto">
                 <img src="asset/restaurantGallery/${response[i].restaurantDisplayPhoto}" id="restaurantDisplayPhoto">
@@ -97,10 +104,13 @@
         </div>
         <div class="h_line"></div>
         `
+                }
+                document.getElementById('restaurantCategory').innerHTML = str
+                displayStar()
             }
-            document.getElementById('restaurantCategory').innerHTML = str
-            displayStar()
         }
+
+
         request.send()
     }
     loadAllRestaurants()
