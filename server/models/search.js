@@ -15,13 +15,12 @@ class SearchDB {
             if (error) {
                 response.status(500).send("Error occured")
             } else {
-                if (`${result.length}` < 1) {
-                    return response.status(404).json("No results found")
-                } else if (`${result.length}` === 1) {
-                    console.log(`${result[0].restaurant_name}`)
+                let x = `${result.length}`
+                if (x === 0) {
+                    console.log("No results found")
                 } else {
                     var array = []
-                    for (let i = 0; i < `${result.length}`; i++) {
+                    for (let i = 0; i < result.length; i++) {
                         var restaurantId = result[i].restaurant_id
                         var restaurantName = result[i].restaurant_name
                         var restaurantDisplayPhoto = result[i].restaurant_displayPhoto
