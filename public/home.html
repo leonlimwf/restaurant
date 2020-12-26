@@ -30,21 +30,11 @@
     </script>
 </body>
 
-<script>
-    function getCookie() {
-        value_or_null = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
-        console.log("Logged in as", value_or_null)
-        if (value_or_null != "") { //!= to see is user is logged in, if logged in, hide the login and signup button
-            document.getElementsByClassName('nav')[0].style.visibility = "hidden";
-            document.getElementsByClassName('navbar-toggler')[0].style.visibility = "hidden";
-        }
-    }
-</script>
-
 <body onload="getCookie()">
     <div class="background">
         <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand tablehopper ml-2" href="#" style="color: #006AFF;">Table Hopper</a>
+            <a class="navbar-brand tablehopper ml-2" href="index.html" style="color: #006AFF;">Table Hopper</a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg" style="color: white;">
@@ -66,7 +56,9 @@
                         <a class="nav-link" href="register.html" style="background-color: #006AFF;border-radius: 5px;">Sign Up</a>
                     </li>
                 </ul>
+
             </div>
+            <a class="navbar-brand tablehopper ml-2" id="loggedInUser" href="#" style="color: white; float: right;font-size: 16px;"></a>
         </nav>
 
 
@@ -76,9 +68,12 @@
                     <h2 class="col-sm-9 tablehopper-h2-about">The finest restaurants are on Table Hopper
                     </h2>
 
-
-                    <input class="col-sm-9 searchbar" id="searchBar" type="search" maxlength="70" placeholder="Try 'Uncle Leong Restaurant' ">
-                    <input type="submit" onclick="search()">
+                    <div class="d-flex justify-content-center px-5">
+                        <div class="search">
+                            <input type="text" id="searchBar" class="search-input" placeholder="Try 'Lau Wang'" name=" ">
+                            <a href="# " class="search-icon "> <i class="fa fa-search " onclick="search() "></i> </a>
+                        </div>
+                    </div>
 
                 </center>
 
@@ -88,63 +83,63 @@
     </div>
 
 </body>
-<div class="categories">
+<div class="categories ">
     <center>
-        <div class="categories-text">
-            <h2 class="view-categories-text">View our list of curated categories</h2>
-            <h3 class="view-categories-subtext">Get the flexibility you need, and the food you crave for</h3>
+        <div class="categories-text ">
+            <h2 class="view-categories-text ">View our list of curated categories</h2>
+            <h3 class="view-categories-subtext ">Get the flexibility you need, and the food you crave for</h3>
         </div>
 
-        <div id="container">
+        <div id="container ">
             <div>
-                <a href="category.html?type=steamboat">
-                    <img src="asset/svg/steamboat.svg" style="height: 14vh;margin-top: 10px;">
-                    <p id="categories-card-descriptor">Steamboat</p>
+                <a href="category.html?type=steamboat ">
+                    <img src="asset/svg/steamboat.svg " style="height: 14vh;margin-top: 10px; ">
+                    <p id="categories-card-descriptor ">Steamboat</p>
                 </a>
             </div>
             <div>
-                <a href="category.html?type=western">
-                    <img src="asset/svg/westerndining.svg" style="height: 10vh;margin-top: 45px;">
-                    <p id="categories-card-descriptor">Western Dining</p>
+                <a href="category.html?type=western ">
+                    <img src="asset/svg/westerndining.svg " style="height: 10vh;margin-top: 45px; ">
+                    <p id="categories-card-descriptor ">Western Dining</p>
                 </a>
             </div>
             <div>
-                <a href="category.html?type=chinese">
-                    <img src="asset/svg/chef.png" style="height: 13vh;margin-top: 15px;">
-                    <p id="categories-card-descriptor">Chinese Dining</p>
+                <a href="category.html?type=chinese ">
+                    <img src="asset/svg/chef.png " style="height: 13vh;margin-top: 15px; ">
+                    <p id="categories-card-descriptor ">Chinese Dining</p>
                 </a>
             </div>
             <div>
-                <a href="category.html?type=barbeque">
-                    <img src="asset/svg/barbeque.svg" style="height: 14vh;margin-top: 10px;">
-                    <p id="categories-card-descriptor">Barbeque</p>
+                <a href="category.html?type=barbeque ">
+                    <img src="asset/svg/barbeque.svg " style="height: 14vh;margin-top: 10px; ">
+                    <p id="categories-card-descriptor ">Barbeque</p>
                 </a>
             </div>
             <span></span>
         </div>
-        <div id="container">
+        <div id="container ">
             <div>
-                <a href="category.html?type=desert">
-                    <img src="asset/svg/desert.svg" style="height: 14vh;margin-top: 10px;">
-                    <p id="categories-card-descriptor">Deserts</p>
+                <a href="category.html?type=desert ">
+                    <img src="asset/svg/desert.svg " style="height: 14vh;margin-top: 10px; ">
+                    <p id="categories-card-descriptor ">Deserts</p>
                 </a>
             </div>
             <div>
-                <a href="category.html?type=finedining">
-                    <img src="asset/svg/finedining.svg" style="height: 14vh;margin-top: 10px;">
-                    <p id="categories-card-descriptor">Fine Dining</p>
+                <a href="category.html?type=finedining ">
+                    <img src="asset/svg/finedining.svg " style="height: 14vh;margin-top: 10px; ">
+                    <p id="categories-card-descriptor ">Fine Dining</p>
                 </a>
             </div>
             <div>
-                <a href="category.html?type=buffet">
-                    <img src="asset/svg/buffet.svg" style="height: 10vh;margin-top: 45px;">
-                    <p id="categories-card-descriptor">Buffet</p>
+                <a href="category.html?type=buffet ">
+                    <img src="asset/svg/buffet.svg " style="height: 10vh;margin-top: 45px; ">
+                    <p id="categories-card-descriptor ">Buffet</p>
                 </a>
             </div>
             <div>
-                <a href="category.html?type=others">
-                    <img src="asset/svg/others.png" style="margin-top: 40%">
-                    <p id="categories-card-descriptor">Others</p>
+                <a href="category.html?type=others ">
+                    <img src="asset/svg/others.png " style="margin-top: 40% ">
+                    <p id="categories-card-descriptor ">Others</p>
                 </a>
             </div>
             <span></span>
@@ -212,6 +207,23 @@
 
 
 <script>
+    function getCookie() {
+        value_or_null = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
+        console.log("Logged in as ", value_or_null)
+        if (value_or_null != " ") { //!= to see is user is logged in, if logged in, hide the login and signup button
+            document.getElementsByClassName('nav')[0].style.visibility = "hidden ";
+            document.getElementsByClassName('navbar-toggler')[0].style.visibility = "hidden ";
+            document.getElementById('loggedInUser').innerHTML = `Hello, ${value_or_null}`
+        }
+        var alerted = sessionStorage.getItem('alerted') || '';
+        console.log(alerted)
+        if (alerted != 'yes') {
+            alert(`Welcome ${value_or_null}`)
+            sessionStorage.setItem('alerted', 'yes');
+        }
+    }
+
+
     function search() {
         var value = document.getElementById('searchBar').value
         console.log(value)

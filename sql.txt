@@ -5,3 +5,30 @@ INNER JOIN user
 ON user.user_id = restaurant.review.user_id
 INNER JOIN restaurant
 ON restaurant.restaurant_id = restaurant.review.restaurant_id
+
+
+SELECT * FROM restaurant.restaurant
+ORDER BY restaurant_pricing ASC
+
+SELECT * FROM restaurant.restaurant
+ORDER BY restaurant_rating DESC
+
+SELECT user_userId, review_date, review_rating, review_content
+FROM restaurant.review
+INNER JOIN user
+ON user.user_id = restaurant.review.user_id
+INNER JOIN restaurant
+ON restaurant.restaurant_id = restaurant.review.restaurant_id
+AND restaurant.restaurant_id = 300001
+
+SELECT features_name, restaurant_name
+FROM restaurant.restaurant_features
+INNER JOIN restaurant.features
+	ON restaurant.restaurant_features.features_id = restaurant.features.features_id
+INNER JOIN restaurant.restaurant
+	ON restaurant.restaurant.restaurant_id = restaurant.restaurant_features.restaurant_id
+    AND restaurant.restaurant.restaurant_id = 300001
+
+SELECT *
+FROM restaurant.restaurant
+WHERE restaurant_name LIKE 'L%'

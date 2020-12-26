@@ -115,39 +115,22 @@ class userDB {
         })
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     getAllUsers(request, respond) {
-        var sql = "SELECT * FROM restaurant.user";
-        db.query(sql, function(error, result) {
+        var sql = `SELECT * 
+        FROM restaurant.user 
+        WHERE user_userId = ?`;
+
+        var x = request.params.id
+        var value = x.toString()
+        console.log("value", x)
+        db.query(sql, value, function(error, result) {
             if (error) {
                 throw error;
             } else {
-                var array = []
-
-                for (var i = 0; i < result.length; i++) {
-                    console.log(i)
-                    var x = result[i].user_userId;
-                    console.log(x)
-                    array.push({ "name": x })
-                }
-
-                console.log(array)
+                console.log(result)
 
             }
-            respond.send(array)
+            respond.send(result)
         });
     }
 

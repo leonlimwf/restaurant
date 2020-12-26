@@ -7,7 +7,7 @@ const usersDBObject = new userdb();
 
 const router = express.Router();
 
-router.get("/users", usersDBObject.getAllUsers);
+router.get("/users/:id", usersDBObject.getAllUsers);
 router.put("/update", usersDBObject.updateUserFirstName);
 router.post("/delete", usersDBObject.deleteAccount);
 // router.get("/seeres", usersDBObject.getAllUsers);
