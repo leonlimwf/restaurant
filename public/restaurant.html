@@ -72,7 +72,7 @@
                     <span id="userName">${response[0].reviewArray[i].reviewUserId}</span>
 
                     <div id='commentSection'>
-                        <p id="commentDate">Written at: <span id="writtenAtDate">${response[0].reviewArray[i].reviewDate}</span></p>
+                        <p id="commentDate">Written at: <span id="writtenAtDate">${response[0].reviewArray[i].reviewDate.substring(0,10)}</span></p>
                         <p class="commentRating">${response[0].reviewArray[i].reviewRating}</p>
                         <p id="commentSectionText">${response[0].reviewArray[i].reviewContent}</p>
                     </div>
@@ -81,6 +81,7 @@
 
             let str = ""
             for (var i = 0; i < response.length; i++) {
+
                 str += `
         <h3 id="restaurantName">${response[i].restaurantName}</h3>
         <h5 id="restaurantCategory">${response[i].restaurantCategory}</h5>
@@ -128,7 +129,8 @@
             <div class="website" style="margin-bottom: 5vh">
                 <h5 id="restaurant-about-text"><i class="fas fa-laptop" style="font-size: 18px;margin-right: 5px;"></i> Find Us at</h5>
                 <div class="h_line"></div>
-                <a href="https://www.google.com" id="website-link" style="font-family: prodmed;margin-top: 5px;">${response[i].restaurantLink}</a>
+                <br>
+                <a href="${response[i].restaurantLink}" id="website-link" style="font-family: prodmed;margin-top: 5px;">${response[i].restaurantLink}</a>
             </div>
         </div>
 
@@ -138,13 +140,26 @@
         <div id="restaurant-review" class="tabcontent">
             <div class="addReview">
                     <input id="addReviewBox" type="text" placeholder="  Write your review here">
-                    <button id="addReviewButton"><i class="fas fa-plus-circle"></i></button>
+                    <div class="rate">
+                    <input class="messageCheckbox" type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                    <input class="messageCheckbox" type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                    <input class="messageCheckbox" type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                    <input class="messageCheckbox"type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                    <input class="messageCheckbox" type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+            </div>
+                    <button id="addReviewButton" onclick="addReview()"><i class="fas fa-plus-circle"></i></button>
             </div>
             <div class="reviewBox">
 
             </div>
         </div>
         `
+
             }
             document.getElementsByClassName('col-sm-6 restaurant')[0].innerHTML = str
             document.getElementsByClassName('reviewBox')[0].innerHTML = reviewStr
@@ -152,7 +167,9 @@
             displayStar()
             displayReviewStar()
         }
+
         request.send()
+
     }
 
     function displayStar() {
@@ -162,6 +179,44 @@
             var star = parseInt(starCount[i].innerHTML)
             var starUnchecked = maxStar - star
             starCount[i].innerHTML = `<span class="fa fa-star"></span>`.repeat(star) + `<span class="fa fa-star" style="opacity: 50%"></span>`.repeat(starUnchecked)
+        }
+    }
+
+    function addReview() {
+        var checkedValue = null;
+        var reviewBoxText = document.getElementById('addReviewBox').value
+        var inputElements = document.getElementsByClassName('messageCheckbox');
+        for (var i = 0; inputElements[i]; ++i) {
+            if (inputElements[i].checked) {
+                checkedValue = inputElements[i].value;
+                break;
+            }
+        }
+        if (checkedValue == null) {
+            alert("Please rate sth")
+        } else {
+            const urlParams = new URLSearchParams(window.location.search);
+            const myParam = urlParams.get('id');
+            var m = new Date();
+            var dateString =
+                m.getUTCFullYear() + "-" +
+                ("0" + (m.getUTCMonth() + 1)).slice(-2) + "-" +
+                ("0" + m.getUTCDate()).slice(-2) + " "
+
+            var review = {
+                review_content: reviewBoxText,
+                review_rating: checkedValue,
+                dateString: dateString,
+                user_id: 80,
+                restaurant_id: myParam
+            };
+            console.log(dateString);
+            console.log(review)
+            var request = new XMLHttpRequest();
+            request.open("POST", "/comment ", true);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.send(JSON.stringify(review));
+            location.reload()
         }
     }
 
@@ -189,7 +244,6 @@
         var tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "";
-            console.log(tabcontent[i])
         }
 
         // Get all elements with class="tablinks" and remove the class "active"

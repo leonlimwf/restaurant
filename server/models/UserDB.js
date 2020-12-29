@@ -1,5 +1,6 @@
 "use strict";
 var validator = require("email-validator");
+const { response } = require("express");
 var db = require('../lib/db-connection');
 const User = require('./User');
 
@@ -20,8 +21,9 @@ class userDB {
                 if (result.length > 0) {
                     if (password == result[0].user_password) { //result[0].password comes from db
                         success = true;
+                        // request.session.success = true
+                        // console.log('request', request.session.success)
                         msg = "<strong style='color: white; font-family: prod'>It's a success! Hang tight!</strong>";
-                        respond.status(200)
                         console.log(success);
 
                     } else {
@@ -60,7 +62,6 @@ class userDB {
         var regSuccess = false;
 
         var emailValid = validator.validate(emailInput)
-
         if (emailValid) {
             console.log(`Email valid, Input Received was ${emailInput}`)
             var values = [userIdInput, passwordInput, firstNameInput, lastNameInput, genderInput, addressInput, phoneNumInput, emailInput, dateStr]
@@ -103,7 +104,7 @@ class userDB {
         var dateStr = year + "-" + month + "-" + date;
         var sql = "INSERT INTO restaurant.review (review_content, review_rating,review_date, user_id, restaurant_id) VALUES (?, ?, ?, ?,?);"
 
-        var values = [request.body.review_content, request.body.review_rating, dateStr, request.body.user_id, request.body.restaurant_id]
+        var values = [request.body.review_content, request.body.review_rating, request.body.dateString, request.body.user_id, request.body.restaurant_id]
 
         db.query(sql, values, function(error, result) {
             if (error) {
@@ -115,14 +116,43 @@ class userDB {
         })
     }
 
-    getAllUsers(request, respond) {
-        var sql = `SELECT * 
-        FROM restaurant.user 
-        WHERE user_userId = ?`;
+    editComment(request, response) {
+        var d = new Date();
+        var date = d.getUTCDate();
+        var month = d.getUTCMonth() + 1; // Since getUTCMonth() returns month from 0-11 not 1-12
+        var year = d.getUTCFullYear();
+        var updateDateStr = year + "-" + month + "-" + date;
+        var sql = "UPDATE restaurant.review SET review_content = ? , review_rating = ?, review_updateDate = ? WHERE (review_id = ?);"
+        var values = [request.body.review_content, request.body.review_rating, updateDateStr, request.body.review_id]
 
-        var x = request.params.id
-        var value = x.toString()
-        console.log("value", x)
+        db.query(sql, values, function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                console.log("Succesfully updated data")
+                response.status(200).send(result)
+            }
+        })
+    }
+
+    deleteComment(request, response) {
+        var sql = "DELETE FROM restaurant.review WHERE (review_id = ?);"
+        var values = request.body.review_id
+
+        db.query(sql, values, function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                console.log("Succesfully deleted data")
+                response.status(200).send(result)
+            }
+        })
+    }
+
+    getAllUsers(request, respond) {
+        var sql = `SELECT * FROM restaurant.user WHERE user_userId = ?`;
+        var value = request.params.id
+        console.log(value)
         db.query(sql, value, function(error, result) {
             if (error) {
                 throw error;
@@ -149,7 +179,7 @@ class userDB {
     }
 
     deleteAccount(request, respond) {
-        var sql = "DELETE from restaurant.user where user_id='?' "
+        var sql = "DELETE from restaurant.user where user_userId = ? "
         var id = request.body.id
         db.query(sql, [id], function(error, result) {
             if (error) {

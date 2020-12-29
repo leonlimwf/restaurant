@@ -47,13 +47,13 @@
                     <div class="profileLeftInfo">
                         <label for="lname" style="margin-top: 50px;">Username</label>
                         <br>
-                        <input type="text" id="usernameInput" name="lname" placeholder="lmao" disabled>
+                        <input type="text" id="usernameInput" name="lname" value="lmao" disabled>
 
                     </div>
                     <div class="profileLeftInfo">
                         <label for="lname">Password</label>
                         <br>
-                        <input type="text" id="passwordInput" name="lname" disabled>
+                        <input type="text" id="passwordInput" name="lname" disabled value="lmao2">
                         <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
                     </div>
                     <div class="profileLeftInfo">
@@ -77,6 +77,66 @@
     </div>
 
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('id');
+
+        function checkIfAccessible() {
+            var who = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
+            if (who != myParam) {
+                window.location.href = "error.html"
+            } else {
+                console.log("Successful")
+            }
+        }
+
+        function loadUser() {
+
+
+            checkIfAccessible()
+            var request = new XMLHttpRequest();
+            request.open("GET", `users/${myParam}`, true);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.onload = function() {
+                response = JSON.parse(request.responseText);
+                // console.log(response)
+                let str = ""
+                    // console.log(response.length)
+                for (var i = 0; i < response.length; i++) {
+                    str = `
+                    <div class="profileLeftInfo">
+                        <label for="lname" style="margin-top: 50px;">Username</label>
+                        <br>
+                        <input type="text" id="usernameInput" name="lname" placeholder=${response[i].user_userId} disabled>
+
+                    </div>
+                    <div class="profileLeftInfo">
+                        <label for="lname">Password</label>
+                        <br>
+                        <input type="password" id="passwordInput" name="lname" disabled placeholder="lmao2">
+                        <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
+                    </div>
+                    <div class="profileLeftInfo">
+                        <label for="lname">Email</label>
+                        <br>
+                        <input type="text" id="emailInput" name="lname" placeholder=${response[i].user_email} disabled>
+                        <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
+                    </div>
+                    <div class="profileLeftInfo">
+                        <label for="lname">Address</label>
+                        <br>
+                        <input type="text" id="addressInput" name="lname" placeholder="${response[i].user_address}" disabled/>
+                        <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
+                    </div>
+                    <br>
+                    <a href="" id="deleteAccount" style="margin-top: 100px;">Delete my account</a>
+                    <p id="deleteAccountWarning">Action is non-reversible. All data will be deleted from our database.</p>
+                    `
+                }
+                document.getElementsByClassName('profileRight')[0].innerHTML = str
+            }
+            request.send()
+        }
+        loadUser()
     </script>
 
 

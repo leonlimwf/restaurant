@@ -3,24 +3,34 @@ const express = require('express')
 const userdb = require('../models/UserDB');
 const path = require('path');
 const { request } = require('express');
+const session = require('express-session')
 const usersDBObject = new userdb();
 
 const router = express.Router();
 
+router.use(session({
+    secret: 'mysecret',
+    resave: true,
+    saveUninitialized: true
+}));
+
 router.get("/users/:id", usersDBObject.getAllUsers);
 router.put("/update", usersDBObject.updateUserFirstName);
-router.post("/delete", usersDBObject.deleteAccount);
-// router.get("/seeres", usersDBObject.getAllUsers);
+router.delete("/delete", usersDBObject.deleteAccount);
 
-router.post("/comment/new", usersDBObject.addComment)
+router
+    .route("/comment")
+    .post(usersDBObject.addComment)
+    .put(usersDBObject.editComment)
+    .delete(usersDBObject.deleteComment)
 
+router
+    .route("/login")
+    .post(usersDBObject.getLoginCredentials)
+    .get((req, res) => {
+        res.sendFile(path.join(__dirname + '../../../public/login.html'));
+    });
 
-
-router.post("/login", usersDBObject.getLoginCredentials);
-router.get('/login', function(req, res) {
-    res.sendFile(path.join(__dirname + '../../../public/login.html'));
-    console.log(__dirname)
-});
 
 router
     .route("/register")
@@ -28,6 +38,8 @@ router
     .get((req, res) => {
         res.sendFile(path.join(__dirname + '../../../public/register.html'));
     });
+
+
 
 
 module.exports = router;

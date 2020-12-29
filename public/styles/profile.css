@@ -63,6 +63,10 @@ html {
     margin-left: 2.5vw;
 }
 
+input::-webkit-input-placeholder {
+    padding-left: 10px;
+}
+
 #usernameInput,
 #passwordInput,
 #emailInput,
@@ -114,10 +118,6 @@ html {
 
 #editButton {
     margin-left: 10px;
-}
-
-::-webkit-input-placeholder {
-    padding-left: 10px;
 }
 
 @media (max-width:991px) {

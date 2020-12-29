@@ -11,6 +11,6 @@ router.get("/id/:id", restaurantDBObject.getRestaurants);
 
 router.get("/category/:category", restaurantDBObject.getRestaurantsByCategory)
 
-
+router.get("/all", restaurantDBObject.getAllRestaurants)
 
 module.exports = router;

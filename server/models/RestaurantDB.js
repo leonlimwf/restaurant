@@ -4,6 +4,18 @@ const { all } = require('../routes/routeRestaurant');
 
 class RestaurantDB {
 
+    getAllRestaurants(request, response) {
+        var sql = "SELECT * FROM restaurant.restaurant"
+        db.query(sql, function(error, result) {
+            if (error) {
+                console.log(error)
+            } else {
+                response.json(result)
+            }
+        })
+    }
+
+
     getRestaurants(request, response) {
         var sql = "SELECT * FROM restaurant.restaurant"
         var id = request.params.id
@@ -83,7 +95,7 @@ class RestaurantDB {
                                             var reviewContent = result4[i].review_content
                                             reviewArray.push({ reviewUserId, reviewDate, reviewRating, reviewContent })
                                         }
-                                        console.log(typeof reviewArray)
+                                        console.log(reviewArray)
 
                                         array.push({
                                                 "restaurantId": restaurantId,
@@ -177,4 +189,5 @@ class RestaurantDB {
         });
     }
 }
+
 module.exports = RestaurantDB;
