@@ -55,6 +55,7 @@ class RestaurantDB {
                                 INNER JOIN restaurant
                                 ON restaurant.restaurant_id = restaurant.review.restaurant_id
                                 AND restaurant.restaurant_id = ?
+                                ORDER BY review.review_date DESC
                                 `
                                 db.query(sql4, [resId], function(error4, result4) {
                                     if (error4) {
@@ -90,7 +91,9 @@ class RestaurantDB {
                                         var reviewArray = []
                                         for (var i in result4) {
                                             var reviewUserId = result4[i].user_userId
-                                            var reviewDate = result4[i].review_date
+                                            const today = new Date(result4[i].review_date);
+                                            today.setHours(today.getHours() + 8);
+                                            var reviewDate = today;
                                             var reviewRating = result4[i].review_rating
                                             var reviewContent = result4[i].review_content
                                             reviewArray.push({ reviewUserId, reviewDate, reviewRating, reviewContent })
