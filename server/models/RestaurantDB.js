@@ -28,7 +28,8 @@ class RestaurantDB {
                 FROM restaurant.restaurant
                 INNER JOIN restaurant_contact
                 WHERE restaurant.restaurant.restaurant_contact_id = restaurant_contact.restaurant_contact_id
-                AND restaurant.restaurant.restaurant_id = ?`
+                AND restaurant.restaurant.restaurant_id = ?
+                `
                 var resId = id.toString()
                 db.query(sql2, [resId], function(error2, result2) {
                     if (error2) {
@@ -141,7 +142,7 @@ class RestaurantDB {
     }
 
     getRestaurantsByCategory(request, response) {
-        var sql = "SELECT * FROM restaurant.restaurant WHERE restaurant_category = ? "
+        var sql = "SELECT * FROM restaurant.restaurant WHERE restaurant_category = ? ORDER BY restaurant.restaurant.restaurant_name ASC"
         var value = request.params.category
         db.query(sql, [value], function(error, result) {
             if (error) {

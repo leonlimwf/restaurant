@@ -164,6 +164,21 @@ class userDB {
         });
     }
 
+    getUserInfo(request, respond) {
+        var sql = `SELECT * FROM restaurant.user WHERE user_userId = ?`;
+        var value = request.params.id
+        console.log(value)
+        db.query(sql, value, function(error, result) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(result)
+
+            }
+            respond.send(result)
+        });
+    }
+
     updateUserFirstName(request, respond) {
         var sql = "UPDATE restaurant.user SET user_firstName = ? WHERE user_id = ?";
         var values = [request.body.first_name, request.body.id];

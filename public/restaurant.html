@@ -57,7 +57,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('id');
         var request = new XMLHttpRequest();
-        console.log(request)
         request.open("GET", `restaurants/id/${myParam}`, true);
         request.setRequestHeader("Content-Type", "application/json");
         request.onload = function() {
@@ -65,7 +64,6 @@
             reviewArrayLength = response[0].reviewArray.length
             let reviewStr = ""
             for (var i = 0; i < reviewArrayLength; i++) {
-                console.log(response[0].reviewArray[i])
                 reviewStr += `
                 <div class="reviewSection">
                     <img id="userImage" src="asset/wallpaper.png">
@@ -81,7 +79,7 @@
 
             let str = ""
             for (var i = 0; i < response.length; i++) {
-
+                console.log(response[i].restaurantAddress.split(' ').join('+'))
                 str += `
         <h3 id="restaurantName">${response[i].restaurantName}</h3>
         <h5 id="restaurantCategory">${response[i].restaurantCategory}</h5>
@@ -132,6 +130,14 @@
                 <br>
                 <a href="${response[i].restaurantLink}" id="website-link" style="font-family: prodmed;margin-top: 5px;">${response[i].restaurantLink}</a>
             </div>
+            <div class="website" style="margin-bottom: 5vh">
+                <h5 id="restaurant-about-text"><i class="fas fa-street-view" style="font-size: 18px;margin-right: 5px;"></i> Getting there</h5>
+                <div class="h_line"></div>
+                <br>
+                        <iframe style="width:600;height:400; background-color: green" id="gmap_canvas" src="https://maps.google.com/maps?q=${response[i].restaurantName}+${response[i].restaurantAddress.slice(-6)}e&t=k&z=17&ie=UTF8&iwloc=&output=embed">
+                        </iframe>
+
+            </div>
         </div>
 
 
@@ -140,20 +146,22 @@
         <div id="restaurant-review" class="tabcontent">
             <div class="addReview">
                     <input id="addReviewBox" type="text" placeholder="  Write your review here">
+                    <br><br>
                     <div class="rate">
-                    <input class="messageCheckbox" type="radio" id="star5" name="rate" value="5" />
-                    <label for="star5" title="text">5 stars</label>
-                    <input class="messageCheckbox" type="radio" id="star4" name="rate" value="4" />
-                    <label for="star4" title="text">4 stars</label>
-                    <input class="messageCheckbox" type="radio" id="star3" name="rate" value="3" />
-                    <label for="star3" title="text">3 stars</label>
-                    <input class="messageCheckbox"type="radio" id="star2" name="rate" value="2" />
-                    <label for="star2" title="text">2 stars</label>
-                    <input class="messageCheckbox" type="radio" id="star1" name="rate" value="1" />
-                    <label for="star1" title="text">1 star</label>
-            </div>
+                        <input class="messageCheckbox" type="radio" id="star5" name="rate" value="5" />
+                        <label for="star5" title="text">5 stars</label>
+                        <input class="messageCheckbox" type="radio" id="star4" name="rate" value="4" />
+                        <label for="star4" title="text">4 stars</label>
+                        <input class="messageCheckbox" type="radio" id="star3" name="rate" value="3" />
+                        <label for="star3" title="text">3 stars</label>
+                        <input class="messageCheckbox"type="radio" id="star2" name="rate" value="2" />
+                        <label for="star2" title="text">2 stars</label>
+                        <input class="messageCheckbox" type="radio" id="star1" name="rate" value="1" />
+                        <label for="star1" title="text">1 star</label>
+                    </div>
                     <button id="addReviewButton" onclick="addReview()"><i class="fas fa-plus-circle"></i></button>
             </div>
+            <p style="font-family: prodmed; margin-left: -10px">Review Section</p>
             <div class="reviewBox">
 
             </div>
@@ -193,7 +201,7 @@
             }
         }
         if (checkedValue == null) {
-            alert("Please rate sth")
+            alert("Please rate using the stars")
         } else {
             const urlParams = new URLSearchParams(window.location.search);
             const myParam = urlParams.get('id');
@@ -205,16 +213,15 @@
                 ("0" + m.getUTCHours()).slice(-2) + ":" +
                 ("0" + m.getUTCMinutes()).slice(-2) + ":" +
                 ("0" + m.getUTCSeconds()).slice(-2);
-            console.log(dateString)
+            // console.log(dateString)
             var user_id = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
-            console.log("Logged in as the", user_id)
+            console.log("Logged in as ", user_id)
             var request2 = new XMLHttpRequest();
             request2.open("GET", `/users/${user_id}`, true);
             request2.setRequestHeader("Content-Type", "application/json");
             request2.onload = function() {
                 response2 = JSON.parse(request2.responseText)
                 response2.userId = (response2[0].user_id)
-                console.log(response2.userId)
 
                 var review = {
                     review_content: reviewBoxText,
@@ -223,14 +230,16 @@
                     user_id: 1,
                     restaurant_id: myParam
                 };
+
                 var request = new XMLHttpRequest();
                 request.open("POST", "/comment ", true);
                 request.setRequestHeader("Content-Type", "application/json");
                 request.send(JSON.stringify(review));
             }
             request2.send();
-            // location.reload()
+            window.location.href = window.location.href;
         }
+
     }
 
     function displayReviewStar() {
@@ -263,6 +272,12 @@
         tablinks = document.getElementsByClassName("tablinks");
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace("active", "");
+            tablinks[i].style.backgroundColor = "white"
+            tablinks[i].style.border = "transparent"
+            tablinks[i].style.fontFamily = "prodmed"
+            tablinks[i].style.letterSpacing = "0.5px"
+            tablinks[i].style.border = "none"
+            tablinks[i].style.outline = "0"
         }
 
         // Show the current tab, and add an "active" class to the button that opened the tab

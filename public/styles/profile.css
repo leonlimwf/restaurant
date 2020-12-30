@@ -33,9 +33,12 @@ html {
     height: 100%;
 }
 
+.fas fa-arrow-left {
+    font-family: prodmed;
+}
+
 #accountSettingsText {
     font-family: prodbold;
-    padding-top: 15vh;
     font-size: 28px;
 }
 

@@ -14,7 +14,7 @@ router.use(session({
     saveUninitialized: true
 }));
 
-router.get("/users/:id", usersDBObject.getAllUsers);
+router.get("/users/:id", usersDBObject.getUserInfo);
 router.put("/update", usersDBObject.updateUserFirstName);
 router.delete("/delete", usersDBObject.deleteAccount);
 
