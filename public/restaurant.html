@@ -63,9 +63,9 @@
         request.onload = function() {
             response = JSON.parse(request.responseText);
             reviewArrayLength = response[0].reviewArray.length
-
             let reviewStr = ""
             for (var i = 0; i < reviewArrayLength; i++) {
+                console.log(response[0].reviewArray[i])
                 reviewStr += `
                 <div class="reviewSection">
                     <img id="userImage" src="asset/wallpaper.png">
@@ -202,21 +202,32 @@
                 m.getUTCFullYear() + "-" +
                 ("0" + (m.getUTCMonth() + 1)).slice(-2) + "-" +
                 ("0" + m.getUTCDate()).slice(-2) + " "
+            console.log(m.getUTCDate() + 1)
+            console.log(dateString)
+            var user_id = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
+            console.log("Logged in as the", user_id)
+            var request2 = new XMLHttpRequest();
+            request2.open("GET", `/users/${user_id}`, true);
+            request2.setRequestHeader("Content-Type", "application/json");
+            request2.onload = function() {
+                response2 = JSON.parse(request2.responseText)
+                response2.userId = (response2[0].user_id)
+                console.log(response2.userId)
 
-            var review = {
-                review_content: reviewBoxText,
-                review_rating: checkedValue,
-                dateString: dateString,
-                user_id: 80,
-                restaurant_id: myParam
-            };
-            console.log(dateString);
-            console.log(review)
-            var request = new XMLHttpRequest();
-            request.open("POST", "/comment ", true);
-            request.setRequestHeader("Content-Type", "application/json");
-            request.send(JSON.stringify(review));
-            location.reload()
+                var review = {
+                    review_content: reviewBoxText,
+                    review_rating: checkedValue,
+                    dateString: dateString,
+                    user_id: 1,
+                    restaurant_id: myParam
+                };
+                var request = new XMLHttpRequest();
+                request.open("POST", "/comment ", true);
+                request.setRequestHeader("Content-Type", "application/json");
+                request.send(JSON.stringify(review));
+            }
+            request2.send();
+            // location.reload()
         }
     }
 

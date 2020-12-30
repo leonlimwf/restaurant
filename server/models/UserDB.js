@@ -105,7 +105,7 @@ class userDB {
         var sql = "INSERT INTO restaurant.review (review_content, review_rating,review_date, user_id, restaurant_id) VALUES (?, ?, ?, ?,?);"
 
         var values = [request.body.review_content, request.body.review_rating, request.body.dateString, request.body.user_id, request.body.restaurant_id]
-
+        console.log(request.body.dateString)
         db.query(sql, values, function(error, result) {
             if (error) {
                 throw error
@@ -150,7 +150,7 @@ class userDB {
     }
 
     getAllUsers(request, respond) {
-        var sql = `SELECT * FROM restaurant.user WHERE user_userId = ?`;
+        var sql = `SELECT user_id FROM restaurant.user WHERE user_userId = ?`;
         var value = request.params.id
         console.log(value)
         db.query(sql, value, function(error, result) {
