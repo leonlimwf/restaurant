@@ -81,9 +81,18 @@
             for (var i = 0; i < response.length; i++) {
                 console.log(response[i].restaurantAddress.split(' ').join('+'))
                 str += `
-        <h3 id="restaurantName">${response[i].restaurantName}</h3>
+        <div class="restaurantNameRating" style="display: flex;justify-content: space-between;">
+            <h3 id="restaurantName">${response[i].restaurantName}</h3>
+            <div id="restaurantStar" style="margin-top: 14px">
+                    <div class="stars-outer" style="display: flex;">
+                        <div class="stars-inner">${response[i].restaurantRating}<span>23</span></div>
+                        <span style="margin-top: -3px">( ${reviewArrayLength} )</span>
+                    </div>
+            </div>
+            
+        </div>
         <h5 id="restaurantCategory">${response[i].restaurantCategory}</h5>
-        <h5 id="restaurantAddress"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>${response[i].restaurantAddress}</h5>
+        <h5 id="restaurantAddress"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i><a href="#gmap_canvas">${response[i].restaurantAddress}</a></h5>
 
         <img src="asset/restaurantGallery/${response[i].restaurantGallery}" id="restaurantImage">
 
@@ -99,11 +108,6 @@
             <div class="review-features" style="margin-bottom: 5vh">
                 <h5 id="restaurant-about-text"><i class="fas fa-question-circle" style="font-size: 18px;margin-right: 5px;"></i> Features and Pricing</h5>
                 <div class="h_line"></div>
-                <div id="restaurantStar">
-                    <div class="stars-outer">
-                        <div class="stars-inner">${response[i].restaurantRating}</div>
-                    </div>
-                </div>
                 <h5 id="restaurantFeatures"><i class="fas fa-check-circle" style="color: limegreen"></i> ${response[i].restaurantFeatures[0]}</h5>
                 <h5 id="restaurantFeatures"><i class="fas fa-check-circle" style="color: limegreen"></i> ${response[i].restaurantFeatures[1]}</h5>
                 <h5 id="restaurantPricing"><i class="far fa-money-bill-alt" style="color: green"></i> ${response[i].restaurantPricing}</h5>
@@ -237,7 +241,6 @@
                 request.send(JSON.stringify(review));
             }
             request2.send();
-            window.location.href = window.location.href;
         }
 
     }
