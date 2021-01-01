@@ -9,4 +9,8 @@ const router = express.Router();
 
 router.get("/search/:search", searchObject.searchRestaurant);
 
+router.get("/search/:search/sortRating", searchObject.searchRestaurantSortByRating);
+
+router.get("/search/:search/sortPricing", searchObject.searchRestaurantSortByPricing);
+
 module.exports = router;

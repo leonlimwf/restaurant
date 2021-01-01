@@ -79,7 +79,6 @@
 
             let str = ""
             for (var i = 0; i < response.length; i++) {
-                console.log(response[i].restaurantAddress.split(' ').join('+'))
                 str += `
         <div class="restaurantNameRating" style="display: flex;justify-content: space-between;">
             <h3 id="restaurantName">${response[i].restaurantName}</h3>
@@ -108,9 +107,9 @@
             <div class="review-features" style="margin-bottom: 5vh">
                 <h5 id="restaurant-about-text"><i class="fas fa-question-circle" style="font-size: 18px;margin-right: 5px;"></i> Features and Pricing</h5>
                 <div class="h_line"></div>
-                <h5 id="restaurantFeatures"><i class="fas fa-check-circle" style="color: limegreen"></i> ${response[i].restaurantFeatures[0]}</h5>
-                <h5 id="restaurantFeatures"><i class="fas fa-check-circle" style="color: limegreen"></i> ${response[i].restaurantFeatures[1]}</h5>
-                <h5 id="restaurantPricing"><i class="far fa-money-bill-alt" style="color: green"></i> ${response[i].restaurantPricing}</h5>
+                <div class="restaurantFeatures">
+                </div>
+                <h5 id="restaurantPricing"><i class="far fa-money-bill-alt" style="color: green; padding-right: 5px; margin-left: -5px"></i> ${response[i].restaurantPricing}</h5>
             </div>
 
             <div class="opening-Hour" style="margin-bottom: 5vh">
@@ -172,9 +171,23 @@
         </div>
         `
 
+
+            }
+
+            let featuresStr = ''
+            for (var i = 0; i < response.length; i++) {
+                var features = response[i].restaurantFeatures
+                for (let i = 0; i < features.length; i++) {
+                    featuresStr +=
+                        `
+                    <h5 id="restaurantFeatures"><i class="fas fa-check-circle" style="color: limegreen; padding-right: 5px"></i> ${features[i]}</h5>
+                    `
+                }
+
             }
             document.getElementsByClassName('col-sm-6 restaurant')[0].innerHTML = str
             document.getElementsByClassName('reviewBox')[0].innerHTML = reviewStr
+            document.getElementsByClassName('restaurantFeatures')[0].innerHTML = featuresStr
             document.getElementById("defaultOpen").click();
             displayStar()
             displayReviewStar()

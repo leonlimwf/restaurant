@@ -93,7 +93,6 @@ html {
 
 .dropbtn {
     background-color: #0069ff;
-    border-radius: 5px;
     color: white;
     padding: 10px;
     font-size: 16px;
@@ -112,7 +111,6 @@ html {
     color: white;
     margin-left: 200px;
     text-align: left;
-    font-size: 14px;
 }
 
 
@@ -159,7 +157,7 @@ html {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 
 .dropdown:hover .dropbtn {
-    background-color: #0069ff;
+    background-color: #3e8e41;
 }
 
 .restaurant {

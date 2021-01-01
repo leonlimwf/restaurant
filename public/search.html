@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="asset/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="asset/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="styles/category.css" />
+    <link rel="stylesheet" type="text/css" href="styles/search.css" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
     <script src="https://kit.fontawesome.com/fdc798ee43.js" crossorigin="anonymous"></script>
@@ -39,7 +39,17 @@
             </ul>
         </div>
     </nav>
-    <h5 id="resultsFound"></h5>
+    <div class="resultBar">
+        <h5 id="resultsFound"></h5>
+        <div class="dropdown">
+            <button class="dropbtn">Sort By</button>
+            <div class="dropdown-content">
+                <button onclick="sortAccordingToRating()">Sort by Rating</button>
+                <button onclick="sortAccordingToPricing()">Sort by Pricing</button>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
     <div id="restaurantCategory">
 
     </div>
@@ -64,6 +74,85 @@
         }
     }
 
+    function sortAccordingToRating() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('type');
+        var ratingRequest = new XMLHttpRequest();
+        ratingRequest.open("GET", `restaurants/category/${myParam}/sortRating`, true);
+        ratingRequest.setRequestHeader("Content-Type", "application/json");
+        ratingRequest.onload = function() {
+            response = JSON.parse(ratingRequest.responseText);
+            document.getElementById('resultsFound').innerHTML = `${response.length} restaurants found for '${response[0].restaurantCategory}' category. <br>Sorted by ratings`
+            let str = ""
+            for (var i = 0; i < response.length; i++) {
+                str += `
+        <div class="col-sm-6 restaurant">
+            <div class="restaurant-displayPhoto">
+                <img src="asset/restaurantGallery/${response[i].restaurantDisplayPhoto}" id="restaurantDisplayPhoto">
+            </div>
+            <div class="restaurant-info">
+                <h5 id="restaurantName"><a href='restaurant.html?id=${response[i].restaurantId}' style="color: black">${response[i].restaurantName}</a></h5>
+                <div id="restaurantStar">
+                    <div class="stars-outer">
+                        <div class="stars-inner">${response[i].restaurantRating}</div>
+                    </div>
+                    <i class="fas fa-circle"></i>
+                    <h5 id="restaurantPricing">${response[i].restaurantPricing}</h5>
+                </div>
+                <h5 id="restaurantRegion">${response[i].restaurantRegion} Region</h5>
+                <h5 id="restaurantAddress"><i class="fas fa-map-marker-alt"></i>${response[i].restaurantAddress}</h5>
+            </div>
+        </div>
+        <div class="h_line"></div>
+        `
+            }
+            document.getElementById('restaurantCategory').innerHTML = str
+            alert("Sorted to rating!")
+            displayStar()
+        }
+        ratingRequest.send()
+    }
+
+    function sortAccordingToPricing() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('type');
+        var pricingRequest = new XMLHttpRequest();
+        pricingRequest.open("GET", `restaurants/category/${myParam}/sortPricing`, true);
+        pricingRequest.setRequestHeader("Content-Type", "application/json");
+        pricingRequest.onload = function() {
+            response = JSON.parse(pricingRequest.responseText);
+            document.getElementById('resultsFound').innerHTML = `${response.length} restaurants found for '${response[0].restaurantCategory}' category. <br>Sorted by pricing`
+            let str = ""
+            for (var i = 0; i < response.length; i++) {
+                str += `
+        <div class="col-sm-6 restaurant">
+            <div class="restaurant-displayPhoto">
+                <img src="asset/restaurantGallery/${response[i].restaurantDisplayPhoto}" id="restaurantDisplayPhoto">
+            </div>
+            <div class="restaurant-info">
+                <h5 id="restaurantName"><a href='restaurant.html?id=${response[i].restaurantId}' style="color: black">${response[i].restaurantName}</a></h5>
+                <div id="restaurantStar">
+                    <div class="stars-outer">
+                        <div class="stars-inner">${response[i].restaurantRating}</div>
+                    </div>
+                    <i class="fas fa-circle"></i>
+                    <h5 id="restaurantPricing">${response[i].restaurantPricing}</h5>
+                </div>
+                <h5 id="restaurantRegion">${response[i].restaurantRegion} Region</h5>
+                <h5 id="restaurantAddress"><i class="fas fa-map-marker-alt"></i>${response[i].restaurantAddress}</h5>
+            </div>
+        </div>
+        <div class="h_line"></div>
+        `
+            }
+            document.getElementById('restaurantCategory').innerHTML = str
+            alert("Sorted to pricing!")
+            displayStar()
+        }
+        pricingRequest.send()
+    }
+
+
     function loadAllRestaurants() {
         checkLogInStatus()
         const urlParams = new URLSearchParams(window.location.search);
@@ -84,6 +173,7 @@
             } else {
                 let str = ""
                 for (var i = 0; i < response.length; i++) {
+                    document.getElementById('resultsFound').innerHTML = `${response.length} restaurants found that starts with '${myParam}'`
                     str += `
         <div class="col-sm-6 restaurant">
             <div class="restaurant-displayPhoto">
