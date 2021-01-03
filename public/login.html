@@ -107,6 +107,7 @@
         request.setRequestHeader("Content-Type", "application/json");
         request.onload = function() {
             response = JSON.parse(request.responseText);
+            console.log(response)
             document.getElementById("alert-box").style.visibility = "visible";
             document.getElementById("alert-box").innerHTML = response.message;
             if (response.success) {

@@ -15,8 +15,12 @@ router.use(session({
 }));
 
 router.get("/users/:id", usersDBObject.getUserInfo);
-router.put("/update", usersDBObject.updateUserFirstName);
+
 router.delete("/delete", usersDBObject.deleteAccount);
+
+router
+    .route("/profile")
+    .put(usersDBObject.updateUserInfo)
 
 router
     .route("/comment")

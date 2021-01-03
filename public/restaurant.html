@@ -61,6 +61,7 @@
         request.setRequestHeader("Content-Type", "application/json");
         request.onload = function() {
             response = JSON.parse(request.responseText);
+            console.log(response[0].reviewArray)
             reviewArrayLength = response[0].reviewArray.length
             let reviewStr = ""
             for (var i = 0; i < reviewArrayLength; i++) {
@@ -109,7 +110,7 @@
                 <div class="h_line"></div>
                 <div class="restaurantFeatures">
                 </div>
-                <h5 id="restaurantPricing"><i class="far fa-money-bill-alt" style="color: green; padding-right: 5px; margin-left: -5px"></i> ${response[i].restaurantPricing}</h5>
+                <h5 id="restaurantPricing"><i class="far fa-money-bill-alt" style="color: green; padding-right: 5px;"></i> ${response[i].restaurantPricing}</h5>
             </div>
 
             <div class="opening-Hour" style="margin-bottom: 5vh">

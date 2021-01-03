@@ -300,6 +300,72 @@ class RestaurantDB {
             }
         });
     }
+
+    getRestaurantSortReviewRating(request, response) {
+        var sql = `
+        SELECT user_userId, review_date, review_rating, review_content
+        FROM restaurant.review
+        INNER JOIN user
+        ON user.user_id = restaurant.review.user_id
+        INNER JOIN restaurant
+        ON restaurant.restaurant_id = restaurant.review.restaurant_id
+        AND restaurant.restaurant_id = ?
+        ORDER BY review_rating DESC
+        `
+        var value = request.params.id
+
+        db.query(sql, [value], function(error, result) {
+            if (error) {
+                console.log(error)
+            } else {
+                var reviewArray = []
+                for (var i in result) {
+                    var reviewUserId = result[i].user_userId
+                    const today = new Date(result[i].review_date);
+                    today.setHours(today.getHours() + 8);
+                    var reviewDate = today;
+                    var reviewRating = result[i].review_rating
+                    var reviewContent = result[i].review_content
+                    reviewArray.push({ reviewUserId, reviewDate, reviewRating, reviewContent })
+                }
+                console.log(reviewArray)
+                response.json(reviewArray)
+            }
+        });
+    }
+
+    getRestaurantSortReviewDate(request, response) {
+        var sql = `
+        SELECT user_userId, review_date, review_rating, review_content
+        FROM restaurant.review
+        INNER JOIN user
+        ON user.user_id = restaurant.review.user_id
+        INNER JOIN restaurant
+        ON restaurant.restaurant_id = restaurant.review.restaurant_id
+        AND restaurant.restaurant_id = ?
+        ORDER BY review_date ASC
+        `
+        var value = request.params.id
+
+        db.query(sql, [value], function(error, result) {
+            if (error) {
+                console.log(error)
+            } else {
+                var reviewArray = []
+                for (var i in result) {
+                    var reviewUserId = result[i].user_userId
+                    const today = new Date(result[i].review_date);
+                    today.setHours(today.getHours() + 8);
+                    var reviewDate = today;
+                    var reviewRating = result[i].review_rating
+                    var reviewContent = result[i].review_content
+                    reviewArray.push({ reviewUserId, reviewDate, reviewRating, reviewContent })
+                }
+                console.log(reviewArray)
+                response.json(reviewArray)
+            }
+        });
+    }
 }
 
 module.exports = RestaurantDB;

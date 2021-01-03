@@ -7,11 +7,17 @@ const router = express.Router();
 
 router.get("/id/:id", restaurantDBObject.getRestaurants);
 
+router.get("/id/:id/sortReviewRating", restaurantDBObject.getRestaurantSortReviewRating)
+
+router.get("/id/:id/sortReviewDate", restaurantDBObject.getRestaurantSortReviewDate)
+
 router.get("/category/:category", restaurantDBObject.getRestaurantsByCategory)
 
 router.get("/category/:category/sortRating", restaurantDBObject.getRestaurantsByCategorySortRating)
 
 router.get("/category/:category/sortPricing", restaurantDBObject.getRestaurantsByCategorySortPricing)
+
+
 
 router.get("/all", restaurantDBObject.getAllRestaurants)
 

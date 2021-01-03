@@ -1,6 +1,7 @@
 "use strict";
 var validator = require("email-validator");
 const { response } = require("express");
+var session = require('express-session');
 var db = require('../lib/db-connection');
 const User = require('./User');
 
@@ -12,21 +13,23 @@ class userDB {
         var msg = "";
         var success = false;
 
-        var sql = "SELECT user_password FROM restaurant.user where user_userId = ?"
+        var sql = "SELECT user_password, user_id FROM restaurant.user where user_userId = ?"
 
         db.query(sql, [userid], function(error, result) {
             if (error) {
                 throw error;
             } else {
+                console.log(result)
                 if (result.length > 0) {
                     if (password == result[0].user_password) { //result[0].password comes from db
                         success = true;
-                        // request.session.success = true
-                        // console.log('request', request.session.success)
+                        request.session.userId = result[0].user_id
+                        console.log(request.session.userId)
                         msg = "<strong style='color: white; font-family: prod'>It's a success! Hang tight!</strong>";
                         console.log(success);
 
                     } else {
+                        console.log(request.session)
                         msg = '<strong>Oh No!</strong> Incorrect password, try again?'
                         respond.status(401)
                         success = false;
@@ -122,8 +125,8 @@ class userDB {
         var month = d.getUTCMonth() + 1; // Since getUTCMonth() returns month from 0-11 not 1-12
         var year = d.getUTCFullYear();
         var updateDateStr = year + "-" + month + "-" + date;
-        var sql = "UPDATE restaurant.review SET review_content = ? , review_rating = ?, review_updateDate = ? WHERE (review_id = ?);"
-        var values = [request.body.review_content, request.body.review_rating, updateDateStr, request.body.review_id]
+        var sql = "UPDATE restaurant.review SET review_content = ? , review_rating = ?, review_date = ? WHERE (review_id = ?);"
+        var values = [request.body.review_content, request.body.review_rating, request.body.updateDateString, request.body.review_id]
 
         db.query(sql, values, function(error, result) {
             if (error) {
@@ -179,21 +182,45 @@ class userDB {
         });
     }
 
-    updateUserFirstName(request, respond) {
-        var sql = "UPDATE restaurant.user SET user_firstName = ? WHERE user_id = ?";
-        var values = [request.body.first_name, request.body.id];
+    updateUserInfo(request, respond) {
+        if (request.body.password) {
+            // user change password
+            var sql = "UPDATE restaurant.user SET user_password = ? WHERE user_id = ?";
+            var values = [request.body.password, request.body.user_id];
+        } else if (request.body.email) {
+            // user change email
+            var sql = "UPDATE restaurant.user SET user_email = ? WHERE user_id = ?";
+            var values = [request.body.email, request.body.user_id];
+        } else if (request.body.address) {
+            // user change address
+            var sql = "UPDATE restaurant.user SET user_address = ? WHERE user_id = ?";
+            var values = [request.body.address, request.body.user_id];
+        } else if (request.body.imageUrl) {
+            //update profile pic
+            var sql = "UPDATE restaurant.user SET user_imageUrl = ? WHERE user_id = ?"
+            var values = [request.body.imageUrl, request.body.user_id];
+        } else if (request.body.imageUrlToDelete) {
+            //delete profile pic
+            var sql = `UPDATE restaurant.user SET user_imageUrl = NULL WHERE user_id = ?`
+            var values = [request.body.user_id];
+        }
         db.query(sql, values, function(error, result) {
             if (error) {
-                throw error;
+                if (error.errno === 1062) {
+                    console.log("Duplicate entry for email address")
+                    return respond.status(404).send("Duplicate entry for email address")
+                } else {
+                    console.log(error)
+                    return respond.status(404).send("Another error occured")
+                }
             } else {
-                console.log("Successful")
+                console.log("Successfully updated user particulars")
                 return respond.status(200).json(result)
-                    // respond.json(result);
             }
         });
     }
 
-    deleteAccount(request, respond) {
+    deleteAccount(request, respond) { //DONT TOUCH OMG
         var sql = "DELETE from restaurant.user where user_userId = ? "
         var id = request.body.id
         db.query(sql, [id], function(error, result) {
