@@ -5,7 +5,7 @@ const { all } = require('../routes/routeRestaurant');
 class RestaurantDB {
 
     getAllRestaurants(request, response) {
-        var sql = "SELECT * FROM restaurant.restaurant"
+        var sql = "SELECT * FROM restaurant.restaurant ORDER BY restaurant_name ASC"
         db.query(sql, function(error, result) {
             if (error) {
                 console.log(error)
@@ -301,6 +301,41 @@ class RestaurantDB {
         });
     }
 
+    getRestaurantsSortByFeatures(request, response) {
+        var sql = `
+        SELECT restaurant.restaurant_id, features_name, restaurant.restaurant_name, restaurant.restaurant_rating, restaurant.restaurant_pricing, restaurant.restaurant_region, restaurant.restaurant_address, restaurant.restaurant_displayPhoto
+        FROM restaurant.restaurant_features
+        INNER JOIN restaurant.features
+        ON restaurant.restaurant_features.features_id = restaurant.features.features_id
+        INNER JOIN restaurant.restaurant
+        ON restaurant.restaurant.restaurant_id = restaurant.restaurant_features.restaurant_id
+        WHERE features_name = ?
+        ORDER BY restaurant_name ASC`
+        var values = request.params.featureName
+        db.query(sql, values, function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                response.json(result)
+            }
+        })
+    }
+
+    getRestaurantsSortByRegion(request, response) {
+        var sql = `SELECT * FROM restaurant.restaurant
+        WHERE restaurant_region = ?
+        ORDER BY restaurant_name ASC`
+        var value = request.params.restaurantRegion
+        db.query(sql, value, function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                response.json(result)
+            }
+        })
+
+    }
+
     getRestaurantSortReviewRating(request, response) {
         var sql = `
         SELECT user_userId, review_date, review_rating, review_content
@@ -318,18 +353,22 @@ class RestaurantDB {
             if (error) {
                 console.log(error)
             } else {
-                var reviewArray = []
-                for (var i in result) {
-                    var reviewUserId = result[i].user_userId
-                    const today = new Date(result[i].review_date);
-                    today.setHours(today.getHours() + 8);
-                    var reviewDate = today;
-                    var reviewRating = result[i].review_rating
-                    var reviewContent = result[i].review_content
-                    reviewArray.push({ reviewUserId, reviewDate, reviewRating, reviewContent })
+                if (result.length > 0) {
+                    var reviewArray = []
+                    for (var i in result) {
+                        var reviewUserId = result[i].user_userId
+                        const today = new Date(result[i].review_date);
+                        today.setHours(today.getHours() + 8);
+                        var reviewDate = today;
+                        var reviewRating = result[i].review_rating
+                        var reviewContent = result[i].review_content
+                        reviewArray.push({ reviewUserId, reviewDate, reviewRating, reviewContent })
+                    }
+                    response.json(reviewArray)
+                } else {
+                    response.send("No reviews found")
                 }
-                console.log(reviewArray)
-                response.json(reviewArray)
+
             }
         });
     }
@@ -351,18 +390,22 @@ class RestaurantDB {
             if (error) {
                 console.log(error)
             } else {
-                var reviewArray = []
-                for (var i in result) {
-                    var reviewUserId = result[i].user_userId
-                    const today = new Date(result[i].review_date);
-                    today.setHours(today.getHours() + 8);
-                    var reviewDate = today;
-                    var reviewRating = result[i].review_rating
-                    var reviewContent = result[i].review_content
-                    reviewArray.push({ reviewUserId, reviewDate, reviewRating, reviewContent })
+                if (result.length > 0) {
+                    var reviewArray = []
+                    for (var i in result) {
+                        var reviewUserId = result[i].user_userId
+                        const today = new Date(result[i].review_date);
+                        today.setHours(today.getHours() + 8);
+                        var reviewDate = today;
+                        var reviewRating = result[i].review_rating
+                        var reviewContent = result[i].review_content
+                        reviewArray.push({ reviewUserId, reviewDate, reviewRating, reviewContent })
+                    }
+                    response.json(reviewArray)
+                } else {
+                    response.send("No reviews found")
                 }
-                console.log(reviewArray)
-                response.json(reviewArray)
+
             }
         });
     }

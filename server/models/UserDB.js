@@ -24,7 +24,7 @@ class userDB {
                     if (password == result[0].user_password) { //result[0].password comes from db
                         success = true;
                         request.session.userId = result[0].user_id
-                        console.log(request.session.userId)
+                        console.log("request sess id", request.session.userId)
                         msg = "<strong style='color: white; font-family: prod'>It's a success! Hang tight!</strong>";
                         console.log(success);
 
@@ -99,38 +99,95 @@ class userDB {
         }
     }
 
-    addComment(request, respond) {
-        var d = new Date();
-        var date = d.getUTCDate();
-        var month = d.getUTCMonth() + 1; // Since getUTCMonth() returns month from 0-11 not 1-12
-        var year = d.getUTCFullYear();
-        var dateStr = year + "-" + month + "-" + date;
-        var sql = "INSERT INTO restaurant.review (review_content, review_rating,review_date, user_id, restaurant_id) VALUES (?, ?, ?, ?,?);"
-
-        var values = [request.body.review_content, request.body.review_rating, request.body.dateString, request.body.user_id, request.body.restaurant_id]
-        console.log(request.body.dateString)
+    getReview(request, respond) {
+        var sql = `
+        SELECT review_id, review.user_id, user_userId, review.restaurant_id , restaurant_name, review_content, review_rating,review_date
+        FROM restaurant.review
+        INNER JOIN user
+        ON user.user_id = restaurant.review.user_id
+        INNER JOIN restaurant
+        ON restaurant.restaurant_id = restaurant.review.restaurant_id
+        WHERE review_id = ?
+        `
+        var values = [request.params.id]
         db.query(sql, values, function(error, result) {
             if (error) {
                 throw error
             } else {
+                console.log(result)
+                respond.status(200).send(result)
+            }
+        })
+    }
+
+    getUserReviewHistory(request, response) {
+        var sql = `
+        SELECT review_id, user.user_id, user.user_userId, review_content, review_rating, review_date, restaurant_name, restaurant.restaurant_id
+        FROM restaurant.review
+        INNER JOIN user
+        ON user.user_id = restaurant.review.user_id
+        INNER JOIN restaurant
+        ON restaurant.restaurant_id = restaurant.review.restaurant_id
+        WHERE user_userId = ?
+        `
+        var value = request.params.id
+        db.query(sql, value, function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                console.log(result)
+                response.status(200).send(result)
+            }
+        })
+    }
+
+    addReview(request, respond) {
+        var m = new Date();
+        var dateString =
+            m.getUTCFullYear() + "-" +
+            ("0" + (m.getUTCMonth() + 1)).slice(-2) + "-" +
+            ("0" + m.getUTCDate()).slice(-2) + " " +
+            ("0" + m.getUTCHours()).slice(-2) + ":" +
+            ("0" + m.getUTCMinutes()).slice(-2) + ":" +
+            ("0" + m.getUTCSeconds()).slice(-2);
+        var sql = "INSERT INTO restaurant.review (review_content, review_rating,review_date, user_id, restaurant_id) VALUES (?, ?, ?, ?,?);"
+
+        var values = [request.body.review_content, request.body.review_rating, dateString, request.body.user_id, request.body.restaurant_id]
+        db.query(sql, values, function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                console.log(result)
                 console.log("Succesfully inserted data")
                 respond.status(200).send(result)
             }
         })
     }
 
-    editComment(request, response) {
-        var d = new Date();
-        var date = d.getUTCDate();
-        var month = d.getUTCMonth() + 1; // Since getUTCMonth() returns month from 0-11 not 1-12
-        var year = d.getUTCFullYear();
-        var updateDateStr = year + "-" + month + "-" + date;
-        var sql = "UPDATE restaurant.review SET review_content = ? , review_rating = ?, review_date = ? WHERE (review_id = ?);"
-        var values = [request.body.review_content, request.body.review_rating, request.body.updateDateString, request.body.review_id]
+    editReview(request, response) {
+        var m = new Date();
+        var dateString =
+            m.getUTCFullYear() + "-" +
+            ("0" + (m.getUTCMonth() + 1)).slice(-2) + "-" +
+            ("0" + m.getUTCDate()).slice(-2) + " " +
+            ("0" + m.getUTCHours()).slice(-2) + ":" +
+            ("0" + m.getUTCMinutes()).slice(-2) + ":" +
+            ("0" + m.getUTCSeconds()).slice(-2);
+
+        if (request.body.review_rating && !request.body.review_content) {
+            var sql = "UPDATE restaurant.review SET review_rating = ?, review_date = ? WHERE (review_id = ?);"
+            var values = [request.body.review_rating, dateString, request.params.id]
+        } else if (request.body.review_content && !request.body.review_rating) {
+            var sql = "UPDATE restaurant.review SET review_content = ? , review_date = ? WHERE (review_id = ?);"
+            var values = [request.body.review_content, dateString, request.params.id]
+        } else if (request.body.review_rating && request.body.review_content) {
+            var sql = "UPDATE restaurant.review SET review_content = ? , review_rating = ?, review_date = ? WHERE (review_id = ?);"
+            var values = [request.body.review_content, request.body.review_rating, dateString, request.params.id]
+        }
 
         db.query(sql, values, function(error, result) {
             if (error) {
-                throw error
+                console.log(error)
             } else {
                 console.log("Succesfully updated data")
                 response.status(200).send(result)
@@ -138,33 +195,18 @@ class userDB {
         })
     }
 
-    deleteComment(request, response) {
+    deleteReview(request, response) {
         var sql = "DELETE FROM restaurant.review WHERE (review_id = ?);"
-        var values = request.body.review_id
+        var values = request.params.id
 
         db.query(sql, values, function(error, result) {
             if (error) {
                 throw error
             } else {
-                console.log("Succesfully deleted data")
+                console.log(`Succesfully deleted data of id ${request.params.id}`)
                 response.status(200).send(result)
             }
         })
-    }
-
-    getAllUsers(request, respond) {
-        var sql = `SELECT user_id FROM restaurant.user WHERE user_userId = ?`;
-        var value = request.params.id
-        console.log(value)
-        db.query(sql, value, function(error, result) {
-            if (error) {
-                throw error;
-            } else {
-                console.log(result)
-
-            }
-            respond.send(result)
-        });
     }
 
     getUserInfo(request, respond) {
@@ -221,9 +263,9 @@ class userDB {
     }
 
     deleteAccount(request, respond) { //DONT TOUCH OMG
-        var sql = "DELETE from restaurant.user where user_userId = ? "
-        var id = request.body.id
-        db.query(sql, [id], function(error, result) {
+        var sql = "DELETE from restaurant.user where user_id = ? "
+        var id = request.body.user_id
+        db.query(sql, id, function(error, result) {
             if (error) {
                 throw error
             } else {

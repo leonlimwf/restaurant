@@ -16,6 +16,8 @@ router.use(session({
 
 router.get("/users/:id", usersDBObject.getUserInfo);
 
+router.get("/users/:id/reviewHistory", usersDBObject.getUserReviewHistory);
+
 router.delete("/delete", usersDBObject.deleteAccount);
 
 router
@@ -23,10 +25,14 @@ router
     .put(usersDBObject.updateUserInfo)
 
 router
-    .route("/comment")
-    .post(usersDBObject.addComment)
-    .put(usersDBObject.editComment)
-    .delete(usersDBObject.deleteComment)
+    .route("/review/:id")
+    .get(usersDBObject.getReview)
+    .put(usersDBObject.editReview)
+    .delete(usersDBObject.deleteReview)
+
+router
+    .route("/review")
+    .post(usersDBObject.addReview)
 
 router
     .route("/login")

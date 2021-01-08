@@ -5,6 +5,8 @@ const restaurantDBObject = new restaurantdb();
 
 const router = express.Router();
 
+//there is a /restaurants infront btw
+
 router.get("/id/:id", restaurantDBObject.getRestaurants);
 
 router.get("/id/:id/sortReviewRating", restaurantDBObject.getRestaurantSortReviewRating)
@@ -17,7 +19,9 @@ router.get("/category/:category/sortRating", restaurantDBObject.getRestaurantsBy
 
 router.get("/category/:category/sortPricing", restaurantDBObject.getRestaurantsByCategorySortPricing)
 
+router.get("/all/feature/:featureName", restaurantDBObject.getRestaurantsSortByFeatures)
 
+router.get("/all/region/:restaurantRegion", restaurantDBObject.getRestaurantsSortByRegion)
 
 router.get("/all", restaurantDBObject.getAllRestaurants)
 
