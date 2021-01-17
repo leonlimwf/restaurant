@@ -301,41 +301,6 @@ class RestaurantDB {
         });
     }
 
-    getRestaurantsSortByFeatures(request, response) {
-        var sql = `
-        SELECT restaurant.restaurant_id, features_name, restaurant.restaurant_name, restaurant.restaurant_rating, restaurant.restaurant_pricing, restaurant.restaurant_region, restaurant.restaurant_address, restaurant.restaurant_displayPhoto
-        FROM restaurant.restaurant_features
-        INNER JOIN restaurant.features
-        ON restaurant.restaurant_features.features_id = restaurant.features.features_id
-        INNER JOIN restaurant.restaurant
-        ON restaurant.restaurant.restaurant_id = restaurant.restaurant_features.restaurant_id
-        WHERE features_name = ?
-        ORDER BY restaurant_name ASC`
-        var values = request.params.featureName
-        db.query(sql, values, function(error, result) {
-            if (error) {
-                throw error
-            } else {
-                response.json(result)
-            }
-        })
-    }
-
-    getRestaurantsSortByRegion(request, response) {
-        var sql = `SELECT * FROM restaurant.restaurant
-        WHERE restaurant_region = ?
-        ORDER BY restaurant_name ASC`
-        var value = request.params.restaurantRegion
-        db.query(sql, value, function(error, result) {
-            if (error) {
-                throw error
-            } else {
-                response.json(result)
-            }
-        })
-
-    }
-
     getRestaurantSortReviewRating(request, response) {
         var sql = `
         SELECT user_userId, review_date, review_rating, review_content
@@ -408,6 +373,41 @@ class RestaurantDB {
 
             }
         });
+    }
+
+    getRestaurantsSortByFeatures(request, response) {
+        var sql = `
+        SELECT restaurant.restaurant_id, features_name, restaurant.restaurant_name, restaurant.restaurant_rating, restaurant.restaurant_pricing, restaurant.restaurant_region, restaurant.restaurant_address, restaurant.restaurant_displayPhoto
+        FROM restaurant.restaurant_features
+        INNER JOIN restaurant.features
+        ON restaurant.restaurant_features.features_id = restaurant.features.features_id
+        INNER JOIN restaurant.restaurant
+        ON restaurant.restaurant.restaurant_id = restaurant.restaurant_features.restaurant_id
+        WHERE features_name = ?
+        ORDER BY restaurant_name ASC`
+        var values = request.params.featureName
+        db.query(sql, values, function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                response.json(result)
+            }
+        })
+    }
+
+    getRestaurantsSortByRegion(request, response) {
+        var sql = `SELECT * FROM restaurant.restaurant
+        WHERE restaurant_region = ?
+        ORDER BY restaurant_name ASC`
+        var value = request.params.restaurantRegion
+        db.query(sql, value, function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                response.json(result)
+            }
+        })
+
     }
 }
 

@@ -58,7 +58,13 @@
                 </ul>
 
             </div>
-            <a class="navbar-brand tablehopper ml-2" id="loggedInUser" href='' style="color: white; float: right;font-size: 16px;"></a>
+            <div class="dropdown">
+                <a class="navbar-brand tablehopper ml-2" id="loggedInUser" href='' style="color: white; float: right;font-size: 16px;"></a>
+                <div class="dropdown-content">
+                    <a id="loggedInUserProfile" href=''>Profile</a>
+                    <a href="#">Log Out</a>
+                </div>
+            </div>
         </nav>
 
 
@@ -223,6 +229,7 @@
             sessionStorage.setItem('alerted', 'yes');
         }
         document.getElementById("loggedInUser").href = `profile.html?id=${value_or_null}`
+        document.getElementById("loggedInUserProfile").href = `profile.html?id=${value_or_null}`
     }
 
 

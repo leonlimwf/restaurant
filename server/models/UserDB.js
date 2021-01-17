@@ -120,27 +120,6 @@ class userDB {
         })
     }
 
-    getUserReviewHistory(request, response) {
-        var sql = `
-        SELECT review_id, user.user_id, user.user_userId, review_content, review_rating, review_date, restaurant_name, restaurant.restaurant_id
-        FROM restaurant.review
-        INNER JOIN user
-        ON user.user_id = restaurant.review.user_id
-        INNER JOIN restaurant
-        ON restaurant.restaurant_id = restaurant.review.restaurant_id
-        WHERE user_userId = ?
-        `
-        var value = request.params.id
-        db.query(sql, value, function(error, result) {
-            if (error) {
-                throw error
-            } else {
-                console.log(result)
-                response.status(200).send(result)
-            }
-        })
-    }
-
     addReview(request, respond) {
         var m = new Date();
         var dateString =
@@ -271,6 +250,28 @@ class userDB {
             } else {
                 console.log(`Successfully deleted account of user ID ${id}`)
                 return respond.status(200).json(result)
+            }
+        })
+    }
+
+    getUserReviewHistory(request, response) {
+        var sql = `
+        SELECT review_id, user.user_id, user.user_userId, review_content, review_rating, review_date, restaurant_name, restaurant.restaurant_id
+        FROM restaurant.review
+        INNER JOIN user
+        ON user.user_id = restaurant.review.user_id
+        INNER JOIN restaurant
+        ON restaurant.restaurant_id = restaurant.review.restaurant_id
+        WHERE user_userId = ?
+        ORDER BY review_date DESC
+        `
+        var value = request.params.id
+        db.query(sql, value, function(error, result) {
+            if (error) {
+                throw error
+            } else {
+                console.log(result)
+                response.status(200).send(result)
             }
         })
     }
