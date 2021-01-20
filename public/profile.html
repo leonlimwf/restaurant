@@ -54,7 +54,7 @@
                     <div class="profileLeftInfo">
                         <label for="lname">Password</label>
                         <br>
-                        <input type="text" id="passwordInput" name="lname" disabled value="lmao2">
+                        <input type="text" id="passwordInput" name="lname" disabled>
                         <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
                     </div>
                     <div class="profileLeftInfo">
@@ -69,13 +69,26 @@
                         <input type="text" id="addressInput" name="lname" disabled>
                         <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
                     </div>
+                    <div class="profileLeftInfo">
+                        <label for="lname">Address</label>
+                        <br>
+                        <input type="text" id="addressInput" name="lname" disabled>
+                        <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
+                    </div>
                     <br>
                     <a href="" id="deleteAccount" style="margin-top: 100px;">Delete my account</a>
                     <p id="deleteAccountWarning">Action is non-reversible. All data will be deleted from our database.</p>
                 </div>
+
+            </div>
+            <h4 id="accountSettingsText" style="margin-top:50px">Reviews</h4>
+            <div class="reviewClass">
+
             </div>
         </div>
+
     </div>
+
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
@@ -90,10 +103,76 @@
             }
         }
 
+        function displayReviewStar() {
+            var count = document.getElementsByClassName('commentRating')
+            const maxStar = 5
+            for (let i = 0; i < count.length; i++) {
+                var star = count[i].innerHTML
+                var starUnchecked = maxStar - star
+                count[i].innerHTML = `<span class="fa fa-star"></span>`.repeat(star) + `<span class="fa fa-star" style="opacity: 50%"></span>`.repeat(starUnchecked)
+            }
+        }
+
+        function deleteComment(element) {
+            var response = confirm("Are you sure you want to delete this comment?")
+            if (response == true) {
+                var item = element.getAttribute('item')
+                console.log('delete-reviewid', item)
+            }
+            var deleteRequest = new XMLHttpRequest();
+            deleteRequest.open("DELETE", `review/${item}`, true);
+            deleteRequest.setRequestHeader("Content-Type", "application/json");
+            deleteRequest.onload = function() {
+                loadUser()
+            }
+            deleteRequest.send()
+        }
+
+        function editComment(element) {
+            var item = element.getAttribute('item')
+            console.log('edit-reviewid', item)
+            var editRequest = new XMLHttpRequest();
+            editRequest.open("PUT", `review/${item}`, true);
+            editRequest.setRequestHeader("Content-Type", "application/json");
+            editRequest.onload = function() {
+                loadUser()
+            }
+            editRequest.send()
+        }
+
         function loadUser() {
-
-
             checkIfAccessible()
+            var commentRequest = new XMLHttpRequest();
+            commentRequest.open("GET", `users/${myParam}/reviewhistory`, true);
+            commentRequest.setRequestHeader("Content-Type", "application/json");
+            commentRequest.onload = function() {
+                commentResponse = JSON.parse(commentRequest.responseText);
+                console.log(commentResponse)
+                let str = ''
+                for (var i = 0; i < commentResponse.length; i++) {
+                    str += `
+                    <div class="reviewSection">
+                        
+                        <img id="resImage" src="asset/restaurantGallery/${commentResponse[i].restaurant_displayPhoto}">
+                        <a href="restaurant.html?id=${commentResponse[i].restaurant_id}"><span id="userName">${commentResponse[i].restaurant_name}</span></a>
+                        <div class="editDelete" style="float:right">
+                            <i class="fas fa-pencil-alt"></i>
+                            <i class="fas fa-trash-alt" style="margin-left: 10px" item="${commentResponse[i].review_id}" onClick="deleteComment(this)"></i>
+                        </div>
+                        <div id='commentSection'>
+                            
+                            <p id="commentDate">Written at: <span id="writtenAtDate">${commentResponse[i].review_date.substring(0,10)}</span></p>
+                            <p class="commentRating">${commentResponse[i].review_rating}</p>
+                            <p id="commentSectionText">${commentResponse[i].review_content}</p>
+                        </div>
+                    </div>
+                    `
+                }
+                document.getElementsByClassName('reviewClass')[0].innerHTML = str
+                displayReviewStar()
+            }
+            commentRequest.send()
+
             var request = new XMLHttpRequest();
             request.open("GET", `users/${myParam}`, true);
             request.setRequestHeader("Content-Type", "application/json");
@@ -113,7 +192,7 @@
                     <div class="profileLeftInfo">
                         <label for="lname">Password</label>
                         <br>
-                        <input type="password" id="passwordInput" name="lname" disabled placeholder="lmao2">
+                        <input type="password" id="passwordInput" name="lname" disabled placeholder=${response[i].user_password}>
                         <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
                     </div>
                     <div class="profileLeftInfo">
@@ -128,12 +207,17 @@
                         <input type="text" id="addressInput" name="lname" placeholder="${response[i].user_address}" disabled/>
                         <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
                     </div>
+                    <div class="profileLeftInfo">
+                        <label for="lname">Account Created On: ${response[i].user_joinDate}</label>
+                    </div>
                     <br>
                     <a href="" id="deleteAccount" style="margin-top: 100px;">Delete my account</a>
                     <p id="deleteAccountWarning">Action is non-reversible. All data will be deleted from our database.</p>
                     `
                 }
                 document.getElementsByClassName('profileRight')[0].innerHTML = str
+                let passwordLen = document.getElementById('passwordInput').placeholder.length
+                document.getElementById('passwordInput').placeholder = '*'.repeat(passwordLen)
             }
             request.send()
         }

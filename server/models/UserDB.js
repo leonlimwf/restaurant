@@ -256,7 +256,7 @@ class userDB {
 
     getUserReviewHistory(request, response) {
         var sql = `
-        SELECT review_id, user.user_id, user.user_userId, review_content, review_rating, review_date, restaurant_name, restaurant.restaurant_id
+        SELECT review_id, user.user_id, user.user_userId, review_content, review_rating, review_date, restaurant_name, restaurant.restaurant_id,restaurant.restaurant_displayPhoto
         FROM restaurant.review
         INNER JOIN user
         ON user.user_id = restaurant.review.user_id

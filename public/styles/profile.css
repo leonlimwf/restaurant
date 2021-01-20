@@ -123,6 +123,62 @@ input::-webkit-input-placeholder {
     margin-left: 10px;
 }
 
+.reviewHistoryBox {
+    background-color: red;
+    min-width: 50em;
+}
+
+#reviewText {
+    font-family: prod;
+}
+
+.reviewSection {
+    margin-left: -10px;
+    padding: 10px;
+    border: 1px solid #c0c0c0;
+    border-radius: 10px;
+    margin-top: 2em;
+    background-color: transparent;
+}
+
+#resImage {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+}
+
+#userName {
+    font-family: prodmed;
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+#commentDate {
+    margin-top: 1em;
+    font-family: prodmed;
+    font-size: 14px;
+}
+
+.commentRating {
+    font-family: prodmed;
+    color: #0069ff;
+}
+
+#commentSectionText {
+    font-family: prodmed;
+    max-width: 40vw;
+}
+
+.fa-pencil-alt:hover {
+    color: limegreen;
+    cursor: pointer;
+}
+
+.fa-trash-alt:hover {
+    color: red;
+    cursor: pointer;
+}
+
 @media (max-width:991px) {
     .profileRight {
         float: left;
