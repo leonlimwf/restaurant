@@ -216,12 +216,15 @@
     function getCookie() {
         value_or_null = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
         console.log("Logged in as ", value_or_null)
-        if (value_or_null != " ") { //!= to see is user is logged in, if logged in, hide the login and signup button
+        if (value_or_null != null) { //!= to see is user is logged in, if logged in, hide the login and signup button
             document.getElementsByClassName('nav')[0].style.visibility = "hidden ";
             document.getElementsByClassName('navbar-toggler')[0].style.visibility = "hidden ";
             document.getElementById('loggedInUser').innerHTML = `Hello, ${value_or_null}`
-
+        } else {
+            document.getElementsByClassName('nav')[0].style.visibility = "visible";
+            document.getElementsByClassName('navbar-toggler')[0].style.visibility = "visible";
         }
+
         var alerted = sessionStorage.getItem('alerted') || '';
         console.log(alerted)
         if (alerted != 'yes') {
