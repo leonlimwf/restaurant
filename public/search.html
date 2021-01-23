@@ -76,13 +76,13 @@
 
     function sortAccordingToRating() {
         const urlParams = new URLSearchParams(window.location.search);
-        const myParam = urlParams.get('type');
+        const myParam = urlParams.get('query');
         var ratingRequest = new XMLHttpRequest();
-        ratingRequest.open("GET", `restaurants/category/${myParam}/sortRating`, true);
+        ratingRequest.open("GET", `search/${myParam}/sortRating`, true);
         ratingRequest.setRequestHeader("Content-Type", "application/json");
         ratingRequest.onload = function() {
             response = JSON.parse(ratingRequest.responseText);
-            document.getElementById('resultsFound').innerHTML = `${response.length} restaurants found for '${response[0].restaurantCategory}' category. <br>Sorted by ratings`
+            document.getElementById('resultsFound').innerHTML = `${response.length} restaurants found that starts with '${myParam}' <br>Sorted by ratings`
             let str = ""
             for (var i = 0; i < response.length; i++) {
                 str += `
@@ -115,14 +115,16 @@
 
     function sortAccordingToPricing() {
         const urlParams = new URLSearchParams(window.location.search);
-        const myParam = urlParams.get('type');
+        const myParam = urlParams.get('query');
         var pricingRequest = new XMLHttpRequest();
-        pricingRequest.open("GET", `restaurants/category/${myParam}/sortPricing`, true);
+        pricingRequest.open("GET", `search/${myParam}/sortPricing`, true);
+        console.log(myParam)
         pricingRequest.setRequestHeader("Content-Type", "application/json");
         pricingRequest.onload = function() {
             response = JSON.parse(pricingRequest.responseText);
-            document.getElementById('resultsFound').innerHTML = `${response.length} restaurants found for '${response[0].restaurantCategory}' category. <br>Sorted by pricing`
-            let str = ""
+            document.getElementById('resultsFound').innerHTML = `${response.length} restaurants found that starts with '${myParam}' <br>Sorted by Pricing`
+            console.log('res', response)
+            str = ''
             for (var i = 0; i < response.length; i++) {
                 str += `
         <div class="col-sm-6 restaurant">

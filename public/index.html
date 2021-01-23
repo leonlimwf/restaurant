@@ -71,8 +71,8 @@
 
                     <div class="d-flex justify-content-center px-5">
                         <div class="search">
-                            <input type="text" id="searchBar" class="search-input" placeholder="Try 'Lau Wang'" name="">
-                            <a href="#" class="search-icon"> <i class="fa fa-search" onclick="search()"></i> </a>
+                            <input type="text" id="searchBar" class="search-input" placeholder="Try 'Lau Wang'" name=" ">
+                            <a href="# " class="search-icon "> <i class="fa fa-search " onclick="search() "></i> </a>
                         </div>
                     </div>
                 </center>
@@ -300,7 +300,13 @@
 </footer>
 
 
-
+<script>
+    function search() {
+        var value = document.getElementById('searchBar').value
+        console.log(value)
+        window.location.href = "search.html?query=" + value
+    }
+</script>
 
 
 </html>

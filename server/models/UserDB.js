@@ -23,13 +23,12 @@ class userDB {
                 if (result.length > 0) {
                     if (password == result[0].user_password) { //result[0].password comes from db
                         success = true;
-                        request.session.userId = result[0].user_id
-                        console.log("request sess id", request.session.userId)
+                        // request.session.userId = result[0].user_id
+                        // console.log("request sess id", request.session.userId)
                         msg = "<strong style='color: white; font-family: prod'>It's a success! Hang tight!</strong>";
                         console.log(success);
 
                     } else {
-                        console.log(request.session)
                         msg = '<strong>Oh No!</strong> Incorrect password, try again?'
                         respond.status(401)
                         success = false;

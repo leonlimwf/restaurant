@@ -19,7 +19,7 @@
 
 <body onload="loadRestaurantInfo()">
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand tablehopper ml-2" href="index.html" style="color: #006AFF;">Table Hopper</a>
+        <a class="navbar-brand tablehopper ml-2" href="home.html" style="color: #006AFF;">Table Hopper</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg" style="color: white;">
@@ -53,7 +53,6 @@
 
 <script>
     function loadRestaurantInfo() {
-        checkLogInStatus()
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('id');
         var request = new XMLHttpRequest();
@@ -192,6 +191,7 @@
             document.getElementById("defaultOpen").click();
             displayStar()
             displayReviewStar()
+            checkLogInStatus()
         }
 
         request.send()
@@ -273,9 +273,11 @@
     function checkLogInStatus() {
         value_or_null = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
         console.log("Logged in as", value_or_null)
-        if (value_or_null != "") { //!= to see is user is logged in, if logged in, hide the login and signup button
+        if (value_or_null != null) { //!= to see is user is logged in, if logged in, hide the login and signup button
             document.getElementsByClassName('nav')[0].style.visibility = "hidden";
             document.getElementsByClassName('navbar-toggler')[0].style.visibility = "hidden";
+        } else {
+            document.getElementsByClassName('addReview')[0].innerHTML = "<h2 style='font-family: prodmed;font-size: 16px;text-align:center;padding-top: 16%'>Please <a href='login.html'>Log In</a> or <a href='register.html'>Register</a> to add review</h2>";
         }
     }
 

@@ -62,7 +62,7 @@
                 <a class="navbar-brand tablehopper ml-2" id="loggedInUser" href='' style="color: white; float: right;font-size: 16px;"></a>
                 <div class="dropdown-content">
                     <a id="loggedInUserProfile" href=''>Profile</a>
-                    <a href="#">Log Out</a>
+                    <a onclick="logOutUser()">Log Out</a>
                 </div>
             </div>
         </nav>
@@ -232,6 +232,15 @@
         document.getElementById("loggedInUserProfile").href = `profile.html?id=${value_or_null}`
     }
 
+    function logOutUser() {
+        userCookie = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
+        var response = confirm("Are you sure you want to log out?")
+        if (response == true) {
+            document.cookie = 'username' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            window.location.href = "index.html"
+            alert("Thanks for visiting Table Hopper!")
+        }
+    }
 
     function search() {
         var value = document.getElementById('searchBar').value
