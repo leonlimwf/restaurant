@@ -89,6 +89,75 @@
 
     </div>
 
+    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color: whitesmoke; font-family: prodmed">
+                    <label>Password</label>
+                    <br>
+                    <input id="checkPassword" placeholder="">
+                    <br>
+                    <label>Enter Password here to make changes</label>
+                    <br>
+                    <input id="inputPassword">
+                    <br>
+                    <label>Enter new credential</label>
+                    <br>
+                    <input id="inputChanges">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onClick="updateComment()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Review</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color: whitesmoke">
+                    <div id="restaurant-review" class="tabcontent">
+                        <div class="addReview">
+                            <p id="editReviewId"></p>
+                            <p id="editReviewRating"></p>
+                            <input id="addReviewBox" type="text" value="">
+                            <br><br>
+                            <div class="rate">
+                                <input class="messageCheckbox" type="radio" id="star5" name="rate" value="5" />
+                                <label for="star5" title="text">5 stars</label>
+                                <input class="messageCheckbox" type="radio" id="star4" name="rate" value="4" />
+                                <label for="star4" title="text">4 stars</label>
+                                <input class="messageCheckbox" type="radio" id="star3" name="rate" value="3" />
+                                <label for="star3" title="text">3 stars</label>
+                                <input class="messageCheckbox" type="radio" id="star2" name="rate" value="2" />
+                                <label for="star2" title="text">2 stars</label>
+                                <input class="messageCheckbox" type="radio" id="star1" name="rate" value="1" />
+                                <label for="star1" title="text">1 star</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onClick="updateComment()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
@@ -131,16 +200,70 @@
         function editComment(element) {
             var response = confirm("Are you sure you want to edit this comment?")
             if (response == true) {
-                var item = element.getAttribute('item')
-                console.log('delete-reviewid', item)
+                var reviewId = element.getAttribute('reviewId')
+                var reviewText = element.getAttribute('reviewText')
+                var reviewRating = element.getAttribute('reviewRating')
+                console.log(reviewId)
+                console.log('inital rating was', reviewRating)
+                console.log(`reviewText ${reviewText}`);
+                document.getElementById("addReviewBox").placeholder = reviewText
+                document.getElementById("editReviewId").innerHTML = reviewId
+                document.getElementById("editReviewRating").innerHTML = reviewRating
+                displayEditCommentStar()
             }
-            var editRequest = new XMLHttpRequest();
-            editRequest.open("PUT", `review/${item}`, true);
-            editRequest.setRequestHeader("Content-Type", "application/json");
-            editRequest.onload = function() {
-                loadUser()
+        }
+
+        function displayEditCommentStar() {
+            var maxStar = 5
+            var count = document.getElementById('editReviewRating').innerHTML
+            uncheckStar = maxStar - count
+            document.getElementsByClassName('rate').innerHTML = `<span class="fa fa-star"></span>`.repeat(count) + `<span class="fa fa-star" style="opacity: 50%"></span>`.repeat(uncheckStar)
+        }
+
+        function updateComment() {
+            var checkedValue = null
+            var response = confirm("Are you sure you want to update this comment?");
+            if (response == true) {
+                var reviewId = document.getElementById("editReviewId").innerHTML
+                console.log('reviewId : ', reviewId)
+                var initialReviewRating = document.getElementById("editReviewRating").innerHTML
+                var initialReviewContent = document.getElementById("addReviewBox").placeholder
+                var updateComment = new XMLHttpRequest(); // new HttpRequest instance to send request to server
+                updateComment.open("PUT", `review/${reviewId}`, true); //The HTTP method called 'PUT' is used here as we are updating data
+                var inputElements = document.getElementsByClassName('messageCheckbox');
+                for (var i = 0; inputElements[i]; ++i) {
+                    if (inputElements[i].checked) {
+                        checkedValue = inputElements[i].value;
+                        break;
+                    }
+                }
+                console.log(`checkedValue : ${checkedValue}`)
+                editedContent = document.getElementById('addReviewBox').value
+                console.log(`editedContent : ${editedContent}`)
+                console.log(`initialReviewContent : ${initialReviewContent}`)
+                var review = {}
+                updateComment.setRequestHeader("Content-Type", "application/json");
+                updateComment.onload = function() {
+                    location.reload()
+                    loadUser()
+                }
+
+                if (checkedValue !== initialReviewRating) {
+                    review.review_rating = checkedValue
+                }
+
+                if (editedContent !== initialReviewContent) {
+                    review.review_content = editedContent
+                }
+
+                updateComment.send(JSON.stringify(review))
             }
-            editRequest.send()
+        }
+
+        function editProfile() {
+            console.log("Hello")
+            var x = document.getElementById('checkPassword').value
+            console.log(x)
         }
 
         function loadUser() {
@@ -157,7 +280,7 @@
                         <img id="resImage" src="asset/restaurantGallery/${commentResponse[i].restaurant_displayPhoto}">
                         <a href="restaurant.html?id=${commentResponse[i].restaurant_id}"><span id="userName">${commentResponse[i].restaurant_name}</span></a>
                         <div class="editDelete" style="float:right">
-                            <i class="fas fa-pencil-alt" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"></i>
+                            <i class="fas fa-pencil-alt" reviewId="${commentResponse[i].review_id}" reviewText="${commentResponse[i].review_content}" reviewRating="${commentResponse[i].review_rating}" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onClick="editComment(this)"></i>
                             <i class="fas fa-trash-alt" style="margin-left: 10px" item="${commentResponse[i].review_id}" onClick="deleteComment(this)"></i>
                         </div>
                         <div id='commentSection'>   
@@ -165,44 +288,6 @@
                             <p class="commentRating">${commentResponse[i].review_rating}</p>
                             <p id="commentSectionText">${commentResponse[i].review_content}</p>
                         </div>
-                    </div>
-
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Review</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                    <div class="modal-body" style="background-color: whitesmoke">
-                        <div id="restaurant-review" class="tabcontent">
-                            <div class="addReview">
-                                <input id="addReviewBox" type="text" placeholder="${commentResponse[i].review_content}">
-                                <br><br>
-                            <div class="rate">
-                                <input class="messageCheckbox" type="radio" id="star5" name="rate" value="5" />
-                                <label for="star5" title="text">5 stars</label>
-                                <input class="messageCheckbox" type="radio" id="star4" name="rate" value="4" />
-                                <label for="star4" title="text">4 stars</label>
-                                <input class="messageCheckbox" type="radio" id="star3" name="rate" value="3" />
-                                <label for="star3" title="text">3 stars</label>
-                                <input class="messageCheckbox"type="radio" id="star2" name="rate" value="2" />
-                                <label for="star2" title="text">2 stars</label>
-                                <input class="messageCheckbox" type="radio" id="star1" name="rate" value="1" />
-                                <label for="star1" title="text">1 star</label>
-                            </div>
-                            <button id="addReviewButton" onclick="addReview()"><i class="fas fa-plus-circle"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                    </div>
-                    </div>
                     </div>
                     `
                 }
@@ -231,7 +316,7 @@
                         <label for="lname">Password</label>
                         <br>
                         <input type="password" id="passwordInput" name="lname" disabled placeholder=${response[i].user_password}>
-                        <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
+                        <a href="#" id="editButton" data-toggle="modal" data-target="#editProfileModal" onClick="editProfile(this)"><i class="fas fa-edit"></i></a>
                     </div>
                     <div class="profileLeftInfo">
                         <label for="lname">Email</label>

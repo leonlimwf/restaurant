@@ -189,6 +189,16 @@ input::-webkit-input-placeholder {
     height: 25vh;
 }
 
+#editReviewId {
+    font-family: prodmed;
+    font-size: 1px;
+}
+
+#editReviewRating {
+    font-family: prodmed;
+    font-size: 1px;
+}
+
 #addReviewBox {
     min-width: 20vw;
     height: 10vh;
@@ -206,6 +216,12 @@ input::-webkit-input-placeholder {
     outline: 0;
     margin-top: 10px;
     background-color: transparent;
+}
+
+#checkPassword,
+#inputPassword,
+#inputChanges {
+    margin-bottom: 20px;
 }
 
 .rate {

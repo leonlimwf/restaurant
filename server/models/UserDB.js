@@ -143,6 +143,7 @@ class userDB {
     }
 
     editReview(request, response) {
+        console.log(`------------`)
         var m = new Date();
         var dateString =
             m.getUTCFullYear() + "-" +
@@ -151,15 +152,15 @@ class userDB {
             ("0" + m.getUTCHours()).slice(-2) + ":" +
             ("0" + m.getUTCMinutes()).slice(-2) + ":" +
             ("0" + m.getUTCSeconds()).slice(-2);
-
+        console.log('body', request.body)
         if (request.body.review_rating && !request.body.review_content) {
             var sql = "UPDATE restaurant.review SET review_rating = ?, review_date = ? WHERE (review_id = ?);"
             var values = [request.body.review_rating, dateString, request.params.id]
         } else if (request.body.review_content && !request.body.review_rating) {
-            var sql = "UPDATE restaurant.review SET review_content = ? , review_date = ? WHERE (review_id = ?);"
+            var sql = "UPDATE restaurant.review SET review_content = ?, review_date = ? WHERE (review_id = ?);"
             var values = [request.body.review_content, dateString, request.params.id]
         } else if (request.body.review_rating && request.body.review_content) {
-            var sql = "UPDATE restaurant.review SET review_content = ? , review_rating = ?, review_date = ? WHERE (review_id = ?);"
+            var sql = "UPDATE restaurant.review SET review_content = ?, review_rating = ?, review_date = ? WHERE (review_id = ?);"
             var values = [request.body.review_content, request.body.review_rating, dateString, request.params.id]
         }
 
@@ -196,7 +197,6 @@ class userDB {
                 throw error;
             } else {
                 console.log(result)
-
             }
             respond.send(result)
         });
@@ -269,7 +269,6 @@ class userDB {
             if (error) {
                 throw error
             } else {
-                console.log(result)
                 response.status(200).send(result)
             }
         })
