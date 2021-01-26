@@ -99,21 +99,47 @@
                     </button>
                 </div>
                 <div class="modal-body" style="background-color: whitesmoke; font-family: prodmed">
-                    <label>Password</label>
+                    <label>Password :
+                        <input id="checkPassword" name="password"type="password" disabled onkeyup='verifyPassword();' />
+                      </label>
                     <br>
-                    <input id="checkPassword" placeholder="">
-                    <br>
-                    <label>Enter Password here to make changes</label>
-                    <br>
-                    <input id="inputPassword">
-                    <br>
-                    <label>Enter new credential</label>
-                    <br>
-                    <input id="inputChanges">
+                    <label>Confirm Password:
+                        <input type="password" name="confirm_password" id="inputPassword"  onkeyup='verifyPassword();' /> 
+                        <span id='message'></span>
+                      </label>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onClick="updateComment()">Save changes</button>
+                    <button type="button" id="nextBtn" disabled class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal2" data-dismiss="modal">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editProfileModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color: whitesmoke; font-family: prodmed">
+                    <label id="oldCredLabel">Your old credential</label>
+                    <br>
+                    <input id='oldCredential' placeholder="" disabled/>
+                    <br><br>
+                    <label id="newCredLabel">Your new credential</label>
+                    <br>
+                    <input id='newCredential' maxlength="99" placeholder="" onkeyup="verifyInputs();" />
+                    <span id='message'></span>
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="saveChanges" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" data-dismiss="editProfileModal" disabled onClick="saveEditProfile()">Save changes</button>
                 </div>
             </div>
         </div>
@@ -203,9 +229,7 @@
                 var reviewId = element.getAttribute('reviewId')
                 var reviewText = element.getAttribute('reviewText')
                 var reviewRating = element.getAttribute('reviewRating')
-                console.log(reviewId)
-                console.log('inital rating was', reviewRating)
-                console.log(`reviewText ${reviewText}`);
+
                 document.getElementById("addReviewBox").placeholder = reviewText
                 document.getElementById("editReviewId").innerHTML = reviewId
                 document.getElementById("editReviewRating").innerHTML = reviewRating
@@ -260,10 +284,112 @@
             }
         }
 
-        function editProfile() {
-            console.log("Hello")
-            var x = document.getElementById('checkPassword').value
-            console.log(x)
+        function editProfile(element) {
+            var hiddenPass = document.getElementById('passwordInput').placeholder
+            document.getElementById('checkPassword').placeholder = hiddenPass
+            var x = document.getElementById('passwordInput').getAttribute("pass");
+            var getPass = element.getAttribute('pass')
+            var getEmail = element.getAttribute('email')
+            var getAddress = element.getAttribute('address')
+            console.log(getPass, getEmail, getAddress)
+            if (getPass !== null) {
+                document.getElementById('oldCredential').placeholder = getPass
+                document.getElementById('oldCredLabel').innerHTML = "Old Password"
+                document.getElementById('newCredLabel').innerHTML = "New Password"
+            }
+            if (getEmail !== null) {
+                document.getElementById('oldCredential').placeholder = getEmail
+                document.getElementById('oldCredLabel').innerHTML = "Old Email"
+                document.getElementById('newCredLabel').innerHTML = "New Email"
+
+            }
+            if (getAddress !== null) {
+                document.getElementById('oldCredential').placeholder = getAddress
+                document.getElementById('oldCredLabel').innerHTML = "Old Address"
+                document.getElementById('newCredLabel').innerHTML = "New Address"
+            }
+        }
+
+        function verifyInputs() {
+            var userNewPass = document.getElementById('newCredential').value
+            var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{9,20}$/;
+            var emailValid = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+            var checkType = document.getElementById('oldCredLabel').innerHTML
+
+            if (checkType == "Old Password" && userNewPass.match(passw)) {
+                document.getElementById('saveChanges').disabled = false
+            }
+            if (checkType == "Old Email" && userNewPass.match(emailValid)) {
+                document.getElementById('saveChanges').disabled = false
+            }
+            if (checkType == "Old Address") {
+                document.getElementById('saveChanges').disabled = false
+            }
+
+        }
+
+        function verifyPassword() {
+            var hiddenPass = document.getElementById('passwordInput').placeholder
+            document.getElementById('checkPassword').placeholder = hiddenPass
+            var passwordValue = document.getElementById('passwordInput').getAttribute("pass");
+            var inputPasswordValue = document.getElementById('inputPassword').value
+            if (passwordValue === inputPasswordValue) {
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerHTML = 'Verified <i class="fas fa-user-check"></i>';
+                document.getElementById('nextBtn').disabled = false
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'Incorrect <i class="fas fa-times-circle"></i>';
+            }
+        }
+
+        function saveEditProfile() {
+            var saveProfileCred = new XMLHttpRequest();
+            var change = {}
+            saveProfileCred.open("PUT", `profile`, true);
+            saveProfileCred.setRequestHeader("Content-Type", "application/json");
+            saveProfileCred.onload = function() {
+                loadUser()
+                location.reload()
+            }
+
+            var checkType = document.getElementById('oldCredLabel').innerHTML
+            console.log(checkType)
+
+            var userOldPass = document.getElementById('oldCredential').getAttribute("placeholder");
+
+            var userOldEmail = document.getElementById('oldCredential').getAttribute("placeholder");
+
+            var userOldAddress = document.getElementById('oldCredential').getAttribute("placeholder");
+
+            var userNewCred = document.getElementById('newCredential').value
+            console.log('uop', userOldPass)
+            console.log('uop', userNewCred)
+
+            console.log('uoe', userOldEmail)
+            console.log('uoe', userNewCred)
+
+            console.log('uoa', userOldAddress)
+            console.log('uoa', userNewCred)
+
+            var userId = (document.cookie.match(/^(?:.*;)?\s*id\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
+
+            if (checkType === "Old Password" && userOldPass !== userNewCred && userNewCred !== null) {
+                change.password = userNewCred
+                change.user_id = userId
+            }
+
+            if (checkType === "Old Email" && userOldEmail !== userNewCred && userNewCred !== null) {
+                change.email = userNewCred
+                change.user_id = userId
+            }
+
+            if (checkType === "Old Address" && userOldAddress !== userNewCred && userNewCred !== null) {
+                change.address = userNewCred
+                change.user_id = userId
+            }
+            saveProfileCred.send(JSON.stringify(change))
+            alert("Successfully updated credentials")
         }
 
         function loadUser() {
@@ -315,20 +441,20 @@
                     <div class="profileLeftInfo">
                         <label for="lname">Password</label>
                         <br>
-                        <input type="password" id="passwordInput" name="lname" disabled placeholder=${response[i].user_password}>
-                        <a href="#" id="editButton" data-toggle="modal" data-target="#editProfileModal" onClick="editProfile(this)"><i class="fas fa-edit"></i></a>
+                        <input type="password" id="passwordInput" name="lname" pass=${response[i].user_password} disabled placeholder=${response[i].user_password}>
+                        <a href="#" id="editButton" data-toggle="modal" pass=${response[i].user_password} data-target="#editProfileModal" onClick="editProfile(this)"><i class="fas fa-edit"></i></a>
                     </div>
                     <div class="profileLeftInfo">
                         <label for="lname">Email</label>
                         <br>
                         <input type="text" id="emailInput" name="lname" placeholder=${response[i].user_email} disabled>
-                        <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
+                        <a href="#" id="editButton" data-toggle="modal" email=${response[i].user_email} data-target="#editProfileModal" onClick="editProfile(this)"><i class="fas fa-edit"></i></a>
                     </div>
                     <div class="profileLeftInfo">
                         <label for="lname">Address</label>
                         <br>
                         <input type="text" id="addressInput" name="lname" placeholder="${response[i].user_address}" disabled/>
-                        <a href="#" id="editButton"><i class="fas fa-edit"></i></a>
+                        <a href="#" id="editButton" data-toggle="modal" address="${response[i].user_address}" data-target="#editProfileModal" onClick="editProfile(this)"><i class="fas fa-edit"></i></a>
                     </div>
                     <div class="profileLeftInfo">
                         <label for="lname">Account Created On: ${response[i].user_joinDate}</label>

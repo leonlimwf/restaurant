@@ -107,7 +107,7 @@
         request.setRequestHeader("Content-Type", "application/json");
         request.onload = function() {
             response = JSON.parse(request.responseText);
-            console.log(response)
+            var user_id = response.id
             document.getElementById("alert-box").style.visibility = "visible";
             document.getElementById("alert-box").innerHTML = response.message;
             if (response.success) {
@@ -121,6 +121,10 @@
                         window.location.href = "home.html";
                         document.cookie =
                             'username=' + credentials.userId +
+                            '; expires=' + now.toUTCString() +
+                            '; path=/';
+                        document.cookie =
+                            'id=' + user_id +
                             '; expires=' + now.toUTCString() +
                             '; path=/';
                     }

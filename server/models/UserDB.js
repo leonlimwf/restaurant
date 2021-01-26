@@ -19,7 +19,7 @@ class userDB {
             if (error) {
                 throw error;
             } else {
-                console.log(result)
+                var user_id = result[0].user_id
                 if (result.length > 0) {
                     if (password == result[0].user_password) { //result[0].password comes from db
                         success = true;
@@ -40,7 +40,7 @@ class userDB {
                     success = false;
                     console.log("Wrong credentials");
                 }
-                respond.json(prepareMessage(msg, success));
+                respond.json(prepareMessage(msg, success, user_id));
             }
         });
     }
@@ -276,8 +276,8 @@ class userDB {
 
 }
 
-function prepareMessage(msg, success, regSuccess) {
-    var obj = { "message": msg, "success": success, "regSuccess": regSuccess };
+function prepareMessage(msg, success, id) {
+    var obj = { "message": msg, "success": success, "id": id };
     return obj;
 }
 
