@@ -137,8 +137,8 @@
                 <h5 id="restaurant-about-text"><i class="fas fa-street-view" style="font-size: 18px;margin-right: 5px;"></i> Getting there</h5>
                 <div class="h_line"></div>
                 <br>
-                        <iframe style="width:600;height:400; background-color: green" id="gmap_canvas" src="https://maps.google.com/maps?q=${response[i].restaurantName}+${response[i].restaurantAddress.slice(-6)}e&t=k&z=17&ie=UTF8&iwloc=&output=embed">
-                        </iframe>
+                <iframe style="width:600;height:400; background-color: green" id="gmap_canvas" src="https://maps.google.com/maps?q=${response[i].restaurantName}+${response[i].restaurantAddress.slice(-6)}e&t=k&z=17&ie=UTF8&iwloc=&output=embed">
+                </iframe>
 
             </div>
         </div>
@@ -233,6 +233,7 @@
                 ("0" + m.getUTCSeconds()).slice(-2);
             // console.log(dateString)
             var user_id = (document.cookie.match(/^(?:.*;)?\s*username\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
+            var id = (document.cookie.match(/^(?:.*;)?\s*id\s*=\s*([^;]+)(?:.*)?$/) || [, null])[1]
             console.log("Logged in as ", user_id)
             var request2 = new XMLHttpRequest();
             request2.open("GET", `/users/${user_id}`, true);
@@ -245,7 +246,7 @@
                     review_content: reviewBoxText,
                     review_rating: checkedValue,
                     dateString: dateString,
-                    user_id: 1,
+                    user_id: id,
                     restaurant_id: myParam
                 };
 
@@ -253,6 +254,7 @@
                 request.open("POST", "/review ", true);
                 request.setRequestHeader("Content-Type", "application/json");
                 request.send(JSON.stringify(review));
+                loadRestaurantInfo();
             }
             request2.send();
         }

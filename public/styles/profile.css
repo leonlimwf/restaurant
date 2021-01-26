@@ -46,13 +46,17 @@ html {
     width: 50%;
     height: 70vh;
     float: left;
-    background: grey;
+    background: #006afd;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .profileRight {
     margin-left: 50%;
     height: 70vh;
     background: whitesmoke;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .test {
@@ -88,19 +92,19 @@ input::-webkit-input-placeholder {
     height: 20em;
     width: 20em;
     margin-top: 10vh;
-    margin-left: 8em;
+    margin-left: 7.5em;
 }
 
 #changeProfilePic {
     width: 20em;
     height: 3.5em;
-    background-color: #006AFF;
+    background-color: white;
     border-radius: 5px;
     margin-top: 5vh;
-    margin-left: 8em;
+    margin-left: 7.5em;
     border: none;
     font-family: prodmed;
-    color: white;
+    color: #0069ff;
     letter-spacing: 0.5px;
 }
 
