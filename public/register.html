@@ -203,20 +203,20 @@
                     var time = now.getTime();
                     time += 3600 * 1000;
                     now.setTime(time);
-                    window.location.href = "home.html";
+                    window.location.href = "login.html";
                     // var curCookieUser = "name=" + credentials.userId
                     // var curCookiePassword = " password=" + credentials.userPassword
-                    document.cookie =
-                        'username=' + registrationCredentials.userIdInput +
-                        '; expires=' + now.toUTCString() +
-                        '; path=/';
-                    document.cookie =
-                        'password=' + registrationCredentials.passwordInput +
-                        '; expires=' + now.toUTCString() +
-                        '; path=/';
+                    // document.cookie =
+                    //     'username=' + registrationCredentials.userIdInput +
+                    //     '; expires=' + now.toUTCString() +
+                    //     '; path=/';
+                    // document.cookie =
+                    //     'password=' + registrationCredentials.passwordInput +
+                    //     '; expires=' + now.toUTCString() +
+                    //     '; path=/';
                     // document.cookie = curCookieUser
                     // document.cookie = curCookiePassword;
-                    alert(document.cookie)
+                    // alert(document.cookie)
                 } else {
                     alert("Error Occured")
                 }

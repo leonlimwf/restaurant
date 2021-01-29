@@ -217,11 +217,11 @@ class userDB {
             var values = [request.body.address, request.body.user_id];
         } else if (request.body.imageUrl) {
             //update profile pic
-            var sql = "UPDATE restaurant.user SET user_imageUrl = ? WHERE user_id = ?"
+            var sql = "UPDATE restaurant.user SET user_imageUrl = ? WHERE user_id = ?";
             var values = [request.body.imageUrl, request.body.user_id];
         } else if (request.body.imageUrlToDelete) {
             //delete profile pic
-            var sql = `UPDATE restaurant.user SET user_imageUrl = NULL WHERE user_id = ?`
+            var sql = `UPDATE restaurant.user SET user_imageUrl = NULL WHERE user_id = ?`;
             var values = [request.body.user_id];
         }
         db.query(sql, values, function(error, result) {

@@ -49,7 +49,7 @@ class RestaurantDB {
                                 throw error3
                             } else {
                                 var sql4 = `
-                                SELECT user_userId, review_date, review_rating, review_content
+                                SELECT user_userId, review_date, review_rating, review_content, user_imageUrl
                                 FROM restaurant.review
                                 INNER JOIN user
                                 ON user.user_id = restaurant.review.user_id
@@ -97,7 +97,8 @@ class RestaurantDB {
                                             var reviewDate = today;
                                             var reviewRating = result4[i].review_rating
                                             var reviewContent = result4[i].review_content
-                                            reviewArray.push({ reviewUserId, reviewDate, reviewRating, reviewContent })
+                                            var userImage = result4[i].user_imageUrl
+                                            reviewArray.push({ reviewUserId, reviewDate, reviewRating, reviewContent, userImage })
                                         }
                                         console.log(reviewArray)
 

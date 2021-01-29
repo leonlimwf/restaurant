@@ -66,7 +66,7 @@
             for (var i = 0; i < reviewArrayLength; i++) {
                 reviewStr += `
                 <div class="reviewSection">
-                    <img id="userImage" src="asset/wallpaper.png">
+                    <img id="userImage" src="${response[0].reviewArray[i].userImage}" onError="this.onerror=null;this.src='asset/blank-user.png';">
                     <span id="userName">${response[0].reviewArray[i].reviewUserId}</span>
 
                     <div id='commentSection'>

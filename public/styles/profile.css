@@ -93,6 +93,7 @@ input::-webkit-input-placeholder {
     width: 20em;
     margin-top: 10vh;
     margin-left: 7.5em;
+    object-fit: cover;
 }
 
 #changeProfilePic {
