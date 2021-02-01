@@ -19,8 +19,10 @@ class userDB {
             if (error) {
                 throw error;
             } else {
-                var user_id = result[0].user_id
+
                 if (result.length > 0) {
+                    console.log(result)
+                    var user_id = result[0].user_id
                     if (password == result[0].user_password) { //result[0].password comes from db
                         success = true;
                         // request.session.userId = result[0].user_id
