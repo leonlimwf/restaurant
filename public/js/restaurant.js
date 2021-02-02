@@ -83,7 +83,7 @@ function loadRestaurantInfo() {
             <h5 id="restaurant-about-text"><i class="fas fa-street-view" style="font-size: 18px;margin-right: 5px;"></i> Getting there</h5>
             <div class="h_line"></div>
             <br>
-            <iframe style="width:600;height:400; background-color: green" id="gmap_canvas" src="https://maps.google.com/maps?q=${response[i].restaurantName}+ Singapore ${response[i].restaurantAddress.slice(-6)}e&t=k&z=17&ie=UTF8&iwloc=&output=embed">
+            <iframe style="width:600;height:400; background-color: green" id="gmap_canvas" src="https://maps.google.com/maps?q=${response[i].restaurantName}+Singapore ${response[i].restaurantAddress.slice(-6)}&e&t=k&z=17&ie=UTF8&iwloc=&output=embed">
             </iframe>
 
         </div>
