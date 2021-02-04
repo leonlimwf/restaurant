@@ -229,6 +229,7 @@
         if (response == true) {
             document.cookie = 'username' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
             document.cookie = 'id' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            sessionStorage.setItem('alerted', 'no');
             window.location.href = "index.html"
             alert("Thanks for visiting Table Hopper!")
         }
