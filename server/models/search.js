@@ -11,7 +11,7 @@ class SearchDB {
         WHERE restaurant_name LIKE ?
         ORDER BY restaurant_name ASC
         `
-        var value = request.params.search + "%"
+        var value = "%" + request.params.search + "%"
         db.query(sql, value, function(error, result) {
             if (error) {
                 response.status(500).send("Error occured")
